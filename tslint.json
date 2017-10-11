@@ -1,0 +1,28 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "no-empty": [
+      true,
+      "allow-empty-catch"
+    ],
+    "object-literal-sort-keys": false,
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape",
+      "avoid-template",
+      "jsx-double"
+    ],
+    "semicolon": [
+      true,
+      "never"
+    ],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "never",
+        "singleline": "never"
+      }
+    ]
+  }
+}

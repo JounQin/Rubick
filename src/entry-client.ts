@@ -1,8 +1,9 @@
+import axios from 'axios'
 import Vue, {ComponentOptions} from 'vue'
 
 import createApp from './app'
 
-const {app, router, store} = createApp()
+const {app, router, store} = createApp(axios)
 
 const {__INITIAL_STATE__: initialState} = window
 

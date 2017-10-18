@@ -1,3 +1,5 @@
+import {AxiosInstance} from 'axios'
+
 import Vue from 'vue'
 
 import App from './views/App.vue'
@@ -5,7 +7,7 @@ import App from './views/App.vue'
 import createRouter from './router'
 import createStore from './store'
 
-export default () => {
+export default (axios: AxiosInstance) => {
   const router = createRouter()
   const store = createStore()
 

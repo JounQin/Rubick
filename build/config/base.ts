@@ -36,7 +36,7 @@ export const vendors = [
 ]
 
 const serverHost = process.env.HOST || 'localhost'
-const serverPort = process.env.PORT || 3000
+const serverPort = process.env.PORT || 4000
 
 export default {
   serverHost,

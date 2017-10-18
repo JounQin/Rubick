@@ -1,6 +1,7 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "interface-name": false,
     "no-empty": [
       true,
       "allow-empty-catch"

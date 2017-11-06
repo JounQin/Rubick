@@ -2,7 +2,7 @@ import {AxiosInstance} from 'axios'
 
 import Vue from 'vue'
 
-import App from './views/App.vue'
+import App from './views/App'
 
 import createRouter from './router'
 import createStore from './store'

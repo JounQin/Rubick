@@ -10,7 +10,7 @@
     "moduleResolution": "node",
     "paths": {
       "*": [
-        "*",
+        "*.ts",
         "*.vue"
       ]
     },

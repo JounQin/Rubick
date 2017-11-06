@@ -1,11 +1,11 @@
 interface NodeModule {
   hot: {
-    accept: Function
+    accept: () => void
   }
 }
 
 interface Window {
-  __INITIAL_STATE__: Object
+  __INITIAL_STATE__: object
 }
 
 declare const __DEV__: boolean

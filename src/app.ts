@@ -14,7 +14,7 @@ export default (axios: AxiosInstance) => {
   const app = new Vue({
     router,
     store,
-    render: (h) => h(App)
+    render: h => h(App)
   })
 
   return {app, router, store}

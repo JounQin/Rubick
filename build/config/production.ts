@@ -1,7 +1,7 @@
 export default config => ({
   devTool: false,
   serverHost: 'localhost',
-  publicPath: `/`,
+  publicPath: '/',
   hashType: 'chunkhash',
   minimize: true
 })

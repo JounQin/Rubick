@@ -19,7 +19,7 @@ import router from './router'
 
 const debug = _debug('rubick:server')
 
-const getTemplate = (path) => {
+const getTemplate = path => {
   const tpl = pug.render(fs.readFileSync(path, 'utf-8'), {
     pretty: !config.minimize,
     polyfill: !__DEV__
@@ -48,7 +48,7 @@ const vueVersion = require('vue-server-renderer/package.json').version
 
 const DEFAULT_HEADERS = {
   'Content-Type': 'text/html',
-  'Server': `koa/${koaVersion}; vue-server-renderer/${vueVersion}`
+  Server: `koa/${koaVersion}; vue-server-renderer/${vueVersion}`
 }
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
@@ -95,7 +95,7 @@ app.use(async (ctx, next) => {
   const {res} = ctx
 
   const stream = renderer.renderToStream(context)
-    .on('error', (e) => {
+    .on('error', e => {
       switch (ctx.status = e.status || 500) {
         case 302:
           ctx.redirect(e.url)

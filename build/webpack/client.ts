@@ -1,9 +1,9 @@
-import * as webpack from 'webpack'
+import * as _debug from 'debug'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
 import * as VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
+import * as webpack from 'webpack'
 import * as merge from 'webpack-merge'
-import * as _debug from 'debug'
 
 import config, {globals, paths, vendors} from '../config'
 

@@ -23,6 +23,7 @@ export const paths = (() => {
   }
 })()
 
+// tslint:disable-next-line no-var-requires
 export const pkg = require(paths.base('package.json'))
 
 export const alias = {}

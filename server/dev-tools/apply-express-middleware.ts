@@ -3,7 +3,7 @@ export default (fn, req, res) => {
   const originalEnd = res.end
 
   return new Promise(resolve => {
-    res.end = function () {
+    res.end = function() {
       originalEnd.apply(this, arguments)
       resolve(false)
     }

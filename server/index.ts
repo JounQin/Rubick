@@ -3,19 +3,22 @@ import * as fs from 'fs'
 
 import * as _debug from 'debug'
 import { minify } from 'html-minifier'
-import * as App from 'koa'
+import * as Koa from 'koa'
 import * as compress from 'koa-compress'
 import * as logger from 'koa-logger'
 import * as serve from 'koa-static'
 import * as lruCache from 'lru-cache'
 import * as pug from 'pug'
-import { createBundleRenderer } from 'vue-server-renderer'
+import { BundleRenderer, createBundleRenderer } from 'vue-server-renderer'
+
+import * as koaPkg from 'koa/package.json'
+import * as vuePkg from 'vue/package.json'
 
 import config, { globals, paths } from '../build/config'
 
-const { __DEV__ } = globals
-
 import router from './router'
+
+const { __DEV__ } = globals
 
 const debug = _debug('rubick:server')
 
@@ -33,20 +36,21 @@ const getTemplate = (path: string) => {
     : tpl
 }
 
-const app = new App()
+const app = new Koa()
 
 app.use(compress()).use(logger())
 
 router(app)
 
-let renderer: any
-let readyPromise: any
+let renderer: BundleRenderer
+let readyPromise: Promise<any>
+// tslint:disable-next-line no-unused-variable
 let mfs: any
 
 const templatePath = paths.server('template.pug')
 
-const koaVersion = require('koa/package.json').version
-const vueVersion = require('vue-server-renderer/package.json').version
+const koaVersion = koaPkg.version
+const vueVersion = vuePkg.version
 
 const DEFAULT_HEADERS = {
   'Content-Type': 'text/html',
@@ -54,7 +58,7 @@ const DEFAULT_HEADERS = {
 }
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-const createRenderer = (bundle: any, options: object) =>
+const createRenderer = (bundle: object, options: object) =>
   createBundleRenderer(bundle, {
     ...options,
     inject: false,
@@ -71,7 +75,7 @@ if (__DEV__) {
     app,
     templatePath,
     getTemplate,
-    (bundle: any, { clientManifest, fs: memoryfs, template }: any) => {
+    (bundle: object, { clientManifest, fs: memoryfs, template }: any) => {
       renderer = createRenderer(bundle, { clientManifest, template })
       mfs = memoryfs
     },

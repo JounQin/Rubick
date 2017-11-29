@@ -1,6 +1,9 @@
-export default (config: any) => ({
-  devTool: '#eval-source-map',
-  publicPath: `http://${config.serverHost}:${config.serverPort}/`,
-  hashType: 'hash',
-  minimize: false,
-})
+import { Config } from './base'
+
+export default (config: Config) =>
+  ({
+    devTool: 'cheap-module-eval-source-map',
+    publicPath: `http://${config.serverHost}:${config.serverPort}/`,
+    hashType: 'hash',
+    minimize: false,
+  } as Config)

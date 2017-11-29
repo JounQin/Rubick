@@ -13,10 +13,11 @@
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack/client.ts --color --progress",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack/server.ts --color --progress",
     "build": "rimraf dist && yarn build:client && yarn build:server",
-    "lint": "tslint -e 'node_modules/**' -t stylish '**/*.ts'",
+    "lint": "tslint -p . -e 'node_modules/**' -t stylish '**/*.ts'",
     "lint:fix": "yarn lint --fix",
     "precommit": "lint-staged"
   },
+  "browserslist": ["> 1% in CN"],
   "lint-staged": {
     "*.{json,md}": ["prettier --write", "git add"],
     "*.ts": ["tslint -t stylish --fix", "git add"]
@@ -61,6 +62,7 @@
     "@types/koa-router": "^7.0.26",
     "@types/koa-static": "^3.0.2",
     "@types/lru-cache": "^4.1.0",
+    "@types/memory-fs": "^0.3.0",
     "@types/node": "^8.0.53",
     "@types/pug": "^2.0.4",
     "@types/webpack": "^3.8.1",

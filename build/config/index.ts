@@ -1,9 +1,11 @@
-import config, { globals } from './base'
+import baseConfig, { Config, globals } from './base'
 
 export * from './base'
 
-export default {
-  ...config,
+const config: Config = {
+  ...baseConfig,
   // tslint:disable-next-line no-var-requires
-  ...require(`./${globals.NODE_ENV}`).default(config),
+  ...require(`./${globals.NODE_ENV}`).default(baseConfig),
 }
+
+export default config

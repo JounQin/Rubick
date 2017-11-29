@@ -8,5 +8,6 @@ declare module 'memory-fs' {
 
     public readFileSync(path: string, encoding?: string): any
   }
+
   export = MemoryFileSystem
 }

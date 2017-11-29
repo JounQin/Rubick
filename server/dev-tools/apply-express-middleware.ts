@@ -1,5 +1,12 @@
+import { NextHandleFunction } from 'connect'
+import * as http from 'http'
+
 // Based on: https://github.com/dayAlone/koa-webpack-hot-middleware/blob/master/index.js
-export default (fn: any, req: any, res: any) => {
+export default (
+  fn: NextHandleFunction,
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
+) => {
   const originalEnd = res.end
 
   return new Promise(resolve => {
@@ -7,8 +14,7 @@ export default (fn: any, req: any, res: any) => {
       originalEnd.apply(this, arguments)
       resolve(false)
     }
-    fn(req, res, () => {
-      resolve(true)
-    })
+
+    fn(req, res, () => resolve(true))
   })
 }

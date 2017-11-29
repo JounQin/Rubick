@@ -1,14 +1,22 @@
 import * as path from 'path'
+import { Options } from 'webpack'
 
-type ENV = 'development' | 'production'
+import * as pkg from '../../package.json'
 
-const NODE_ENV: ENV = (process.env.NODE_ENV as ENV) || 'development'
+export { pkg }
+
+enum ENV {
+  DEV = 'development',
+  PROD = 'production',
+}
+
+const NODE_ENV: ENV = (process.env.NODE_ENV as ENV) || ENV.DEV
 
 export const globals = {
   NODE_ENV,
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
-  __DEV__: NODE_ENV === 'development',
-  __PROD__: NODE_ENV === 'production',
+  __DEV__: NODE_ENV === ENV.DEV,
+  __PROD__: NODE_ENV === ENV.PROD,
 }
 
 export const paths = (() => {
@@ -23,9 +31,6 @@ export const paths = (() => {
   }
 })()
 
-// tslint:disable-next-line no-var-requires
-export const pkg = require(paths.base('package.json'))
-
 export const alias = {}
 
 export const vendors = [
@@ -36,14 +41,25 @@ export const vendors = [
   'vuex',
 ]
 
-const serverHost = process.env.HOST || 'localhost'
-const serverPort = process.env.PORT || 4000
+const serverHost: string = process.env.HOST || 'localhost'
+const serverPort: number = +process.env.PORT || 4000
 
-export default {
+export interface Config {
+  serverHost: string
+  serverPort: number
+  innerServer: string
+  quiet: boolean
+  stats: Options.Stats
+  devTool: Options.Devtool
+  publicPath: string
+  hashType: 'hash' | 'chunkhash'
+  minimize: boolean
+}
+
+const config = {
   serverHost,
   serverPort,
   innerServer: `http://localhost:${serverPort}/`,
-  browsers: ['> 1% in CN'],
   quiet: false,
   stats: {
     colors: true,
@@ -52,4 +68,6 @@ export default {
     chunks: false,
     chunkModules: false,
   },
-}
+} as Config
+
+export default config

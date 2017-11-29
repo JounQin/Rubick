@@ -2,13 +2,13 @@ import * as path from 'path'
 
 type ENV = 'development' | 'production'
 
-const NODE_ENV: ENV = process.env.NODE_ENV as ENV || 'development'
+const NODE_ENV: ENV = (process.env.NODE_ENV as ENV) || 'development'
 
 export const globals = {
   NODE_ENV,
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
   __DEV__: NODE_ENV === 'development',
-  __PROD__: NODE_ENV === 'production'
+  __PROD__: NODE_ENV === 'production',
 }
 
 export const paths = (() => {
@@ -19,7 +19,7 @@ export const paths = (() => {
     src: base.bind(null, 'src'),
     dist: base.bind(null, 'dist'),
     server: base.bind(null, 'server'),
-    test: base.bind(null, 'test')
+    test: base.bind(null, 'test'),
   }
 })()
 
@@ -33,7 +33,7 @@ export const vendors = [
   'regenerator-runtime/runtime',
   'vue',
   'vue-router',
-  'vuex'
+  'vuex',
 ]
 
 const serverHost = process.env.HOST || 'localhost'
@@ -50,6 +50,6 @@ export default {
     modules: false,
     children: false,
     chunks: false,
-    chunkModules: false
-  }
+    chunkModules: false,
+  },
 }

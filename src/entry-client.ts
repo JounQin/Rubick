@@ -1,11 +1,11 @@
 import axios from 'axios'
-import Vue, {ComponentOptions} from 'vue'
+import Vue, { ComponentOptions } from 'vue'
 
 import createApp from './app'
 
-const {app, router, store} = createApp(axios)
+const { app, router, store } = createApp(axios)
 
-const {__INITIAL_STATE__: initialState} = window
+const { __INITIAL_STATE__: initialState } = window
 
 const ready = () => {
   router.beforeResolve(async (to, from, next) => {
@@ -18,16 +18,23 @@ const ready = () => {
 
     let diffed = false
 
-    const activated = matched.filter((comp, index) => diffed || (diffed = (prevMatched[index] !== comp)))
+    const activated = matched.filter(
+      (comp, index) => diffed || (diffed = prevMatched[index] !== comp),
+    )
 
     if (activated.length) {
       try {
-        await Promise.all(activated.map(({asyncData}: ComponentOptions<Vue>) => asyncData && asyncData({
-          store,
-          route: to
-        })))
-      } catch (e) {
-      }
+        await Promise.all(
+          activated.map(
+            ({ asyncData }: ComponentOptions<Vue>) =>
+              asyncData &&
+              asyncData({
+                store,
+                route: to,
+              }),
+          ),
+        )
+      } catch (e) {}
     }
 
     next()

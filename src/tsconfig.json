@@ -2,25 +2,12 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
-    "paths": {
-      "*": [
-        "*.ts",
-        "*.vue"
-      ]
-    },
     "sourceMap": true,
     "strict": true,
     "strictFunctionTypes": false,
-    "target": "es5",
-    "typeRoots": [
-      "./types",
-      "../node_modules/@types"
-    ]
+    "target": "es5"
   }
 }

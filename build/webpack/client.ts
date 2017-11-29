@@ -5,52 +5,61 @@ import * as VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import * as webpack from 'webpack'
 import * as merge from 'webpack-merge'
 
-import config, {globals, paths, vendors} from '../config'
+import config, { globals, paths, vendors } from '../config'
 
 import baseConfig from './base'
 
-const VUE_ENV = process.env.VUE_ENV = 'client'
+const VUE_ENV = (process.env.VUE_ENV = 'client')
 
-const {devTool, minimize} = config
+const { devTool, minimize } = config
 
 const sourceMap = !!devTool
 
-const {__DEV__, NODE_ENV} = globals
+const { __DEV__, NODE_ENV } = globals
 
 const debug = _debug('rubick:webpack:client')
 
-debug(`create webpack configuration for NODE_ENV:${NODE_ENV}, VUE_ENV:${VUE_ENV}`)
+debug(
+  `create webpack configuration for NODE_ENV:${NODE_ENV}, VUE_ENV:${VUE_ENV}`,
+)
 
 const clientConfig = merge.smart(baseConfig, {
   entry: {
     app: [paths.src('entry-client.ts')],
-    vendors
+    vendors,
   },
   target: 'web',
   module: {
-    rules: [{
-      test: /\.pug$/,
-      loader: 'raw-loader!pug-html-loader'
-    }]
+    rules: [
+      {
+        test: /\.pug$/,
+        loader: 'raw-loader!pug-html-loader',
+      },
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
-      __SERVER__: JSON.stringify(false)
+      __SERVER__: JSON.stringify(false),
     }),
-    new webpack.optimize.CommonsChunkPlugin({name: 'vendors'}),
-    new webpack.optimize.CommonsChunkPlugin({name: 'manifest'}),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendors' }),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'manifest' }),
     new HtmlWebpackPlugin({
       template: 'src/index.pug',
       filename: '__non-ssr-page__.html',
-      inject: true,
-      minify: {
-        collapseWhitespace: minimize,
-        minifyJS: minimize
-      }
+      favicon: 'src/assets/favicon.ico',
+      minify: minimize && {
+        collapseWhitespace: true,
+        minifyJS: true,
+        minifyCSS: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+      },
     }),
-    new VueSSRClientPlugin()
-  ]
+    new VueSSRClientPlugin(),
+  ],
 })
 
 if (minimize) {
@@ -62,18 +71,23 @@ if (minimize) {
       compress: {
         unused: true,
         dead_code: true,
-        warnings: false
+        warnings: false,
       },
       comments: false,
-      sourceMap
-    })
+      sourceMap,
+    }),
   )
 }
 
 if (__DEV__) {
-  ((clientConfig.entry as webpack.Entry).app as string[]).unshift('webpack-hot-middleware/client')
+  ;((clientConfig.entry as webpack.Entry).app as string[]).unshift(
+    'webpack-hot-middleware/client',
+  )
 
-  clientConfig.plugins.push(new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin())
+  clientConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+  )
 } else {
   debug(`Enable plugins for ${NODE_ENV} (SWPrecache).`)
 
@@ -88,10 +102,10 @@ if (__DEV__) {
       runtimeCaching: [
         {
           urlPattern: /\//,
-          handler: 'networkFirst'
-        }
-      ]
-    })
+          handler: 'networkFirst',
+        },
+      ],
+    }),
   )
 }
 

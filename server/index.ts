@@ -2,18 +2,18 @@
 import * as fs from 'fs'
 
 import * as _debug from 'debug'
-import {minify} from 'html-minifier'
+import { minify } from 'html-minifier'
 import * as App from 'koa'
 import * as compress from 'koa-compress'
 import * as logger from 'koa-logger'
 import * as serve from 'koa-static'
 import * as lruCache from 'lru-cache'
 import * as pug from 'pug'
-import {createBundleRenderer} from 'vue-server-renderer'
+import { createBundleRenderer } from 'vue-server-renderer'
 
-import config, {globals, paths} from '../build/config'
+import config, { globals, paths } from '../build/config'
 
-const {__DEV__} = globals
+const { __DEV__ } = globals
 
 import router from './router'
 
@@ -22,13 +22,15 @@ const debug = _debug('rubick:server')
 const getTemplate = path => {
   const tpl = pug.render(fs.readFileSync(path, 'utf-8'), {
     pretty: !config.minimize,
-    polyfill: !__DEV__
+    polyfill: !__DEV__,
   })
 
-  return config.minimize ? minify(tpl, {
-    collapseWhitespace: true,
-    minifyJS: true
-  }) : tpl
+  return config.minimize
+    ? minify(tpl, {
+        collapseWhitespace: true,
+        minifyJS: true,
+      })
+    : tpl
 }
 
 const app = new App()
@@ -48,32 +50,37 @@ const vueVersion = require('vue-server-renderer/package.json').version
 
 const DEFAULT_HEADERS = {
   'Content-Type': 'text/html',
-  Server: `koa/${koaVersion}; vue-server-renderer/${vueVersion}`
+  Server: `koa/${koaVersion}; vue-server-renderer/${vueVersion}`,
 }
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-const createRenderer = (bundle, options) => createBundleRenderer(bundle, {
-  ...options,
-  inject: false,
-  cache: lruCache({
-    max: 1000,
-    maxAge: 1000 * 60 * 15
-  }),
-  basedir: paths.dist(),
-  runInNewContext: false
-})
+const createRenderer = (bundle, options) =>
+  createBundleRenderer(bundle, {
+    ...options,
+    inject: false,
+    cache: lruCache({
+      max: 1000,
+      maxAge: 1000 * 60 * 15,
+    }),
+    basedir: paths.dist(),
+    runInNewContext: false,
+  })
 
 if (__DEV__) {
-  readyPromise = require('./dev-tools')
-    .default(app, templatePath, getTemplate, (bundle, {clientManifest, fs: memoryfs, template}) => {
-      renderer = createRenderer(bundle, {clientManifest, template})
+  readyPromise = require('./dev-tools').default(
+    app,
+    templatePath,
+    getTemplate,
+    (bundle, { clientManifest, fs: memoryfs, template }) => {
+      renderer = createRenderer(bundle, { clientManifest, template })
       mfs = memoryfs
-    })
+    },
+  )
 } else {
   mfs = fs
   renderer = createRenderer(require(paths.dist('vue-ssr-server-bundle.json')), {
     clientManifest: require(paths.dist('vue-ssr-client-manifest.json')),
-    template: getTemplate(templatePath)
+    template: getTemplate(templatePath),
   })
   app.use(serve('dist'))
 }
@@ -83,20 +90,21 @@ app.use(async (ctx, next) => {
 
   ctx.set(DEFAULT_HEADERS)
 
-  const {url} = ctx
+  const { url } = ctx
 
   const start = Date.now()
 
-  const context = {ctx, title: 'Rubick'}
+  const context = { ctx, title: 'Rubick' }
 
   ctx.respond = false
   ctx.status = 200
 
-  const {res} = ctx
+  const { res } = ctx
 
-  const stream = renderer.renderToStream(context)
+  const stream = renderer
+    .renderToStream(context)
     .on('error', e => {
-      switch (ctx.status = e.status || 500) {
+      switch ((ctx.status = e.status || 500)) {
         case 302:
           ctx.redirect(e.url)
           return res.end()
@@ -115,6 +123,8 @@ app.use(async (ctx, next) => {
   stream.pipe(res)
 })
 
-const {serverHost, serverPort} = config
+const { serverHost, serverPort } = config
 
-app.listen(serverPort, serverHost, () => debug('Server is now running at %s:%s.', serverHost, serverPort))
+app.listen(serverPort, serverHost, () =>
+  debug('Server is now running at %s:%s.', serverHost, serverPort),
+)

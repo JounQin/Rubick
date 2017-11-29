@@ -13,7 +13,7 @@ export default (compiler, middleware) => {
       },
       setHeader() {
         ctx.set.apply(ctx, arguments)
-      }
+      },
     })
 
     if (hasNext) {

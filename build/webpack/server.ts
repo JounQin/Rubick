@@ -10,7 +10,7 @@ import baseConfig from './base'
 
 const { NODE_ENV } = globals
 
-const VUE_ENV = (process.env.VUE_ENV = 'server')
+const VUE_ENV = 'server'
 
 const debug = _debug('rubick:webpack:server')
 

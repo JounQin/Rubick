@@ -9,7 +9,7 @@ import config, { globals, paths, vendors } from '../config'
 
 import baseConfig from './base'
 
-const VUE_ENV = (process.env.VUE_ENV = 'client')
+const VUE_ENV = 'client'
 
 const { devTool, minimize } = config
 
@@ -29,14 +29,6 @@ const clientConfig = merge.smart(baseConfig, {
     vendors,
   },
   target: 'web',
-  module: {
-    rules: [
-      {
-        test: /\.pug$/,
-        loader: 'raw-loader!pug-html-loader',
-      },
-    ],
-  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
@@ -48,15 +40,6 @@ const clientConfig = merge.smart(baseConfig, {
       template: 'src/index.pug',
       filename: '__non-ssr-page__.html',
       favicon: 'src/assets/favicon.ico',
-      minify: minimize && {
-        collapseWhitespace: true,
-        minifyJS: true,
-        minifyCSS: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-      },
     }),
     new VueSSRClientPlugin(),
   ],
@@ -74,7 +57,6 @@ if (minimize) {
         warnings: false,
       },
       comments: false,
-      sourceMap,
     }),
   )
 }

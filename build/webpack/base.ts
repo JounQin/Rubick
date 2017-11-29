@@ -4,6 +4,8 @@ import * as webpack from 'webpack'
 
 import config, { globals, paths } from '../config'
 
+const { devTool, minimize } = config
+
 const { __PROD__ } = globals
 
 const webpackConfig: webpack.Configuration = {
@@ -15,7 +17,7 @@ const webpackConfig: webpack.Configuration = {
     path: paths.dist(),
     filename: `[name].[${__PROD__ ? 'chunkhash' : 'hash'}].js`,
   },
-  devtool: config.devTool,
+  devtool: devTool,
   module: {
     rules: [
       {
@@ -28,6 +30,18 @@ const webpackConfig: webpack.Configuration = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
+      },
+      {
+        test: /\.pug$/,
+        use: [
+          {
+            loader: 'html-loader',
+            options: {
+              minimize,
+            },
+          },
+          'pug-html-loader',
+        ],
       },
     ],
   },

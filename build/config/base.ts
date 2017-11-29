@@ -12,7 +12,7 @@ export const globals = {
 }
 
 export const paths = (() => {
-  const base = (...args) => path.resolve(__dirname, '../../', ...args)
+  const base = (...args: string[]) => path.resolve(__dirname, '../../', ...args)
 
   return {
     base,

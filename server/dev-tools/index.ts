@@ -1,5 +1,6 @@
 import { watch } from 'chokidar'
 import * as _debug from 'debug'
+import * as Koa from 'koa'
 import * as MFS from 'memory-fs'
 import * as webpack from 'webpack'
 import * as webpackDevMiddleware from 'webpack-dev-middleware'
@@ -10,18 +11,18 @@ import webpackHot from './webpack-hot'
 
 const debug = _debug('rubick:server')
 
-const readFile = (fs, file) => {
+const readFile = (fs: MFS, file: string) => {
   try {
     return fs.readFileSync(paths.dist(file), 'utf-8')
   } catch (e) {}
 }
 
-export default (app, templatePath, getTemplate, cb) => {
-  let bundle
-  let clientManifest
-  let fs
-  let template
-  let ready
+export default (app: Koa, templatePath: string, getTemplate: any, cb: any) => {
+  let bundle: any
+  let clientManifest: any
+  let fs: any
+  let template: any
+  let ready: any
 
   const readyPromise = new Promise(resolve => {
     ready = resolve

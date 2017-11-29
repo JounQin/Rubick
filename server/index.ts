@@ -19,7 +19,7 @@ import router from './router'
 
 const debug = _debug('rubick:server')
 
-const getTemplate = path => {
+const getTemplate = (path: string) => {
   const tpl = pug.render(fs.readFileSync(path, 'utf-8'), {
     pretty: !config.minimize,
     polyfill: !__DEV__,
@@ -39,9 +39,9 @@ app.use(compress()).use(logger())
 
 router(app)
 
-let renderer
-let readyPromise
-let mfs
+let renderer: any
+let readyPromise: any
+let mfs: any
 
 const templatePath = paths.server('template.pug')
 
@@ -54,7 +54,7 @@ const DEFAULT_HEADERS = {
 }
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-const createRenderer = (bundle, options) =>
+const createRenderer = (bundle: any, options: object) =>
   createBundleRenderer(bundle, {
     ...options,
     inject: false,
@@ -71,7 +71,7 @@ if (__DEV__) {
     app,
     templatePath,
     getTemplate,
-    (bundle, { clientManifest, fs: memoryfs, template }) => {
+    (bundle: any, { clientManifest, fs: memoryfs, template }: any) => {
       renderer = createRenderer(bundle, { clientManifest, template })
       mfs = memoryfs
     },
@@ -103,7 +103,7 @@ app.use(async (ctx, next) => {
 
   const stream = renderer
     .renderToStream(context)
-    .on('error', e => {
+    .on('error', (e: { status: number; url: string; stack: any }) => {
       switch ((ctx.status = e.status || 500)) {
         case 302:
           ctx.redirect(e.url)

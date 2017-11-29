@@ -1,14 +1,15 @@
 import * as _debug from 'debug'
+import { Context } from 'koa'
 import applyExpressMiddleware from './apply-express-middleware'
 
 const debug = _debug('rubick:webpack-dev')
 
-export default (compiler, middleware) => {
+export default (compiler: any, middleware: any) => {
   debug('Enable webpack dev middleware.')
 
-  return async (ctx, next) => {
+  return async (ctx: Context, next: any) => {
     const hasNext = await applyExpressMiddleware(middleware, ctx.req, {
-      end(content) {
+      end(content: any) {
         ctx.body = content
       },
       setHeader() {

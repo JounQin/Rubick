@@ -15,7 +15,7 @@ main
 import { Component, Vue } from 'vue-property-decorator'
 import { Route } from 'vue-router'
 
-import { Next } from 'types'
+import { Next } from 'utils'
 
 import RbInput from 'components/rb-input/RbInput.vue'
 

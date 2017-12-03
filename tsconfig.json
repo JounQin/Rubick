@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "alwaysStrict": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "noImplicitAny": true

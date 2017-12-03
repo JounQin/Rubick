@@ -1,12 +1,17 @@
 <template lang="pug">
-  div {{ msg }}
+div {{ msg }}
 </template>
 <script lang="ts">
-  export default {
-    data() {
-      return {
-        msg: 'Hello, TypeScript with Vue'
-      }
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+export default class Home extends Vue {
+  name = 'home'
+
+  data() {
+    return {
+      msg: 'Hello, TypeScript with Vue',
     }
   }
+}
 </script>

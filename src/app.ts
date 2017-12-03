@@ -1,11 +1,19 @@
 import { AxiosInstance } from 'axios'
 
-import Vue from 'vue'
+import { Component, Vue } from 'vue-property-decorator'
+
+import './plugins'
 
 import App from './views/App.vue'
 
 import createRouter from './router'
 import createStore from './store'
+
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'beforeRouteUpdate',
+])
 
 export default (axios: AxiosInstance) => {
   const router = createRouter()

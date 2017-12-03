@@ -17,6 +17,8 @@ export const globals = {
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
   __DEV__: NODE_ENV === ENV.DEV,
   __PROD__: NODE_ENV === ENV.PROD,
+  NON_INDEX_REGEX: /^(?!.*[/\\](index)\.ts).*\.(ts|vue)$/.toString(),
+  I18N_REGEX: /([\w_-]*[\w]+)\.i18n\.json$/.toString(),
 }
 
 export const paths = (() => {
@@ -53,7 +55,6 @@ export interface Config {
   devTool: Options.Devtool
   publicPath: string
   hashType: 'hash' | 'chunkhash'
-  minimize: boolean
 }
 
 const config = {

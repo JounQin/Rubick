@@ -1,0 +1,58 @@
+@import '~normalize.css';
+@import '~font-awesome/scss/font-awesome.scss';
+
+body {
+  @include font-hei();
+  background-color: $bg-color;
+  font-size: 14px;
+}
+
+a {
+  &,
+  &:hover,
+  &:visited {
+    color: $link-color;
+    text-decoration: none;
+  }
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.pull-left {
+  float: left !important;
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.btn {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: 1px solid;
+  border-radius: 0;
+  outline: 0;
+
+  &.btn-primary {
+    color: $reverse-color;
+    border-color: $primary-color;
+    background-color: $primary-color;
+  }
+
+  &.btn-block {
+    display: block;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}

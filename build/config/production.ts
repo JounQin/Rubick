@@ -6,5 +6,4 @@ export default (config: Config) =>
     serverHost: 'localhost',
     publicPath: '/',
     hashType: 'chunkhash',
-    minimize: true,
   } as Config)

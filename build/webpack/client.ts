@@ -11,7 +11,7 @@ import baseConfig from './base'
 
 const VUE_ENV = 'client'
 
-const { devTool, minimize } = config
+const { devTool } = config
 
 const sourceMap = !!devTool
 
@@ -45,7 +45,7 @@ const clientConfig = merge.smart(baseConfig, {
   ],
 })
 
-if (minimize) {
+if (!devTool) {
   debug(`Enable plugins for ${NODE_ENV} (UglifyJS).`)
 
   clientConfig.plugins.push(

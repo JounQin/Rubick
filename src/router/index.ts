@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from 'views/Home.vue'
-
 Vue.use(VueRouter)
 
 export default () =>
@@ -12,7 +10,18 @@ export default () =>
     routes: [
       {
         path: '/',
-        component: Home,
+        component: () => import('views/Home.vue'),
+      },
+      {
+        path: '/landing',
+        component: () => import('views/landing/Landing.vue'),
+        children: [
+          {
+            name: 'login',
+            path: '/login/:type(account)?',
+            component: () => import('views/landing/Login.vue'),
+          },
+        ],
       },
     ],
   })

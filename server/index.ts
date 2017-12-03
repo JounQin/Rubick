@@ -18,17 +18,18 @@ import config, { globals, paths } from '../build/config'
 
 import router from './router'
 
+const minimize = !config.devTool
 const { __DEV__ } = globals
 
 const debug = _debug('rubick:server')
 
 const getTemplate = (path: string) => {
   const tpl = pug.render(fs.readFileSync(path, 'utf-8'), {
-    pretty: !config.minimize,
+    pretty: minimize,
     polyfill: !__DEV__,
   })
 
-  return config.minimize
+  return minimize
     ? minify(tpl, {
         collapseWhitespace: true,
         minifyJS: true,

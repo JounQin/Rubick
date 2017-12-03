@@ -4,9 +4,40 @@ import * as webpack from 'webpack'
 
 import config, { globals, paths } from '../config'
 
-const { devTool, minimize } = config
+const { devTool, publicPath } = config
 
-const { __PROD__ } = globals
+const { __DEV__, __PROD__ } = globals
+
+const minimize = !devTool
+const sourceMap = !minimize
+
+const SCSS_LOADERS = ExtractTextPlugin.extract({
+  use: [
+    {
+      loader: 'css-loader',
+      options: { minimize, sourceMap },
+    },
+    {
+      loader: 'postcss-loader',
+      options: { sourceMap },
+    },
+    {
+      loader: 'resolve-url-loader',
+      options: { sourceMap },
+    },
+    {
+      loader: 'sass-loader',
+      options: { sourceMap: true },
+    },
+    {
+      loader: 'sass-resources-loader',
+      options: {
+        resources: paths.src('styles/_variables.scss'),
+      },
+    },
+  ],
+  fallback: 'vue-style-loader',
+})
 
 const webpackConfig: webpack.Configuration = {
   resolve: {
@@ -15,6 +46,7 @@ const webpackConfig: webpack.Configuration = {
   },
   output: {
     path: paths.dist(),
+    publicPath,
     filename: `[name].[${__PROD__ ? 'chunkhash' : 'hash'}].js`,
   },
   devtool: devTool,
@@ -25,11 +57,31 @@ const webpackConfig: webpack.Configuration = {
         loader: 'ts-loader',
         options: {
           appendTsSuffixTo: [/\.vue$/],
+          compilerOptions: {
+            module: 'esnext',
+            target: 'es5',
+          },
         },
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
+        options: {
+          loaders: {
+            scss: SCSS_LOADERS,
+          },
+        },
+      },
+      {
+        test: /\.scss$/,
+        use: SCSS_LOADERS,
+      },
+      {
+        test: /\.(eot|svg|ttf|woff2?)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 1024 * 8,
+        },
       },
       {
         test: /\.pug$/,
@@ -51,14 +103,13 @@ const webpackConfig: webpack.Configuration = {
       SERVER_PREFIX: JSON.stringify(config.publicPath),
       INNER_SERVER: JSON.stringify(config.innerServer),
     }),
+    new ExtractTextPlugin({
+      filename: 'app.[chunkhash].css',
+      disable: __DEV__,
+    }),
     ...(__PROD__
-      ? [
-          new webpack.optimize.ModuleConcatenationPlugin(),
-          new ExtractTextPlugin({
-            filename: 'common.[chunkhash].css',
-          }),
-        ]
-      : [new FriendlyErrorsPlugin()]),
+      ? [new webpack.optimize.ModuleConcatenationPlugin()]
+      : [new webpack.NoEmitOnErrorsPlugin(), new FriendlyErrorsPlugin()]),
   ],
 }
 

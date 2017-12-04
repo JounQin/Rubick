@@ -2,9 +2,14 @@
 main
   form(:class="$style.container", @submit.prevent="login")
     div(:class="$style.tips") {{ $t(isAccount ? 'account_login' : 'user_login') }}
-    rb-input(v-model="account" :label="$t('account')")
-    rb-input(v-if="!isAccount" v-model="username", :label="$t('username')")
-    rb-input(v-model="password" :label="$t('password')")
+    rb-input(v-for="type of ['account', 'username', 'password']"
+             v-if="!isAccount || type !== 'username'"
+             :class="{invalid: $v[type].$error}"
+             :label="$t(type)"
+             :key="type"
+             v-model="_self[type]"
+             @input="$v[type].$touch()")
+      template(v-if="$v[type].$error") {{ $t('required') }}
     button.btn.btn-primary.btn-block(type="submit") {{ $t('login') }}
     router-link(:to="{name: 'login', params: {type: isAccount ? null : 'account'}}") {{ $t(isAccount ? 'user_login' : 'account_login') }} »
     router-link.pull-right(v-if="isAccount" to="/password") {{ $t('forget_password') }}
@@ -23,6 +28,17 @@ import RbInput from 'components/rb-input/RbInput.vue'
   components: {
     RbInput,
   },
+  validator: {
+    account: {
+      minLength: 1,
+    },
+    username: {
+      minLength: 1,
+    },
+    password: {
+      minLength: 1,
+    },
+  },
 })
 export default class Login extends Vue {
   name: 'login'
@@ -39,11 +55,24 @@ export default class Login extends Vue {
 
   beforeRouteUpdate(to: Route, from: Route, next: Next) {
     this.isAccount = !!to.params.type
+    this.$v.$reset()
     next()
   }
 
   login() {
-    console.log('xx')
+    const excepted: string[] = []
+
+    if (this.isAccount) {
+      excepted.push('username')
+    }
+
+    this.$v.$touch(...excepted)
+
+    if (this.$v.$error) {
+      return
+    }
+
+    this.$http.post('/login')
   }
 }
 </script>

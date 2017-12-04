@@ -21,6 +21,8 @@ declare const __PROD__: boolean
 declare const __SERVER__: boolean
 declare const NON_INDEX_REGEX: RegExp
 declare const I18N_REGEX: RegExp
+declare const INNER_SERVER: string
+declare const SERVER_PREFIX: string
 
 declare module '*.vue' {
   import Vue from 'vue'

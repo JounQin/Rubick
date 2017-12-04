@@ -1,25 +1,25 @@
 <template lang="pug">
-div(:class="$style.input", @click="active = true; $refs.input.focus()")
+div(:class="$style.input", @click="$refs.input.focus()")
+  input(v-model="model",@focus="active = true",  @blur="active = !!model", ref="input")
   span(:class="[$style.label, {[$style.active]: active}]") {{ label }}
-  input(v-model="model", @blur="active = !!model", ref="input")
+  span(v-if="$slots.default", :class="$style.error")
+    slot
 </template>
 <script lang="ts">
 import { Component, Model, Prop, Vue } from 'vue-property-decorator'
-
-const CHANGE = 'change'
 
 @Component
 export default class RbInput extends Vue {
   @Prop() label: string
 
-  @Model(CHANGE) input: string
+  @Model() input: string
 
   get model() {
     return this.input
   }
 
   set model(model) {
-    this.$emit(CHANGE, model)
+    this.$emit('input', model)
   }
 
   active = !!this.input
@@ -30,6 +30,34 @@ export default class RbInput extends Vue {
   position: relative;
   display: flex;
   margin-bottom: 20px;
+
+  > input {
+    padding: 10px 16px;
+    width: 100%;
+    border: 1px solid $border-color;
+    outline: 0;
+  }
+
+  &:not(:global(.invalid)) {
+    > input:focus {
+      border-color: $focus-color;
+
+      + .label {
+        color: $focus-color;
+      }
+    }
+  }
+
+  &:global(.invalid) {
+    > input {
+      border-color: $invalid-border-color;
+      background-color: $invalid-bg-color;
+
+      + .label {
+        color: $invalid-color;
+      }
+    }
+  }
 
   > .label {
     position: absolute;
@@ -46,11 +74,12 @@ export default class RbInput extends Vue {
     }
   }
 
-  > input {
-    padding: 10px 16px;
-    width: 100%;
-    border: 1px solid $border-color;
-    outline: 0;
+  > .error {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translate3d(0, -50%, 0);
+    color: $invalid-color;
   }
 }
 </style>

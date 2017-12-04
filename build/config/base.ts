@@ -12,6 +12,9 @@ enum ENV {
 
 const NODE_ENV: ENV = (process.env.NODE_ENV as ENV) || ENV.DEV
 
+const serverHost: string = process.env.HOST || 'localhost'
+const serverPort: number = +process.env.PORT || 4000
+
 export const globals = {
   NODE_ENV,
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
@@ -19,6 +22,7 @@ export const globals = {
   __PROD__: NODE_ENV === ENV.PROD,
   NON_INDEX_REGEX: /^(?!.*[/\\](index)\.ts).*\.(ts|vue)$/.toString(),
   I18N_REGEX: /([\w_-]*[\w]+)\.i18n\.json$/.toString(),
+  INNER_SERVER: JSON.stringify(`http://localhost:${serverPort}/`),
 }
 
 export const paths = (() => {
@@ -43,13 +47,9 @@ export const vendors = [
   'vuex',
 ]
 
-const serverHost: string = process.env.HOST || 'localhost'
-const serverPort: number = +process.env.PORT || 4000
-
 export interface Config {
   serverHost: string
   serverPort: number
-  innerServer: string
   quiet: boolean
   stats: Options.Stats
   devTool: Options.Devtool
@@ -60,7 +60,6 @@ export interface Config {
 const config = {
   serverHost,
   serverPort,
-  innerServer: `http://localhost:${serverPort}/`,
   quiet: false,
   stats: {
     colors: true,

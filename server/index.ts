@@ -4,6 +4,7 @@ import * as fs from 'fs'
 import * as _debug from 'debug'
 import { minify } from 'html-minifier'
 import * as Koa from 'koa'
+import * as proxy from 'koa-better-http-proxy'
 import * as compress from 'koa-compress'
 import * as logger from 'koa-logger'
 import * as serve from 'koa-static'
@@ -16,12 +17,12 @@ import * as vuePkg from 'vue/package.json'
 
 import config, { globals, paths } from '../build/config'
 
-import router from './router'
-
 const minimize = !config.devTool
 const { __DEV__ } = globals
 
 const debug = _debug('rubick:server')
+
+const { serverHost, serverPort } = config
 
 const getTemplate = (path: string) => {
   const tpl = pug.render(fs.readFileSync(path, 'utf-8'), {
@@ -39,9 +40,15 @@ const getTemplate = (path: string) => {
 
 const app = new Koa()
 
-app.use(compress()).use(logger())
-
-router(app)
+app
+  .use(compress())
+  .use(logger())
+  .use(
+    proxy(serverHost, {
+      port: serverPort + 1,
+      filter: ctx => ctx.url.startsWith('/api'),
+    }),
+  )
 
 let renderer: BundleRenderer
 let readyPromise: Promise<any>
@@ -91,6 +98,10 @@ if (__DEV__) {
 }
 
 app.use(async (ctx, next) => {
+  if (ctx.status !== 404) {
+    return
+  }
+
   await readyPromise
 
   ctx.set(DEFAULT_HEADERS)
@@ -127,8 +138,6 @@ app.use(async (ctx, next) => {
 
   stream.pipe(res)
 })
-
-const { serverHost, serverPort } = config
 
 app.listen(serverPort, serverHost, () =>
   debug('Server is now running at %s:%s.', serverHost, serverPort),

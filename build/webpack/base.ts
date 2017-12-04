@@ -101,7 +101,6 @@ const webpackConfig: webpack.Configuration = {
     new webpack.DefinePlugin({
       ...globals,
       SERVER_PREFIX: JSON.stringify(config.publicPath),
-      INNER_SERVER: JSON.stringify(config.innerServer),
     }),
     new ExtractTextPlugin({
       filename: 'app.[chunkhash].css',

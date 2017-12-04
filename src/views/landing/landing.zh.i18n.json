@@ -7,5 +7,6 @@
   "password": "密码",
   "login": "登录",
   "forget_password": "忘记密码？",
-  "register_tips": "没有账号？现在注册"
+  "register_tips": "没有账号？现在注册",
+  "required": "必填项"
 }

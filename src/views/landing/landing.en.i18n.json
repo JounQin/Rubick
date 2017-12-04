@@ -7,5 +7,6 @@
   "password": "Password",
   "login": "Login",
   "forget_password": "Forget Password?",
-  "register_tips": "Need an account? Register now"
+  "register_tips": "Need an account? Register now",
+  "required": "required"
 }

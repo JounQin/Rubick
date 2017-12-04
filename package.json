@@ -8,7 +8,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "env-cmd .env env-cmd --fallback .env.local ts-node server",
+    "server": "nodemon --exec \"ts-node server/router\"",
+    "dev": "env-cmd .env env-cmd --fallback .env.local concurrently \"ts-node server\" \"npm run server\"",
     "start": "env-cmd .env ts-node server",
     "build:client": "env-cmd .env webpack --config build/webpack/client.ts --color --progress",
     "build:server": "env-cmd .env webpack --config build/webpack/server.ts --color --progress",
@@ -20,7 +21,11 @@
   "browserslist": ["> 1% in CN"],
   "lint-staged": {
     "*.{json,md}": ["prettier --write", "git add"],
-    "*.ts": ["tslint -t stylish --fix", "git add"]
+    "*.ts": ["tslint -p . -t stylish --fix", "git add"]
+  },
+  "nodemonConfig": {
+    "ext": "ts",
+    "watch": ["server/router"]
   },
   "postcss": {
     "autoprefixer": null
@@ -41,10 +46,12 @@
   "dependencies": {
     "axios": "^0.17.1",
     "koa": "^2.4.1",
+    "koa-better-http-proxy": "^0.2.4",
     "koa-compress": "^2.0.0",
     "koa-logger": "^3.1.0",
     "koa-router": "^7.3.0",
     "koa-static": "^4.0.2",
+    "lodash": "^4.17.4",
     "lru-cache": "^4.1.1",
     "regenerator-runtime": "^0.11.0",
     "vue": "^2.5.9",
@@ -64,6 +71,7 @@
     "@types/koa-logger": "^2.0.3",
     "@types/koa-router": "^7.0.26",
     "@types/koa-static": "^3.0.2",
+    "@types/lodash": "^4.14.86",
     "@types/lru-cache": "^4.1.0",
     "@types/memory-fs": "^0.3.0",
     "@types/node": "^8.0.53",
@@ -75,6 +83,7 @@
     "@types/webpack-node-externals": "^1.6.0",
     "autoprefixer": "^7.1.6",
     "chokidar": "^1.7.0",
+    "concurrently": "^3.5.1",
     "css-loader": "^0.28.7",
     "debug": "^3.1.0",
     "env-cmd": "^7.0.0",
@@ -89,6 +98,7 @@
     "lint-staged": "^6.0.0",
     "memory-fs": "^0.4.1",
     "node-sass": "^4.7.2",
+    "nodemon": "^1.12.1",
     "normalize.css": "^7.0.0",
     "postcss-loader": "^2.0.9",
     "prettier": "^1.8.2",

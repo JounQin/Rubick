@@ -16,6 +16,7 @@ import * as koaPkg from 'koa/package.json'
 import * as vuePkg from 'vue/package.json'
 
 import config, { globals, paths } from '../build/config'
+import startRouter from './router'
 
 const minimize = !config.devTool
 const { __DEV__ } = globals
@@ -40,15 +41,18 @@ const getTemplate = (path: string) => {
 
 const app = new Koa()
 
-app
-  .use(compress())
-  .use(logger())
-  .use(
+app.use(compress()).use(logger())
+
+if (__DEV__) {
+  app.use(
     proxy(serverHost, {
       port: serverPort + 1,
       filter: ctx => ctx.url.startsWith('/api'),
     }),
   )
+} else {
+  startRouter(app)
+}
 
 let renderer: BundleRenderer
 let readyPromise: Promise<any>

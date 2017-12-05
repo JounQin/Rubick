@@ -25,12 +25,12 @@ export default (axios: AxiosInstance) => {
     render: h => h(App),
   })
 
-  const prepare = async () => await store.dispatch('checkLoginStatus')
+  const prepare = async () => await store.dispatch('checkUser')
 
   const ready = () => {
     router.beforeEach((to, from, next) => {
       if (to.meta.auth) {
-        if (!store.state.auth.loginStatus) {
+        if (!store.state.auth.user.namespace) {
           next({
             path: '/login',
             replace: true,

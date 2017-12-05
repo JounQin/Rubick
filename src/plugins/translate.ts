@@ -1,11 +1,8 @@
 import Vue from 'vue'
 
-const context = require.context('../views', true, I18N_REGEX)
+import { LOCALE, Translate } from 'types'
 
-enum LOCALE {
-  EN = 'en',
-  ZH = 'zh',
-}
+const context = require.context('../views', true, I18N_REGEX)
 
 const { EN, ZH } = LOCALE
 
@@ -25,12 +22,6 @@ const translations: {
   Object.assign(matched, module)
   return modules
 }, {})
-
-export interface Translate {
-  (key: string, params: object): string
-  locale?: LOCALE
-  toggleLocale?(): void
-}
 
 const translate: Translate = (
   key: string,

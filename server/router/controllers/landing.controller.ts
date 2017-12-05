@@ -1,14 +1,17 @@
 import { Context } from 'koa'
+import { omit } from 'lodash'
 
 import { Controller, Method, RequestMapping } from '../decorators'
 
 import { HTTP_METHOD, jakiro } from '../commons'
 
+const TOKEN = 'token'
+
 @Controller
 export class LandingController {
   @RequestMapping('/login')
   checkLogin(ctx: Context) {
-    ctx.body = !!ctx.session.user
+    ctx.body = omit(ctx.session.user, TOKEN)
   }
 
   @RequestMapping('/login', Method.POST)
@@ -47,6 +50,9 @@ export class LandingController {
       callbackUrl = data.next
     }
 
-    ctx.body = callbackUrl || '/'
+    ctx.body = {
+      url: callbackUrl || '/',
+      user: omit(result, TOKEN),
+    }
   }
 }

@@ -28,13 +28,13 @@ export default (context: Context) =>
       return reject({ status: 302, url: fullPath })
     }
 
-    ready()
-
     try {
       await prepare()
     } catch (e) {
       return reject(e)
     }
+
+    ready()
 
     router.push(url)
 

@@ -1,32 +1,28 @@
 import { AxiosInstance } from 'axios'
 import { Store } from 'vuex'
 
-enum TYPES {
-  SET_LOGIN_STATUS = 'SET_LOGIN_STATUS',
-}
+import { AuthState, User } from 'types'
 
-interface State {
-  loginStatus: boolean
+enum TYPES {
+  SET_USER = 'SET_USER',
 }
 
 export default (axios: AxiosInstance) => {
-  const state: State = {
-    loginStatus: false,
-  }
+  const state: AuthState = { user: {} as User }
 
   const actions = {
-    async checkLoginStatus({ commit }: Store<State>) {
-      const { data: loginStatus } = await axios.get('/login')
-      commit(TYPES.SET_LOGIN_STATUS, loginStatus)
+    async checkUser({ commit }: Store<AuthState>) {
+      const { data: user } = await axios.get('/login')
+      commit(TYPES.SET_USER, user)
     },
-    setLoginStatus({ commit }: Store<State>, loginStatus: boolean) {
-      commit(TYPES.SET_LOGIN_STATUS, loginStatus)
+    setUser({ commit }: Store<AuthState>, user: User) {
+      commit(TYPES.SET_USER, user)
     },
   }
 
   const mutations = {
-    [TYPES.SET_LOGIN_STATUS](s: State, loginStatus: boolean) {
-      s.loginStatus = loginStatus
+    [TYPES.SET_USER](s: AuthState, user: User) {
+      s.user = user
     },
   }
 

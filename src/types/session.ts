@@ -1,4 +1,5 @@
 export interface User {
-  account: string
+  namespace: string
   username?: string
+  email?: string
 }

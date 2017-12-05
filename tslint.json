@@ -7,6 +7,13 @@
     "member-access": false,
     "no-unused-expression": true,
     "no-unused-variable": true,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-last"
+      }
+    ]
   }
 }

@@ -8,6 +8,7 @@ main
              :label="$t(type)"
              :key="type"
              v-model="_self[type]"
+             :type="type === 'password' ? type : 'text'"
              @input="$v[type].$touch()")
       template(v-if="$v[type].$error") {{ $t('required') }}
     button.btn.btn-primary.btn-block(type="submit") {{ $t('login') }}
@@ -59,7 +60,7 @@ export default class Login extends Vue {
     next()
   }
 
-  login() {
+  async login() {
     const excepted: string[] = []
 
     if (this.isAccount) {
@@ -72,7 +73,17 @@ export default class Login extends Vue {
       return
     }
 
-    this.$http.post('/login')
+    try {
+      const { data: url } = await this.$http.post('/login', {
+        organization: this.account,
+        username: this.username,
+        password: this.password,
+      })
+
+      this.$router.push(url)
+    } catch (e) {
+      console.error(e)
+    }
   }
 }
 </script>

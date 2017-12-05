@@ -1,0 +1,3 @@
+import startRouter from '.'
+
+startRouter()

@@ -1,6 +1,6 @@
 <template lang="pug">
 div(:class="$style.input", @click="$refs.input.focus()")
-  input(v-model="model",@focus="active = true",  @blur="active = !!model", ref="input")
+  input(v-model="model", :type="type", @focus="active = true",  @blur="active = !!model", ref="input")
   span(:class="[$style.label, {[$style.active]: active}]") {{ label }}
   span(v-if="$slots.default", :class="$style.error")
     slot
@@ -11,6 +11,7 @@ import { Component, Model, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class RbInput extends Vue {
   @Prop() label: string
+  @Prop() type: string
 
   @Model() input: string
 

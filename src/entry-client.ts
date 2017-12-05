@@ -3,11 +3,13 @@ import Vue, { ComponentOptions } from 'vue'
 
 import createApp from './app'
 
-const { app, router, store } = createApp(axios)
+const { app, router, store, prepare, ready } = createApp(axios)
 
 const { __INITIAL_STATE__: initialState } = window
 
-const ready = () => {
+const routerReady = () => {
+  ready()
+
   router.beforeResolve(async (to, from, next) => {
     const matched = router.getMatchedComponents(to)
     const prevMatched = router.getMatchedComponents(from)
@@ -50,9 +52,15 @@ if (initialState) {
     delete window.__INITIAL_STATE__
   }
 
-  router.onReady(ready)
+  router.onReady(routerReady)
 } else {
-  ready()
+  ;(async () => {
+    try {
+      await prepare()
+    } finally {
+      routerReady()
+    }
+  })()
 }
 
 if (module.hot) {

@@ -6,6 +6,11 @@ import { HTTP_METHOD, jakiro } from '../commons'
 
 @Controller
 export class LandingController {
+  @RequestMapping('/login')
+  checkLogin(ctx: Context) {
+    ctx.body = !!ctx.session.user
+  }
+
   @RequestMapping('/login', Method.POST)
   async login(ctx: Context) {
     const { request } = ctx
@@ -29,6 +34,7 @@ export class LandingController {
     }
 
     ctx.session.user = result
+
     const { result: profile } = await jakiro({
       url: `/auth/${data.organization || data.username}/profile`,
     })

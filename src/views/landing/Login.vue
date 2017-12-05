@@ -20,6 +20,7 @@ main
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Route } from 'vue-router'
+import { Action } from 'vuex-class'
 
 import { Next } from 'utils'
 
@@ -50,6 +51,8 @@ export default class Login extends Vue {
 
   isAccount = false
 
+  @Action setLoginStatus: (loginStatus: boolean) => void
+
   created() {
     this.isAccount = !!this.$route.params.type
   }
@@ -78,7 +81,10 @@ export default class Login extends Vue {
         organization: this.account,
         username: this.username,
         password: this.password,
+        next: this.$route.query.next,
       })
+
+      this.setLoginStatus(true)
 
       this.$router.push(url)
     } catch (e) {

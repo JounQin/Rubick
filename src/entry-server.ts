@@ -8,7 +8,7 @@ interface Context {
 }
 
 export default (context: Context) =>
-  new Promise((resolve, reject) => {
+  new Promise(async (resolve, reject) => {
     const start: boolean | number = __DEV__ && Date.now()
 
     const { ctx } = context
@@ -19,13 +19,21 @@ export default (context: Context) =>
 
     axios.defaults.headers = ctx.headers
 
-    const { app, router, store } = createApp(axios)
+    const { app, router, store, prepare, ready } = createApp(axios)
 
     const { url } = ctx
     const { fullPath } = router.resolve(url).route
 
     if (fullPath !== url) {
       return reject({ status: 302, url: fullPath })
+    }
+
+    ready()
+
+    try {
+      await prepare()
+    } catch (e) {
+      return reject(e)
     }
 
     router.push(url)
@@ -37,13 +45,19 @@ export default (context: Context) =>
         return reject({ status: 404 })
       }
 
+      const { currentRoute: route } = router
+
+      if (route.fullPath !== url) {
+        return reject({ status: 302, url: route.fullPath })
+      }
+
       await Promise.all(
         matched.map(
           ({ asyncData }: ComponentOptions<Vue>) =>
             asyncData &&
             asyncData({
               store,
-              route: router.currentRoute,
+              route,
             }),
         ),
       )

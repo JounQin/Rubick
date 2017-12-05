@@ -16,8 +16,8 @@ Component.registerHooks([
 ])
 
 export default (axios: AxiosInstance) => {
-  const router = createRouter()
-  const store = createStore()
+  const store = createStore(axios)
+  const router = createRouter(store)
 
   const app = new Vue({
     router,
@@ -25,5 +25,23 @@ export default (axios: AxiosInstance) => {
     render: h => h(App),
   })
 
-  return { app, router, store }
+  const prepare = async () => await store.dispatch('checkLoginStatus')
+
+  const ready = () => {
+    router.beforeEach((to, from, next) => {
+      if (to.meta.auth) {
+        if (!store.state.auth.loginStatus) {
+          next({
+            path: '/login',
+            replace: true,
+          })
+          return
+        }
+      }
+
+      next()
+    })
+  }
+
+  return { app, router, store, prepare, ready }
 }

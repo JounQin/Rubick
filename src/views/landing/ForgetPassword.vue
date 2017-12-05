@@ -5,11 +5,12 @@ main
     rb-input(v-for="type of ['mobileOrEmail', 'captcha']"
              :class="{invalid: $v[type].$error}"
              :label="$t(snakeCase(type))"
+             :captcha="type === 'captcha'"
              :key="type"
              v-model="_self[type]"
              @input="$v[type].$touch()")
       template(v-if="$v[type].$error", slot="error") {{ $t('required') }}
-    button.btn.btn-primary.btn-block(type="submit", :disabled="$v.$invalid") {{ $t('verify_now') }}
+    rb-btn.btn-block(type="submit", :disabled="$v.$invalid") {{ $t('verify_now') }}
   .tips.text-center
     router-link(to="/login") {{ $t('login_tips') }}
 </template>

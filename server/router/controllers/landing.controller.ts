@@ -1,11 +1,24 @@
+import * as CaptchaPng2 from 'captchapng2'
+import * as crypto from 'crypto'
 import { Context } from 'koa'
 import { omit } from 'lodash'
 
 import { Controller, Method, RequestMapping } from '../decorators'
 
-import { HTTP_METHOD, jakiro } from '../commons'
+import {
+  CAPTCHA_SESSION,
+  HTTP_METHOD,
+  VERIFICATION_CODE_COOKIE,
+  jakiro,
+  sendSms,
+  toInt,
+} from '../commons'
 
 const TOKEN = 'token'
+
+const randomCode = () => toInt(Math.random() * 9000 + 1000) + ''
+
+const getImage = (input: string) => new CaptchaPng2(80, 30, input).getBuffer()
 
 @Controller
 export class LandingController {
@@ -54,5 +67,47 @@ export class LandingController {
       url: callbackUrl || '/',
       user: omit(result, TOKEN),
     }
+  }
+
+  @RequestMapping('/captcha')
+  getCaptcha(ctx: Context) {
+    const captcha = randomCode()
+    ctx.session[CAPTCHA_SESSION] = captcha
+    ctx.type = 'image/png'
+    ctx.body = getImage(captcha)
+  }
+
+  @RequestMapping('/sms', Method.POST)
+  async sendSms(ctx: Context) {
+    const captcha = ctx.session[CAPTCHA_SESSION]
+
+    if (captcha !== ctx.request.body.captcha) {
+      ctx.body = {
+        errors: [
+          {
+            code: 'invalid_captcha',
+          },
+        ],
+      }
+      ctx.status = 401
+      return
+    }
+
+    const code = randomCode()
+
+    const { mobile } = ctx.request.body
+
+    await sendSms(mobile, code)
+
+    ctx.cookies.set(
+      VERIFICATION_CODE_COOKIE,
+      crypto
+        .createHash('md5')
+        .update(mobile + code)
+        .digest('hex'),
+      {
+        maxAge: 60 * 60 * 1000,
+      },
+    )
   }
 }

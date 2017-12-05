@@ -23,6 +23,7 @@ export const globals = {
   NON_INDEX_REGEX: /^(?!.*[/\\](index)\.ts).*\.(ts|vue)$/.toString(),
   I18N_REGEX: /([\w-]*[\w]+)\.i18n\.json$/.toString(),
   INNER_SERVER: JSON.stringify(`http://localhost:${serverPort}/`),
+  API_PREFIX: JSON.stringify('/api'),
 }
 
 export const paths = (() => {

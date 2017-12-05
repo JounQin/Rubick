@@ -11,7 +11,7 @@ main
              :type="type === 'password' ? type : 'text'"
              @input="$v[type].$touch()")
       template(v-if="$v[type].$error", slot="error") {{ $t('required') }}
-    button.btn.btn-primary.btn-block(style="margin-bottom: 20px", type="submit") {{ $t('login') }}
+    rb-btn.btn-block(style="margin-bottom: 20px", type="submit") {{ $t('login') }}
     router-link(:to="{ name: 'login', params: {type: isAccount ? null : 'account'} }", replace) {{ $t(isAccount ? 'user_login' : 'account_login') }} »
     router-link.pull-right(v-if="isAccount" to="/forget-password") {{ $t('forget_password') + $t('question_mark') }}
   .tips.text-center

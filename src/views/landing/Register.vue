@@ -5,12 +5,15 @@ main
     rb-input(v-for="type of types"
              :class="{invalid: $v[type].$error}"
              :label="$t(snakeCase(type))"
+             :captcha="captchaType(type)"
+             :captchaDisabled="type === 'verificationCode' && ($v.mobile.$invalid || $v.imageCaptcha.$invalid)"
+             :captchaData="type === 'verificationCode' ? { captcha: imageCaptcha, mobile } : null"
              :key="type"
              v-model="_self[type]"
              :type="type.indexOf('password') !== -1 ? 'password' : 'text'"
              @input="$v[type].$touch()")
       template(v-if="$v[type].$error", slot="error") {{ $t('required') }}
-    button.btn.btn-primary.btn-block(type="submit") {{ $t('register') }}
+    rb-btn.btn-block(type="submit") {{ $t('register') }}
   .tips.text-center
     router-link(to="/login") {{ $t('login_tips') }}
 </template>
@@ -23,6 +26,13 @@ import { Action } from 'vuex-class'
 import { Next, User } from 'types'
 
 import RbInput from 'components/rb-input/RbInput.vue'
+
+const CaptchaType: {
+  [key: string]: string
+} = {
+  imageCaptcha: 'image',
+  verificationCode: 'code',
+}
 
 @Component({
   components: {
@@ -44,7 +54,7 @@ import RbInput from 'components/rb-input/RbInput.vue'
     mobile: {
       mobile: true,
     },
-    captcha: {
+    imageCaptcha: {
       length: 4,
     },
     verificationCode: {
@@ -85,7 +95,7 @@ export default class Login extends Vue {
     'password',
     'confirmPassword',
     'mobile',
-    'captcha',
+    'imageCaptcha',
     'verificationCode',
     'realyname',
     'company',
@@ -102,7 +112,7 @@ export default class Login extends Vue {
   password: string = null
   confirmPassword: string = null
   mobile: string = null
-  captcha: string = null
+  imageCaptcha: string = null
   verificationCode: string = null
   realyname: string = null
   company: string = null
@@ -114,6 +124,10 @@ export default class Login extends Vue {
   informedWay: string = null
 
   snakeCase = snakeCase
+
+  captchaType(type: string) {
+    return CaptchaType[type]
+  }
 
   register() {}
 }

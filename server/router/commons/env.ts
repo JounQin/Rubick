@@ -3,6 +3,14 @@ const { env } = process
 export enum ENV {
   APP_KEYS = 'APP_KEYS',
   API_SERVER_URL = 'API_SERVER_URL',
+  CCP_ACCOUNTSID = 'CCP_ACCOUNTSID',
+  CCP_ACCOUNTTOKEN = 'CCP_ACCOUNTTOKEN',
+  CCP_APPID = 'CCP_APPID',
+  CCP_TEMPLATEID = 'CCP_TEMPLATEID',
+  CCP_SERVERIP = 'CCP_SERVERIP',
+  CCP_SERVERPORT = 'CCP_SERVERPORT',
+  CCP_SOFTVERSION = 'CCP_SOFTVERSION',
+  SMS_BASE_URL = 'SMS_BASE_URL',
 }
 
 export enum MODE {
@@ -18,24 +26,24 @@ interface KeyValue {
 
 type VALUE = string | string[] | KeyValue | KeyValue[]
 
-function getEnv(key: string, defaultValue?: string): string
+function getEnv(key: ENV, defaultValue?: string): string
 function getEnv(
-  key: string,
+  key: ENV,
   mode?: MODE.STR_ARR,
   defaultValue?: string[],
 ): string[]
 function getEnv(
-  key: string,
+  key: ENV,
   mode?: MODE.KEY_VALUE,
   defaultValue?: KeyValue,
 ): KeyValue
 function getEnv(
-  key: string,
+  key: ENV,
   mode?: MODE.KEY_VALUE_ARR,
   defaultValue?: KeyValue[],
 ): KeyValue[]
 function getEnv(
-  key: string,
+  key: ENV,
   modeOrDefaultValue: string | MODE = '',
   defaultValue?: VALUE,
 ): VALUE {

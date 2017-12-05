@@ -8,8 +8,9 @@
   "email": "邮箱",
   "confirm_password": "确认密码",
   "mobile": "手机号",
-  "captcha": "图形验证码",
+  "image_captcha": "图形验证码",
   "verification_code": "手机验证码",
+  "send_verification_code": "获取验证码",
   "realyname": "真实姓名",
   "company": "公司名称",
   "city": "所在城市",
@@ -21,5 +22,6 @@
   "register": "注册",
   "login_tips": "已有账号？现在登录",
   "mobile_or_email": "手机号或邮箱",
+  "captcha": "验证码",
   "verify_now": "立即验证"
 }

@@ -29,6 +29,7 @@ declare global {
   const I18N_REGEX: RegExp
   const INNER_SERVER: string
   const SERVER_PREFIX: string
+  const API_PREFIX: string
 }
 
 declare module 'vue/types/vue' {

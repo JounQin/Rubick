@@ -58,10 +58,11 @@ a {
 }
 
 .btn {
-  padding: 5px 10px;
+  position: relative;
+  padding: 6px 10px;
   font-size: 12px;
   border: 1px solid;
-  border-radius: 0;
+  border-radius: 3px;
   outline: 0;
 
   &.btn-primary {
@@ -73,6 +74,7 @@ a {
     &[disabled] {
       border-color: $primary-disabled-color;
       background-color: $primary-disabled-color;
+      cursor: not-allowed;
     }
   }
 

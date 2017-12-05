@@ -8,8 +8,9 @@
   "email": "Email",
   "confirm_password": "Confirm Password",
   "mobile": "Mobile",
-  "captcha": "Captcha",
+  "image_captcha": "Captcha",
   "verification_code": "Verification Code",
+  "send_verification_code": "Send",
   "realyname": "Your Full Name",
   "company": "Company Name",
   "city": "City",
@@ -21,5 +22,6 @@
   "register": "Register",
   "login_tips": "Already have an account? Login now",
   "mobile_or_email": "Mobile or Email",
+  "captcha": "Captcha",
   "verify_now": "Verify Now"
 }

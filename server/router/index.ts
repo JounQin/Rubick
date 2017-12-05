@@ -7,7 +7,7 @@ import * as session from 'koa-session'
 
 import config from '../../build/config'
 
-import { ENV, MODE, getEnv } from './commons'
+import { API_PREFIX, ENV, MODE, getEnv } from './commons'
 import { injectAllRoutes } from './decorators'
 
 import './controllers'
@@ -15,7 +15,7 @@ import './controllers'
 const debug = _debug('rubick:server')
 
 const router = new KoaRouter({
-  prefix: '/api',
+  prefix: API_PREFIX,
 })
 
 injectAllRoutes(router)

@@ -1,7 +1,7 @@
 <template lang="pug">
 main
-  form(:class="$style.container", @submit.prevent="login")
-    div(:class="$style.tips") {{ $t(isAccount ? 'account_login' : 'user_login') }}
+  form(@submit.prevent="login")
+    div {{ $t(isAccount ? 'account_login' : 'user_login') }}
     rb-input(v-for="type of ['account', 'username', 'password']"
              v-if="!isAccount || type !== 'username'"
              :class="{invalid: $v[type].$error}"
@@ -11,10 +11,10 @@ main
              :type="type === 'password' ? type : 'text'"
              @input="$v[type].$touch()")
       template(v-if="$v[type].$error", slot="error") {{ $t('required') }}
-    button.btn.btn-primary.btn-block(type="submit") {{ $t('login') }}
-    router-link(:to="{name: 'login', params: {type: isAccount ? null : 'account'}}") {{ $t(isAccount ? 'user_login' : 'account_login') }} »
+    button.btn.btn-primary.btn-block(style="margin-bottom: 20px", type="submit") {{ $t('login') }}
+    router-link(:to="{ name: 'login', params: {type: isAccount ? null : 'account'} }", replace) {{ $t(isAccount ? 'user_login' : 'account_login') }} »
     router-link.pull-right(v-if="isAccount" to="/forget-password") {{ $t('forget_password') + $t('question_mark') }}
-  .text-center(:class="$style.register")
+  .tips.text-center
     router-link(to="/register") {{ $t('register_tips') }}
 </template>
 <script lang="ts">
@@ -93,26 +93,3 @@ export default class Login extends Vue {
   }
 }
 </script>
-<style lang="scss" module>
-.container {
-  padding: 16px 32px;
-  width: 360px;
-  background-color: $card-bg-color;
-  margin-bottom: 20px;
-
-  button[type='submit'] {
-    margin-bottom: 20px;
-  }
-}
-
-.tips {
-  margin-bottom: 16px;
-  font-size: 24px;
-  text-align: center;
-}
-
-.register > a {
-  color: $link-desc-color;
-  font-size: 18px;
-}
-</style>

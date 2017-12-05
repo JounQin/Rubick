@@ -18,11 +18,39 @@ $img-height: 72px;
   padding: $spacing;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
   color: #494949;
 
   header {
     height: $img-height;
     margin-bottom: $spacing;
+  }
+
+  main {
+    >  {
+      form {
+        padding: 16px 32px;
+        background-color: $card-bg-color;
+        width: 360px;
+        max-width: 100vw;
+        margin-bottom: 20px;
+
+        &:global(.wider) {
+          width: 640px;
+        }
+
+        > :first-child {
+          margin-bottom: 16px;
+          font-size: 24px;
+          text-align: center;
+        }
+      }
+
+      :global(.tips) > a {
+        color: $link-desc-color;
+        font-size: 18px;
+      }
+    }
   }
 }
 

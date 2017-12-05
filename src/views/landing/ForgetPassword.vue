@@ -1,7 +1,7 @@
 <template lang="pug">
 main
-  form(:class="$style.container", @submit.prevent="login")
-    div(:class="$style.tips") {{ $t('forget_password') }}
+  form(@submit.prevent="login")
+    div {{ $t('forget_password') }}
     rb-input(v-for="type of ['mobileOrEmail', 'captcha']"
              :class="{invalid: $v[type].$error}"
              :label="$t(snakeCase(type))"
@@ -10,7 +10,7 @@ main
              @input="$v[type].$touch()")
       template(v-if="$v[type].$error", slot="error") {{ $t('required') }}
     button.btn.btn-primary.btn-block(type="submit", :disabled="$v.$invalid") {{ $t('verify_now') }}
-  .text-center(:class="$style.register")
+  .tips.text-center
     router-link(to="/login") {{ $t('login_tips') }}
 </template>
 <script lang="ts">
@@ -45,26 +45,3 @@ export default class Login extends Vue {
   snakeCase = snakeCase
 }
 </script>
-<style lang="scss" module>
-.container {
-  padding: 16px 32px;
-  width: 360px;
-  background-color: $card-bg-color;
-  margin-bottom: 20px;
-
-  button[type='submit'] {
-    margin-bottom: 20px;
-  }
-}
-
-.tips {
-  margin-bottom: 16px;
-  font-size: 24px;
-  text-align: center;
-}
-
-.register > a {
-  color: $link-desc-color;
-  font-size: 18px;
-}
-</style>

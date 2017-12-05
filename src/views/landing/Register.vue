@@ -1,7 +1,7 @@
 <template lang="pug">
 main
-  form(:class="$style.container", @submit.prevent="register")
-    div(:class="$style.tips") {{ $t('enterprise_registration') }}
+  form.wider(@submit.prevent="register")
+    div {{ $t('enterprise_registration') }}
     rb-input(v-for="type of types"
              :class="{invalid: $v[type].$error}"
              :label="$t(snakeCase(type))"
@@ -11,7 +11,7 @@ main
              @input="$v[type].$touch()")
       template(v-if="$v[type].$error", slot="error") {{ $t('required') }}
     button.btn.btn-primary.btn-block(type="submit") {{ $t('register') }}
-  .text-center(:class="$style.login")
+  .tips.text-center
     router-link(to="/login") {{ $t('login_tips') }}
 </template>
 <script lang="ts">
@@ -118,27 +118,3 @@ export default class Login extends Vue {
   register() {}
 }
 </script>
-<style lang="scss" module>
-.container {
-  padding: 16px 32px;
-  width: 640px;
-  max-width: 100vw;
-  background-color: $card-bg-color;
-  margin-bottom: 20px;
-
-  button[type='submit'] {
-    margin-bottom: 20px;
-  }
-}
-
-.tips {
-  margin-bottom: 16px;
-  font-size: 24px;
-  text-align: center;
-}
-
-.login > a {
-  color: $link-desc-color;
-  font-size: 18px;
-}
-</style>

@@ -10,10 +10,10 @@ main
              v-model="_self[type]"
              :type="type === 'password' ? type : 'text'"
              @input="$v[type].$touch()")
-      template(v-if="$v[type].$error") {{ $t('required') }}
+      template(v-if="$v[type].$error", slot="error") {{ $t('required') }}
     button.btn.btn-primary.btn-block(type="submit") {{ $t('login') }}
     router-link(:to="{name: 'login', params: {type: isAccount ? null : 'account'}}") {{ $t(isAccount ? 'user_login' : 'account_login') }} »
-    router-link.pull-right(v-if="isAccount" to="/password") {{ $t('forget_password') }}
+    router-link.pull-right(v-if="isAccount" to="/forget-password") {{ $t('forget_password') + $t('question_mark') }}
   .text-center(:class="$style.register")
     router-link(to="/register") {{ $t('register_tips') }}
 </template>

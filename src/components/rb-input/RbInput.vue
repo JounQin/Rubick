@@ -2,8 +2,8 @@
 div(:class="$style.input", @click="$refs.input.focus()")
   input(v-model="model", :type="type", @focus="active = true",  @blur="active = !!model", ref="input")
   span(:class="[$style.label, {[$style.active]: active}]") {{ label }}
-  span(v-if="$slots.default", :class="$style.error")
-    slot
+  span(v-if="$slots.error", :class="$style.error")
+    slot(name="error")
 </template>
 <script lang="ts">
 import { Component, Model, Prop, Vue } from 'vue-property-decorator'

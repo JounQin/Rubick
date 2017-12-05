@@ -25,6 +25,16 @@ export default (store: Store<any>) => {
             path: '/login/:type(account)?',
             component: () => import('views/landing/Login.vue'),
           },
+          {
+            name: 'register',
+            path: '/register',
+            component: () => import('views/landing/Register.vue'),
+          },
+          {
+            name: 'forget-password',
+            path: '/forget-password',
+            component: () => import('views/landing/ForgetPassword.vue'),
+          },
         ],
       },
     ],

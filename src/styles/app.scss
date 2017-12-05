@@ -1,10 +1,31 @@
 @import '~normalize.css';
 @import '~font-awesome/scss/font-awesome.scss';
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
 body {
   @include font-hei();
   background-color: $bg-color;
   font-size: 14px;
+  overflow-y: auto;
+}
+
+#app {
+  display: flex;
+  min-height: 100%;
+
+  > * {
+    flex: 1;
+  }
 }
 
 a {
@@ -47,6 +68,12 @@ a {
     color: $reverse-color;
     border-color: $primary-color;
     background-color: $primary-color;
+
+    &.disabled,
+    &[disabled] {
+      border-color: $primary-disabled-color;
+      background-color: $primary-disabled-color;
+    }
   }
 
   &.btn-block {

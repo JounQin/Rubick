@@ -1,12 +1,12 @@
 <template lang="pug">
 div(:class="$style.landing")
+  div(:class="$style.locale", @click="$t.toggleLocale")
+        i.fa.fa-globe
+        | {{ $t('locale') }}
   header
     router-link(to="/")
       img(src="~assets/logo-large.svg")
-    div(:class="$style.locale", @click="$t.toggleLocale")
-      i.fa.fa-globe
-      | {{ $t('locale') }}
-  router-view(:class="$style.main")
+  router-view
 </template>
 <style lang="scss" module>
 $spacing: 30px;
@@ -16,30 +16,27 @@ $img-height: 72px;
   display: flex;
   flex-direction: column;
   padding: $spacing;
+  align-items: center;
+  justify-content: center;
   color: #494949;
 
   header {
-    position: relative;
     height: $img-height;
     margin-bottom: $spacing;
-    text-align: center;
   }
 }
 
 .locale {
   position: absolute;
-  top: 50%;
-  right: 0;
+  top: $spacing + $img-height / 2;
+  right: $spacing + $img-height / 2;
   transform: translate3d(0, -50%, 0);
   color: $text-desc-color;
   cursor: pointer;
+  font-size: 18px;
 
   :global(.fa) {
     margin-right: 10px;
   }
-}
-
-.main {
-  align-self: center;
 }
 </style>

@@ -69,6 +69,11 @@ export default {
         model => excepted.includes(model) || this.$v[model].$reset(),
       )
 
+    Object.defineProperty(this.$v, '$invalid', {
+      configurable: __DEV__,
+      get: () => models.some(model => this.$v[model].$invalid),
+    })
+
     Object.defineProperty(this.$v, '$error', {
       configurable: __DEV__,
       get: () => models.some(model => this.$v[model].$error),
@@ -101,6 +106,8 @@ export default {
           applyRule.call(this, model, rule)
         },
       })
+
+      applyRule.call(this, model, rule)
 
       Vue.nextTick(() => {
         this.$watch(model, () => {

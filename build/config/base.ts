@@ -21,7 +21,7 @@ export const globals = {
   __DEV__: NODE_ENV === ENV.DEV,
   __PROD__: NODE_ENV === ENV.PROD,
   NON_INDEX_REGEX: /^(?!.*[/\\](index)\.ts).*\.(ts|vue)$/.toString(),
-  I18N_REGEX: /([\w_-]*[\w]+)\.i18n\.json$/.toString(),
+  I18N_REGEX: /([\w-]*[\w]+)\.i18n\.json$/.toString(),
   INNER_SERVER: JSON.stringify(`http://localhost:${serverPort}/`),
 }
 

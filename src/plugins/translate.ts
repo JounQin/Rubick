@@ -29,7 +29,9 @@ const translate: Translate = (
 ) => {
   const value = translations[translate.locale][key]
   return (
-    value && value.replace(/{([^{}]+)}/g, (matched, $0) => params[$0.trim()])
+    (value &&
+      value.replace(/{([^{}]+)}/g, (matched, $0) => params[$0.trim()])) ||
+    key
   )
 }
 

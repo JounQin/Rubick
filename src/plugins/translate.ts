@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import { LOCALE, Translate } from 'types'
+import { LOCALE, StrObj, Translate } from 'types'
 
 const context = require.context('../views', true, I18N_REGEX)
 
@@ -23,10 +23,7 @@ const translations: {
   return modules
 }, {})
 
-const translate: Translate = (
-  key: string,
-  params?: { [key: string]: string },
-) => {
+const translate: Translate = (key: string, params?: StrObj) => {
   const value = translations[translate.locale][key]
   return (
     (value &&
@@ -41,4 +38,4 @@ translate.toggleLocale = () => {
 
 Vue.util.defineReactive(translate, 'locale', ZH)
 
-Vue.prototype.$t = translate
+Vue.translate = Vue.prototype.$t = translate

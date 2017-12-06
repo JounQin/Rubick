@@ -40,6 +40,7 @@ declare module 'vue/types/vue' {
   }
 
   interface VueConstructor {
+    translate: Translate
     util: {
       defineReactive: (obj: object, key: string, val: any) => void
       warn: (msg: string) => void

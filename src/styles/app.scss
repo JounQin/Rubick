@@ -1,6 +1,8 @@
 @import '~normalize.css';
 @import '~font-awesome/scss/font-awesome.scss';
 
+@import 'transitions';
+
 *,
 *:before,
 *:after {
@@ -34,6 +36,17 @@ a {
   &:visited {
     color: $link-color;
     text-decoration: none;
+  }
+}
+
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 10px;
+
+  &.list-unstyled {
+    list-style: none;
+    padding-left: 0;
   }
 }
 

@@ -1,4 +1,4 @@
-<<template lang="pug">
+<template lang="pug">
 img(v-if="type === 'image'", :src="src", @click.stop="getCaptcha")
 rb-btn(v-else-if="type === 'code'"
        :disabled="disabled || !!seconds"

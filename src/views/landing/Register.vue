@@ -5,15 +5,18 @@ main
     rb-input(v-for="type of types"
              :class="{invalid: $v[type].$error}"
              :label="$t(snakeCase(type))"
-             :captcha="captchaType(type)"
+             :captcha="Captchas[type]"
              :captchaDisabled="type === 'verificationCode' && ($v.mobile.$invalid || $v.imageCaptcha.$invalid)"
              :captchaData="type === 'verificationCode' ? { captcha: imageCaptcha, mobile } : null"
+             :selections="Selections[type]"
+             displayField="display",
+             valueField="value"
              :key="type"
              v-model="_self[type]"
              :type="type.indexOf('password') !== -1 ? 'password' : 'text'"
              @input="$v[type].$touch()")
       template(v-if="$v[type].$error", slot="error") {{ $t('required') }}
-    rb-btn.btn-block(type="submit") {{ $t('register') }}
+    rb-btn.btn-block(type="submit", :disabled="$v.$invalid") {{ $t('register') }}
   .tips.text-center
     router-link(to="/login") {{ $t('login_tips') }}
 </template>
@@ -27,11 +30,56 @@ import { Next, User } from 'types'
 
 import RbInput from 'components/rb-input/RbInput.vue'
 
-const CaptchaType: {
+const Captchas: {
   [key: string]: string
 } = {
   imageCaptcha: 'image',
   verificationCode: 'code',
+}
+
+const SelectionsType = {
+  industry: [
+    'education',
+    'e-commerce',
+    'mobile-medical',
+    'entertainment',
+    'locale',
+    'social-network',
+    'estate-service',
+    'ads-marketing',
+    'mobile-internet',
+    'travel',
+    'game',
+    'tool-software',
+    'internet-finance',
+    'enterprise-service',
+    'others',
+  ],
+  applyingServices: [
+    'cloud-strategy-consultancy',
+    'cloud-solution-architect',
+    'application-migrating-deployment',
+    'support-operational-optimization',
+    'professional-training',
+  ],
+  informedWay: [
+    'social-site',
+    'offline-activity',
+    'media-reports',
+    'forums',
+    'search-engine',
+    'recommended',
+    'others',
+  ],
+}
+
+const Selections: { [key: string]: { display: string; value: string }[] } = {}
+
+for (let [key, values] of Object.entries(SelectionsType)) {
+  Selections[key] = values.map(value => ({
+    display: Vue.translate(value),
+    value,
+  }))
 }
 
 @Component({
@@ -125,9 +173,9 @@ export default class Login extends Vue {
 
   snakeCase = snakeCase
 
-  captchaType(type: string) {
-    return CaptchaType[type]
-  }
+  Captchas = Captchas
+
+  Selections = Selections
 
   register() {}
 }

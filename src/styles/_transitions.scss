@@ -1,0 +1,10 @@
+.scale-y-enter-active,
+.scale-y-leave-active {
+  transform-origin: top;
+  transition: transform 0.3s;
+}
+
+.scale-y-enter,
+.scale-y-leave-to {
+  transform: scaleY(0);
+}

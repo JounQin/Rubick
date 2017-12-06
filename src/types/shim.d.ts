@@ -37,6 +37,7 @@ declare module 'vue/types/vue' {
     $t: Translate
     $v: any
     $http: AxiosStatic
+    $util: any
   }
 
   interface VueConstructor {

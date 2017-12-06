@@ -11,6 +11,7 @@ main
              :selections="Selections[type]"
              displayField="display",
              valueField="value"
+             :maxNum="type === 'applyingServices' ? -1 : 1"
              :key="type"
              v-model="_self[type]"
              :type="type.indexOf('password') !== -1 ? 'password' : 'text'"
@@ -22,7 +23,7 @@ main
 </template>
 <script lang="ts">
 import { snakeCase } from 'lodash'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Route } from 'vue-router'
 import { Action } from 'vuex-class'
 
@@ -55,6 +56,7 @@ const SelectionsType = {
     'enterprise-service',
     'others',
   ],
+  trailMode: ['professional', 'enterprise', 'data-center'],
   applyingServices: [
     'cloud-strategy-consultancy',
     'cloud-solution-architect',
@@ -71,15 +73,6 @@ const SelectionsType = {
     'recommended',
     'others',
   ],
-}
-
-const Selections: { [key: string]: { display: string; value: string }[] } = {}
-
-for (let [key, values] of Object.entries(SelectionsType)) {
-  Selections[key] = values.map(value => ({
-    display: Vue.translate(value),
-    value,
-  }))
 }
 
 @Component({
@@ -167,7 +160,7 @@ export default class Login extends Vue {
   city: string = null
   industry: string = null
   position: string = null
-  trailMode: string = null
+  trailMode: string[] = null
   applyingServices: string[] = null
   informedWay: string = null
 
@@ -175,7 +168,17 @@ export default class Login extends Vue {
 
   Captchas = Captchas
 
-  Selections = Selections
+  Selections: { [key: string]: { display: string; value: string }[] } = {}
+
+  @Watch('$t.locale', { immediate: true })
+  translate() {
+    for (let [key, values] of Object.entries(SelectionsType)) {
+      this.Selections[key] = values.map(value => ({
+        display: Vue.translate(snakeCase(value)),
+        value,
+      }))
+    }
+  }
 
   register() {}
 }

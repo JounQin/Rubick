@@ -11,7 +11,7 @@ main
              :type="type === 'password' ? type : 'text'"
              @input="$v[type].$touch()")
       template(v-if="$v[type].$error", slot="error") {{ $t('required') }}
-    rb-btn.btn-block(style="margin-bottom: 20px", type="submit") {{ $t('login') }}
+    rb-btn.btn-block(style="margin-bottom: 20px", type="submit", :loading="submitting") {{ $t('login') }}
     router-link(:to="{ name: 'login', params: {type: isAccount ? null : 'account'} }", replace) {{ $t(isAccount ? 'user_login' : 'account_login') }} »
     router-link.pull-right(v-if="isAccount" to="/forget-password") {{ $t('forget_password') + $t('question_mark') }}
   .tips.text-center
@@ -50,6 +50,7 @@ export default class Login extends Vue {
   password: string = null
 
   isAccount = false
+  submitting = false
 
   @Action setUser: (user: User) => void
 
@@ -76,6 +77,8 @@ export default class Login extends Vue {
       return
     }
 
+    this.submitting = true
+
     try {
       const { data: { url, user } } = await this.$http.post('/login', {
         organization: this.account,
@@ -89,6 +92,8 @@ export default class Login extends Vue {
       this.$router.push(url)
     } catch (e) {
       console.error(e)
+    } finally {
+      this.submitting = false
     }
   }
 }

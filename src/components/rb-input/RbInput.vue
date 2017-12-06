@@ -1,14 +1,20 @@
 <template lang="pug">
-div(:class="[$style.input, {[$style.active]: active}]", @click="toggleActive")
-  input(v-model="model"
+div(:class="[$style.input, { [$style.active]: active, [$style.focus]: focus }]"
+    @click="toggleActive",
+    @focus="active = focus = true"
+    @blur="blur"
+    tabIndex="1")
+  input(v-if="maxNum === 1",
+        v-model="model"
         :type="type"
         :readonly="selections"
-        @focus="active = true"
-        @blur="active = !!model; selectionsActive = false"
-        ref="input")
+        @blur="blur")
+  ul.list-unstyled(v-if="maxNum !== 1", :class="$style.selected")
+    li(v-for="(value, index) of selected", @click.stop="") {{ display(value) }}
+      i.fa.fa-remove(@click.stop="removeSelected(value, index)")
   transition(name="scale-y")
-    ul.list-unstyled(v-if="selections", v-show="selectionsActive", :class="$style.selections")
-      li(v-for="selection of selections", @click.stop="toggleSelection(selection)") {{ displayField ? selection[displayField] : selection }}
+    ul.list-unstyled(v-if="selectOptions", v-show="selectionsActive", :class="$style.selections")
+      li(v-for="selection of selectOptions", @click.stop="toggleSelection(selection)") {{ displayField ? selection[displayField] : selection }}
   span(:class="[$style.label, {[$style.active]: active}]") {{ label }}
   div(:class="$style.right")
     span(v-if="$slots.error", :class="$style.error")
@@ -24,6 +30,8 @@ import { BasicObj, Input } from 'types'
 import RbCaptcha from './RbCaptcha.vue'
 
 type Selection = BasicObj | Input
+
+const INPUT = 'input'
 
 @Component({
   components: {
@@ -41,33 +49,26 @@ export default class RbInput extends Vue {
   @Prop() selections: Selection[]
   @Prop() displayField: string
   @Prop() valueField: string
+  @Prop({ default: 1 })
+  maxNum: number
 
-  @Model('input') _input: string
-  @Prop() input: Input
+  selectOptions: Selection[] = this.selections ? [...this.selections] : null
+
+  @Model(INPUT, {
+    type: [String, Number, Array],
+  })
+  input: Input | Input[]
 
   get model() {
-    const { displayField, _input, selections, valueField } = this
-
-    if (!selections) {
-      return _input
-    }
-
-    const selection = selections.find(
-      selection =>
-        (valueField ? (selection as BasicObj)[valueField] : selection) ===
-        _input,
-    )
-
-    return selection && displayField
-      ? (selection as BasicObj)[displayField]
-      : selection
+    const { input } = this
+    return this.selections ? this.display(input as Input) : input
   }
 
   set model(model) {
     const { displayField, selections, valueField } = this
 
     if (!selections) {
-      this.$emit('input', model)
+      this.$emit(INPUT, model)
       return
     }
 
@@ -78,29 +79,96 @@ export default class RbInput extends Vue {
     )
 
     this.$emit(
-      'input',
+      INPUT,
       selection && valueField ? (selection as BasicObj)[valueField] : selection,
     )
   }
 
-  active = !!this.input
+  active = !!(Array.isArray(this.input) ? this.input.length : this.input)
+  focus = false
   selectionsActive = false
+  selected: string[] = []
+
+  get shouldActive() {
+    return !!(this.maxNum === 1 ? this.model : this.selected.length)
+  }
+
+  display(value: Input) {
+    const { displayField, valueField } = this
+
+    const selection = this.selections.find(
+      selection =>
+        (valueField ? (selection as BasicObj)[valueField] : selection) ===
+        value,
+    )
+
+    return selection && displayField
+      ? (selection as BasicObj)[displayField]
+      : selection
+  }
 
   toggleActive() {
-    ;(this.$refs.input as HTMLInputElement).focus()
-
     if (this.selections) {
-      this.active =
-        (this.selectionsActive = !this.selectionsActive) || !!this.model
+      this.focus = this.selectionsActive = !this.selectionsActive
+      this.active = this.focus || this.shouldActive
     }
   }
 
+  blur() {
+    this.focus = this.selectionsActive = false
+    this.active = this.shouldActive
+  }
+
   toggleSelection(selection: Selection) {
-    this.selectionsActive = false
-    this.model = this.valueField
+    const value = this.valueField
       ? (selection as BasicObj)[this.valueField]
       : selection as string
-    this.$nextTick(() => (this.active = !!this.model))
+
+    const { maxNum, selected, selectOptions, valueField } = this
+
+    let blur
+
+    if (maxNum === 1) {
+      this.model = value
+      this.selectionsActive = false
+    } else if (maxNum === -1 || this.selected.length < this.maxNum) {
+      const index = selectOptions.findIndex(
+        selection =>
+          (valueField ? (selection as BasicObj)[valueField] : selection) ===
+          value,
+      )
+
+      if (index !== -1) {
+        selectOptions.splice(index, 1)
+        selected.push(value)
+
+        this.$emit(INPUT, [...selected])
+
+        blur = maxNum !== -1 && this.selected.length >= this.maxNum
+      }
+    } else {
+      blur = true
+    }
+
+    if (blur) {
+      this.focus = this.selectionsActive = false
+    }
+
+    this.$nextTick(() => (this.active = true))
+  }
+
+  removeSelected(value: string, index: number) {
+    this.selected.splice(index, 1)
+
+    const { valueField } = this
+
+    this.selectOptions.push(
+      this.selections.find(
+        selection =>
+          (valueField ? (selection as BasicObj)[valueField] : selection) ===
+          value,
+      ),
+    )
   }
 }
 </script>
@@ -111,6 +179,7 @@ export default class RbInput extends Vue {
   margin-bottom: 20px;
   border: 1px solid $border-color;
   padding: 0 16px;
+  outline: 0;
 
   > input {
     padding: 10px 0;
@@ -121,7 +190,7 @@ export default class RbInput extends Vue {
   }
 
   &:not(:global(.invalid)) {
-    &.active {
+    &.focus {
       border-color: $focus-color;
 
       .label {
@@ -189,9 +258,40 @@ export default class RbInput extends Vue {
     }
   }
 
+  .selected {
+    flex: 1;
+    min-height: 36px;
+    margin-bottom: 0;
+    padding-top: 6px;
+
+    > li {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 3px;
+      background-color: $btn-tip-bg-color;
+      box-shadow: inset 0 0 0 1px rgba(34, 36, 38, 0.15);
+      cursor: pointer;
+      align-items: center;
+      margin-bottom: 6px;
+      margin-right: 5px;
+
+      > i {
+        margin-left: 5px;
+        padding: 2px;
+        font-size: 12px;
+        opacity: 0.5;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
   .right {
     display: flex;
     align-items: center;
+    padding-left: 10px;
   }
 
   .error {

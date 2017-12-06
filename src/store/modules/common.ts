@@ -1,27 +1,27 @@
 import { AxiosInstance } from 'axios'
 import { Store } from 'vuex'
 
-import { AuthState, User } from 'types'
+import { CommonState, User } from 'types'
 
 enum TYPES {
   SET_USER = 'SET_USER',
 }
 
 export default (axios: AxiosInstance) => {
-  const state: AuthState = { user: {} as User }
+  const state: CommonState = { user: {} as User }
 
   const actions = {
-    async checkUser({ commit }: Store<AuthState>) {
-      const { data: user } = await axios.get('/login')
+    async commonCheck({ commit }: Store<CommonState>) {
+      const { data: { user } } = await axios.get('/common')
       commit(TYPES.SET_USER, user)
     },
-    setUser({ commit }: Store<AuthState>, user: User) {
+    setUser({ commit }: Store<CommonState>, user: User) {
       commit(TYPES.SET_USER, user)
     },
   }
 
   const mutations = {
-    [TYPES.SET_USER](s: AuthState, user: User) {
+    [TYPES.SET_USER](s: CommonState, user: User) {
       s.user = user
     },
   }

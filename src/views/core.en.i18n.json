@@ -4,5 +4,7 @@
   "username": "Username",
   "password": "Password",
   "login": "Login",
-  "question_mark": "?"
+  "question_mark": "?",
+  "colon": ":",
+  "note": "Note"
 }

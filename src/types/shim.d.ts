@@ -37,11 +37,12 @@ declare module 'vue/types/vue' {
     $t: Translate
     $v: any
     $http: AxiosStatic
-    $util: any
+    $util: {
+      [key: string]: any
+    }
   }
 
   interface VueConstructor {
-    translate: Translate
     util: {
       defineReactive: (obj: object, key: string, val: any) => void
       warn: (msg: string) => void

@@ -8,6 +8,8 @@ div(:class="[$style.input, { [$style.active]: active, [$style.focus]: focus }]"
         v-model="model"
         :type="type"
         :readonly="selections"
+        autocomplete="new-password"
+        @focus="active = focus = true"
         @blur="blur")
   ul.list-unstyled(v-if="maxNum !== 1", :class="$style.selected")
     li(v-for="(value, index) of selected", @click.stop="") {{ display(value) }}

@@ -1,6 +1,6 @@
 <template lang="pug">
 div(:class="$style.landing")
-  div(:class="$style.locale", @click="$t.toggleLocale")
+  div(:class="$style.locale", @click="$t.toggleLocale()")
         i.fa.fa-globe
         | {{ $t('locale') }}
   header

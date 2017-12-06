@@ -2,6 +2,10 @@
 main
   form.wider(@submit.prevent="register")
     div {{ $t('enterprise_registration') }}
+    div(:class="$style.note")
+      div {{ $t('note') + $t('colon') }}
+      ol
+        li(v-for="i of 3") {{ $t('register_tips_' + i) }}
     rb-input(v-for="type of types"
              :class="{invalid: $v[type].$error}"
              :label="$t(snakeCase(type))"
@@ -16,7 +20,7 @@ main
              v-model="_self[type]"
              :type="type.indexOf('password') !== -1 ? 'password' : 'text'"
              @input="$v[type].$touch()")
-      template(v-if="$v[type].$error", slot="error") {{ $t('required') }}
+      template(v-if="$v[type].$error.required", slot="error") {{ $t('required') }}
     rb-btn.btn-block(type="submit", :disabled="$v.$invalid") {{ $t('register') }}
   .tips.text-center
     router-link(to="/login") {{ $t('login_tips') }}
@@ -81,16 +85,16 @@ const SelectionsType = {
   },
   validator: {
     account: {
-      minLength: 1,
+      required: true,
     },
     email: {
-      minLength: 1,
+      required: true,
     },
     password: {
-      minLength: 1,
+      required: true,
     },
     confirmPassword: {
-      minLength: 1,
+      required: true,
     },
     mobile: {
       mobile: true,
@@ -102,28 +106,28 @@ const SelectionsType = {
       length: 4,
     },
     realyname: {
-      minLength: 1,
+      required: true,
     },
     company: {
-      minLength: 1,
+      required: true,
     },
     city: {
-      minLength: 1,
+      required: true,
     },
     industry: {
-      minLength: 1,
+      required: true,
     },
     position: {
-      minLength: 1,
+      required: true,
     },
     trailMode: {
-      minLength: 1,
+      required: true,
     },
     applyingServices: {
-      minLength: 1,
+      required: true,
     },
     informedWay: {
-      minLength: 1,
+      required: true,
     },
   },
 })
@@ -174,7 +178,7 @@ export default class Login extends Vue {
   translate() {
     for (let [key, values] of Object.entries(SelectionsType)) {
       this.Selections[key] = values.map(value => ({
-        display: Vue.translate(snakeCase(value)),
+        display: this.$t(snakeCase(value)),
         value,
       }))
     }
@@ -183,3 +187,17 @@ export default class Login extends Vue {
   register() {}
 }
 </script>
+<style lang="scss" module>
+.note {
+  display: flex;
+  color: $tips-color;
+  font-size: 12px;
+  margin-bottom: 20px;
+
+  > ol {
+    flex: 1;
+    margin-bottom: 0;
+    padding-left: 20px;
+  }
+}
+</style>

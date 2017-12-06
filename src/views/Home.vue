@@ -12,7 +12,7 @@ export default class Home extends Vue {
   name = 'home'
   msg = 'Hello, TypeScript with Vue'
 
-  @State(state => state.auth.user)
+  @State(state => state.common.user)
   user: User
 }
 </script>

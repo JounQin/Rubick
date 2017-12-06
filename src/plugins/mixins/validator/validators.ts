@@ -1,3 +1,5 @@
+import { Input } from 'types'
+
 export const length = (len: number) =>
   function(val: string, model: string) {
     maxLength(len).call(this, val, model)
@@ -24,3 +26,15 @@ export const mobile = (flag: boolean) =>
     maxLength(11).call(this, val, model)
     return !!flag === /^1[35789]\d{9}$/.test(val)
   }
+
+export const required = (flag: boolean) => (val: Input | Input[]) => {
+  if (!flag) {
+    return true
+  }
+
+  if (!val) {
+    return false
+  }
+
+  return !!(Array.isArray(val) ? val : val + '').length
+}

@@ -19,7 +19,7 @@ export default (context: Context) =>
 
     axios.defaults.headers = ctx.headers
 
-    const { app, router, store, prepare, ready } = createApp(axios)
+    const { app, router, store, prepare, ready } = createApp(axios, context)
 
     const { url } = ctx
     const { fullPath } = router.resolve(url).route

@@ -20,6 +20,10 @@
   "applying_services": "Expected Services to Apply",
   "informed_way": "How do you get to know about us?",
   "register": "Register",
+  "register_tips_1": "We don't provide VPN services. Please comply with national laws and regulations",
+  "register_tips_2":
+    "Fill out your genuine business details so that your registration can be reviewed and approved as soon as possible",
+  "register_tips_3": "All fields are mandatory",
   "enterprise": "Enterprise",
   "data_center": "Data Center",
   "professional": "Professional",

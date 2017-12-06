@@ -6,5 +6,5 @@ export enum LOCALE {
 export interface Translate {
   (key: string, params?: object): string
   locale?: LOCALE
-  toggleLocale?(): void
+  toggleLocale?(locale?: LOCALE): void
 }

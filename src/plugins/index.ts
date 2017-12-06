@@ -1,5 +1,6 @@
 import './components'
 import './http'
 import './mixins'
-import './translate'
 import './util'
+
+export * from './translate'

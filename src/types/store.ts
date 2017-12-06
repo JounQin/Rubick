@@ -1,8 +1,8 @@
 import { User } from './session'
 
-export interface AuthState {
+export interface CommonState {
   user: User
 }
 export interface RootState {
-  auth: AuthState
+  common: CommonState
 }

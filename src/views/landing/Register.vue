@@ -131,9 +131,7 @@ const SelectionsType = {
     },
   },
 })
-export default class Login extends Vue {
-  name: 'register'
-
+export default class Register extends Vue {
   types = [
     'account',
     'email',

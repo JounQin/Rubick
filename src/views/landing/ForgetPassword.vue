@@ -37,9 +37,7 @@ import RbInput from 'components/rb-input/RbInput.vue'
     },
   },
 })
-export default class Login extends Vue {
-  name: 'forget-password'
-
+export default class ForgetPassword extends Vue {
   mobileOrEmail: string = null
   captcha: string = null
 

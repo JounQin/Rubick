@@ -12,11 +12,14 @@ export default (context: ServerContext) =>
 
     const { ctx } = context
 
+    const $t = translate.create(context.locale)
+
     Object.assign(context, {
       axios: axios.create({
         headers: ctx.headers,
       }),
-      translate: translate.create(context.locale),
+      translate: $t,
+      title: $t('alauda'),
     })
 
     const { app, router, store, prepare, ready } = createApp(context.axios)

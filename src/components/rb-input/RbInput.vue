@@ -44,7 +44,8 @@ export default class RbInput extends Vue {
   @Prop() label: string
   @Prop() type: string
 
-  @Prop() captcha: string
+  @Prop({ type: [String, Boolean] })
+  captcha: string | boolean
   @Prop() captchaDisabled: boolean
   @Prop() captchaData: any
 

@@ -53,6 +53,7 @@ declare module 'vue/types/vue' {
 declare module 'vue/types/options' {
   interface ComponentOptions<V extends VUE> {
     asyncData?: (arg: object | void) => any
+    title?: string | (() => string)
     validator?: any
   }
 }

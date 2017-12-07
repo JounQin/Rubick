@@ -12,7 +12,8 @@ const SRC = API_PREFIX + '/captcha'
 
 @Component
 export default class extends Vue {
-  @Prop() type: string
+  @Prop({ type: [String, Boolean] })
+  type: string | boolean
   @Prop() disabled: boolean
   @Prop() addon: any
 

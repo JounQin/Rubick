@@ -188,7 +188,7 @@ app.use(async (ctx, next) => {
 
   const start = Date.now()
 
-  const context = { ctx, locale, title: 'Rubick' }
+  const context = { ctx, locale }
 
   let html = ''
 

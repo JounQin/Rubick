@@ -157,7 +157,10 @@ app.use(async (ctx, next) => {
   let generateStatic: boolean
   let distPath: string
 
-  if (STATIC_PATTERN.find(pattern => !!re(pattern).exec(url))) {
+  if (
+    (!__DEV__ || getEnv(ENV.ENABLE_DEV_STATIC, MODE.BOOLEAN)) &&
+    STATIC_PATTERN.find(pattern => !!re(pattern).exec(url))
+  ) {
     const staticFile = url.split('?')[0].replace(/^\//, '') || 'home'
     const staticPath = `static/${staticFile}.${locale}.html`
 

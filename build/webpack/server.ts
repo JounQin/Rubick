@@ -1,3 +1,5 @@
+import * as path from 'path'
+
 import * as _debug from 'debug'
 import * as VueSSRServerPlugin from 'vue-server-renderer/server-plugin'
 import * as webpack from 'webpack'
@@ -19,7 +21,7 @@ debug(
 )
 
 export default merge.smart(baseConfig, {
-  entry: paths.src('entry-server.ts'),
+  entry: [path.resolve(__dirname, 'element.js'), paths.src('entry-server.ts')],
   target: 'node',
   output: {
     filename: 'server-bundle.js',

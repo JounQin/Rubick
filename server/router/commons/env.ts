@@ -10,12 +10,14 @@ export enum ENV {
   CCP_SERVERIP = 'CCP_SERVERIP',
   CCP_SERVERPORT = 'CCP_SERVERPORT',
   CCP_SOFTVERSION = 'CCP_SOFTVERSION',
+  ENABLE_DEV_STATIC = 'ENABLE_DEV_STATIC',
   NON_SSR_PATTERN = 'NON_SSR_PATTERN',
   SMS_BASE_URL = 'SMS_BASE_URL',
   STATIC_PATTERN = 'STATIC_PATTERN',
 }
 
 export enum MODE {
+  BOOLEAN,
   STR_ARR,
   KEY_VALUE,
   KEY_VALUE_ARR,
@@ -26,9 +28,10 @@ interface KeyValue {
   value: string
 }
 
-type VALUE = string | string[] | KeyValue | KeyValue[]
+type VALUE = boolean | string | string[] | KeyValue | KeyValue[]
 
 function getEnv(key: ENV, defaultValue?: string): string
+function getEnv(key: ENV, mode?: MODE.BOOLEAN, defaultValue?: boolean): boolean
 function getEnv(
   key: ENV,
   mode?: MODE.STR_ARR,
@@ -52,6 +55,8 @@ function getEnv(
   const value = env[key]
 
   switch (modeOrDefaultValue) {
+    case MODE.BOOLEAN:
+      return value ? value !== 'false' : defaultValue || false
     case MODE.STR_ARR:
       return value ? value.split(',') : defaultValue || []
     case MODE.KEY_VALUE:

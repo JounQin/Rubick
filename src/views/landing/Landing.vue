@@ -1,8 +1,10 @@
 <template lang="pug">
 div(:class="$style.landing")
-  div(:class="$style.locale", @click="$t.toggleLocale()")
-        i.fa.fa-globe
-        | {{ $t('locale') }}
+  div(:class="$style.locale"
+      @click="$t.toggleLocale()"
+      v-tooltip.bottom="$t('switch_lang_tips')")
+    i.fa.fa-globe
+    | {{ $t('locale') }}
   header
     router-link(to="/")
       img(src="~assets/logo-large.svg")

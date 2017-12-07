@@ -1,4 +1,4 @@
-import _axios from 'axios'
+import axios from 'axios'
 import Vue, { ComponentOptions } from 'vue'
 
 import { translate } from 'plugins'
@@ -11,18 +11,16 @@ export default (context: ServerContext) =>
   new Promise(async (resolve, reject) => {
     const start: boolean | number = __DEV__ && Date.now()
 
-    const ctx = context.ctx
+    const { ctx } = context
 
-    const axios = _axios.create()
+    Object.assign(context, {
+      axios: axios.create({
+        headers: ctx.headers,
+      }),
+      translate: translate.create(ctx.cookies.get(LOCALE_COOKIE) as LOCALE),
+    })
 
-    context.axios = axios
-    context.translate = translate.create(ctx.cookies.get(
-      LOCALE_COOKIE,
-    ) as LOCALE)
-
-    axios.defaults.headers = ctx.headers
-
-    const { app, router, store, prepare, ready } = createApp(axios, context)
+    const { app, router, store, prepare, ready } = createApp(context.axios)
 
     const { url } = ctx
     const { fullPath } = router.resolve(url).route

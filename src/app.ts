@@ -2,7 +2,6 @@ import { AxiosInstance } from 'axios'
 import { Component, Vue } from 'vue-property-decorator'
 
 import 'plugins'
-import { ServerContext } from 'types'
 
 import App from './views/App.vue'
 
@@ -15,7 +14,7 @@ Component.registerHooks([
   'beforeRouteUpdate',
 ])
 
-export default (axios: AxiosInstance, context?: ServerContext) => {
+export default (axios: AxiosInstance) => {
   const store = createStore(axios)
   const router = createRouter(store)
 

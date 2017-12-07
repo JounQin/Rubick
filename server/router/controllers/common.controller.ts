@@ -8,7 +8,7 @@ import { TOKEN } from '../commons'
 @Controller
 export class CommonController {
   @RequestMapping('/common')
-  getCommon(ctx: Context) {
+  commonCheck(ctx: Context) {
     ctx.body = {
       user: omit(ctx.session.user, TOKEN),
     }

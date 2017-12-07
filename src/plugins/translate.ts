@@ -1,8 +1,7 @@
-import { AxiosInstance } from 'axios'
 import Vue from 'vue'
 
 import { LOCALE, StrObj, Translate } from 'types'
-import { LOCALE_COOKIE, setCookie } from 'utils'
+import { LOCALE_COOKIE, getCookie, setCookie } from 'utils'
 
 const context = require.context('../views', true, I18N_REGEX)
 
@@ -25,9 +24,9 @@ const translations: {
   return modules
 }, {})
 
-export const createTranslate = (axios: AxiosInstance, DEFAULT_LOCALE = ZH) => {
-  const translate: Translate = (key: string, params?: StrObj) => {
-    const value = translations[translate.locale][key]
+const createTranslate = (DEFAULT_LOCALE = ZH) => {
+  const translateInstance: Translate = (key: string, params?: StrObj) => {
+    const value = translations[translateInstance.locale][key]
     return (
       (value &&
         value.replace(/{([^{}]+)}/g, (matched, $0) => params[$0.trim()])) ||
@@ -35,31 +34,34 @@ export const createTranslate = (axios: AxiosInstance, DEFAULT_LOCALE = ZH) => {
     )
   }
 
-  translate.toggleLocale = (
-    locale: LOCALE = TOGGLE_LOCALE[translate.locale],
+  translateInstance.toggleLocale = (
+    locale: LOCALE = TOGGLE_LOCALE[translateInstance.locale],
   ) => {
-    if (locale !== translate.locale) {
-      setCookie(LOCALE_COOKIE, (translate.locale = locale), Infinity)
+    if (locale !== translateInstance.locale) {
+      setCookie(LOCALE_COOKIE, (translateInstance.locale = locale), Infinity)
     }
   }
 
-  Vue.util.defineReactive(translate, 'locale', DEFAULT_LOCALE)
+  translateInstance.create = createTranslate
 
-  if (!__SERVER__) {
-    Object.defineProperty(Vue.prototype, '$t', {
-      writable: __DEV__,
-      value: translate,
-    })
-  }
+  Vue.util.defineReactive(translateInstance, 'locale', DEFAULT_LOCALE)
 
-  return translate
+  return translateInstance
 }
 
-if (__SERVER__) {
-  Object.defineProperty(Vue.prototype, '$t', {
-    configurable: __DEV__,
-    get() {
-      return this.$ssrContext.translate
-    },
-  })
-}
+export const translate = createTranslate(
+  __SERVER__ ? undefined : (getCookie(LOCALE_COOKIE) as LOCALE),
+)
+
+Object.defineProperty(
+  Vue.prototype,
+  '$t',
+  __SERVER__
+    ? {
+        configurable: __DEV__,
+        get() {
+          return this.$ssrContext.translate
+        },
+      }
+    : { value: translate, writable: __DEV__ },
+)

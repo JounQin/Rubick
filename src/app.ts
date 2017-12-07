@@ -1,11 +1,8 @@
 import { AxiosInstance } from 'axios'
 import { Component, Vue } from 'vue-property-decorator'
 
-import { createTranslate } from './plugins'
-
-import { LOCALE } from 'types'
-
-import { LOCALE_COOKIE, getCookie } from 'utils'
+import 'plugins'
+import { ServerContext } from 'types'
 
 import App from './views/App.vue'
 
@@ -18,15 +15,7 @@ Component.registerHooks([
   'beforeRouteUpdate',
 ])
 
-export default (axios: AxiosInstance, context?: any) => {
-  const translate = createTranslate(axios, (context
-    ? context.ctx.cookies.get(LOCALE_COOKIE)
-    : getCookie(LOCALE_COOKIE)) as LOCALE)
-
-  if (__SERVER__) {
-    context.translate = translate
-  }
-
+export default (axios: AxiosInstance, context?: ServerContext) => {
   const store = createStore(axios)
   const router = createRouter(store)
 

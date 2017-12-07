@@ -1,21 +1,24 @@
 import _axios from 'axios'
 import Vue, { ComponentOptions } from 'vue'
 
+import { translate } from 'plugins'
+import { LOCALE, ServerContext } from 'types'
+import { LOCALE_COOKIE } from 'utils'
+
 import createApp from './app'
 
-interface Context {
-  [key: string]: any
-}
-
-export default (context: Context) =>
+export default (context: ServerContext) =>
   new Promise(async (resolve, reject) => {
     const start: boolean | number = __DEV__ && Date.now()
 
-    const { ctx } = context
+    const ctx = context.ctx
 
     const axios = _axios.create()
 
     context.axios = axios
+    context.translate = translate.create(ctx.cookies.get(
+      LOCALE_COOKIE,
+    ) as LOCALE)
 
     axios.defaults.headers = ctx.headers
 

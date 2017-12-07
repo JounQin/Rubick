@@ -66,3 +66,12 @@ if (initialState) {
 if (module.hot) {
   module.hot.accept()
 }
+
+if (
+  __PROD__ &&
+  (location.protocol === 'https:' ||
+    ['127.0.0.1', 'localhost'].includes(location.hostname)) &&
+  navigator.serviceWorker
+) {
+  navigator.serviceWorker.register('/service-worker.js')
+}

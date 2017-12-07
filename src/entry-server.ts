@@ -2,8 +2,7 @@ import axios from 'axios'
 import Vue, { ComponentOptions } from 'vue'
 
 import { translate } from 'plugins'
-import { LOCALE, ServerContext } from 'types'
-import { LOCALE_COOKIE } from 'utils'
+import { ServerContext } from 'types'
 
 import createApp from './app'
 
@@ -17,7 +16,7 @@ export default (context: ServerContext) =>
       axios: axios.create({
         headers: ctx.headers,
       }),
-      translate: translate.create(ctx.cookies.get(LOCALE_COOKIE) as LOCALE),
+      translate: translate.create(context.locale),
     })
 
     const { app, router, store, prepare, ready } = createApp(context.axios)

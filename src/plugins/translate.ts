@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 import { LOCALE, StrObj, Translate } from 'types'
-import { LOCALE_COOKIE, getCookie, setCookie } from 'utils'
+import { LOCALE_COOKIE, Lang, Locale, getCookie, setCookie } from 'utils'
 
 const context = require.context('../views', true, I18N_REGEX)
 
@@ -24,6 +24,10 @@ const translations: {
   return modules
 }, {})
 
+const setDocLang = (locale: LOCALE) => {
+  document.documentElement.setAttribute(Lang, locale)
+}
+
 const createTranslate = (DEFAULT_LOCALE = ZH) => {
   const instance: Translate = (key: string, params?: StrObj) => {
     const value = translations[instance.locale][key]
@@ -37,19 +41,28 @@ const createTranslate = (DEFAULT_LOCALE = ZH) => {
   instance.toggleLocale = (locale: LOCALE = TOGGLE_LOCALE[instance.locale]) => {
     if (locale !== instance.locale) {
       setCookie(LOCALE_COOKIE, (instance.locale = locale), Infinity)
+      setDocLang(locale)
     }
   }
 
   instance.create = createTranslate
 
-  Vue.util.defineReactive(instance, 'locale', DEFAULT_LOCALE)
+  Vue.util.defineReactive(instance, Locale, DEFAULT_LOCALE)
 
   return instance
 }
 
-export const translate = createTranslate(
-  __SERVER__ ? undefined : (getCookie(LOCALE_COOKIE) as LOCALE),
-)
+let defaultLocale
+
+if (!__SERVER__) {
+  defaultLocale = (getCookie(LOCALE_COOKIE) as LOCALE) || undefined
+
+  if (defaultLocale && !window.__INITIAL_STATE__) {
+    setDocLang(defaultLocale)
+  }
+}
+
+export const translate = createTranslate(defaultLocale)
 
 Object.defineProperty(
   Vue.prototype,

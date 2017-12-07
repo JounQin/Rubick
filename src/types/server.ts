@@ -1,11 +1,12 @@
 import { AxiosInstance } from 'axios'
 import { Context } from 'koa'
 
-import { Translate } from './plugin'
+import { LOCALE, Translate } from './plugin'
 
 export interface ServerContext {
   ctx: Context
   axios: AxiosInstance
+  locale: LOCALE
   state: object
   translate: Translate
 }

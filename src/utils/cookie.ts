@@ -8,7 +8,7 @@ export const getCookie = (name: string) =>
       ),
       '$1',
     ),
-  ) || undefined
+  )
 
 export const setCookie = (
   name: string,

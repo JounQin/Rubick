@@ -28,14 +28,15 @@ export default (axios: AxiosInstance) => {
 
   const ready = () => {
     router.beforeEach((to, from, next) => {
-      if (to.meta.auth) {
-        if (!store.state.common.user.namespace) {
-          next({
-            path: '/login',
-            replace: true,
-          })
-          return
-        }
+      if (
+        to.matched.some(route => route.meta.auth) &&
+        !store.state.common.user.namespace
+      ) {
+        next({
+          path: '/login',
+          replace: true,
+        })
+        return
       }
 
       next()

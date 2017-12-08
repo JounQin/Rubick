@@ -1,0 +1,16 @@
+{
+  "nav_board": "看板",
+  "nav_dashboard": "概览",
+  "nav_infrastructure": "交付中心",
+  "nav_container": "容器",
+  "nav_application": "应用",
+  "nav_service": "服务",
+  "nav_template": "应用模板",
+  "nav_envfile": "环境变量文件",
+  "nav_configuration": "配置文件",
+  "nav_others": "更多",
+  "nav_mirror": "免费加速器",
+  "nav_docs": "用户文档",
+  "nav_locale": "English",
+  "dashboard": "概览"
+}

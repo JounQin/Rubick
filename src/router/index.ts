@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
 
+import RouterView from './RouterView.vue'
+
 Vue.use(VueRouter)
 
 export default (store: Store<any>) => {
@@ -11,10 +13,38 @@ export default (store: Store<any>) => {
     routes: [
       {
         path: '/',
-        component: () => import('views/Home.vue'),
+        redirect: '/dashboard',
+      },
+      {
+        path: '/console',
+        component: () => import('views/console/Console.vue'),
         meta: {
           auth: true,
         },
+        children: [
+          {
+            name: 'dashboard',
+            path: '/dashboard',
+            component: () => import('views/dashboard/Dashboard.vue'),
+          },
+          {
+            name: 'container',
+            path: '/container',
+            component: RouterView,
+            children: [
+              {
+                name: 'application',
+                path: 'application',
+                component: () => import('views/container/Application.vue'),
+              },
+              {
+                name: 'service',
+                path: 'service',
+                component: () => import('views/container/Service.vue'),
+              },
+            ],
+          },
+        ],
       },
       {
         path: '/landing',

@@ -44,6 +44,8 @@ export default (context: ServerContext) =>
       const matched = router.getMatchedComponents()
 
       if (!matched.length) {
+        // tslint:disable-next-line:no-console
+        console.error('no matched components')
         return reject({ status: 404 })
       }
 
@@ -55,16 +57,20 @@ export default (context: ServerContext) =>
 
       context.title = routeTitle(route, $t)
 
-      await Promise.all(
-        matched.map(
-          ({ asyncData }: ComponentOptions<Vue>) =>
-            asyncData &&
-            asyncData({
-              store,
-              route,
-            }),
-        ),
-      )
+      try {
+        await Promise.all(
+          matched.map(
+            ({ asyncData }: ComponentOptions<Vue>) =>
+              asyncData &&
+              asyncData({
+                store,
+                route,
+              }),
+          ),
+        )
+      } catch (e) {
+        return reject(e)
+      }
 
       if (__DEV__) {
         // tslint:disable-next-line:no-console

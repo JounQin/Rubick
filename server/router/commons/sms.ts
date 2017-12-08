@@ -28,9 +28,7 @@ const generateSignature = () =>
     .digest('hex')
 
 const generateUrl = () =>
-  `${SMS_BASE_URL}/2013-12-26/Accounts/${
-    ACCOUNT_SID
-  }/SMS/TemplateSMS?sig=${generateSignature().toUpperCase()}`
+  `${SMS_BASE_URL}/2013-12-26/Accounts/${ACCOUNT_SID}/SMS/TemplateSMS?sig=${generateSignature().toUpperCase()}`
 
 export const sendSms = (to: string, code: string) =>
   axios.post(

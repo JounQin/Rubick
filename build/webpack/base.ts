@@ -67,6 +67,12 @@ const webpackConfig: webpack.Configuration = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
+          cssModules: {
+            camelCase: true,
+            localIdentName: __PROD__
+              ? '[hash:base64]'
+              : '[name]__[local]___[hash:base64:5]',
+          },
           loaders: {
             scss: SCSS_LOADERS,
           },

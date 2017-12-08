@@ -60,17 +60,12 @@ const createTranslate = (DEFAULT_LOCALE = ZH) => {
 
   instance.create = createTranslate
 
-  Vue.util.defineReactive(
-    instance,
-    Locale,
-    DEFAULT_LOCALE,
-    (...args: any[]) => {
-      const prev = instance.locale
-      setImmediate(() =>
-        watchers.forEach(watcher => watcher(prev, instance.locale)),
-      )
-    },
-  )
+  Vue.util.defineReactive(instance, Locale, DEFAULT_LOCALE, () => {
+    const prev = instance.locale
+    setImmediate(() =>
+      watchers.forEach(watcher => watcher(prev, instance.locale)),
+    )
+  })
 
   return instance
 }

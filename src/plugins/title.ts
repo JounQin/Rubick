@@ -23,8 +23,13 @@ export const breadCrumbs = (route: Route) =>
 
 export const routeTitle = (route: Route, $t = translate) => {
   const title = breadCrumbs(route)
-    .map(({ text }) => $t(snakeCase(text)))
-    .join('-')
+    .map(({ text }) => {
+      text = snakeCase(text)
+      const nav = $t('nav_' + text)
+      text = text === nav ? $t(text) : nav
+      return text
+    })
+    .join(' - ')
   const prefix = $t('alauda')
   return title ? `${prefix} - ${title}` : prefix
 }

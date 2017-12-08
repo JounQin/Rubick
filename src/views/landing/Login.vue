@@ -30,9 +30,6 @@ import RbInput from 'components/rb-input/RbInput.vue'
   components: {
     RbInput,
   },
-  title() {
-    return `${this.$route.params.type ? 'account' : 'user'}_login`
-  },
   validator: {
     account: {
       minLength: 1,

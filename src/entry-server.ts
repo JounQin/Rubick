@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Vue, { ComponentOptions } from 'vue'
 
-import { translate } from 'plugins'
+import { routeTitle, translate } from 'plugins'
 import { ServerContext } from 'types'
 
 import createApp from './app'
@@ -19,7 +19,6 @@ export default (context: ServerContext) =>
         headers: ctx.headers,
       }),
       translate: $t,
-      title: $t('alauda'),
     })
 
     const { app, router, store, prepare, ready } = createApp(context.axios)
@@ -53,6 +52,8 @@ export default (context: ServerContext) =>
       if (route.fullPath !== url) {
         return reject({ status: 302, url: route.fullPath })
       }
+
+      context.title = routeTitle(route, $t)
 
       await Promise.all(
         matched.map(

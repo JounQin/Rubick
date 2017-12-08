@@ -8,4 +8,5 @@ export interface Translate {
   locale?: LOCALE
   toggleLocale?(locale?: LOCALE): void
   create?(DEFAULT_LOCALE?: LOCALE): Translate
+  $watch?(watcher: (prev?: LOCALE, current?: LOCALE) => void): (() => void)
 }

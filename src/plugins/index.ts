@@ -4,4 +4,5 @@ import './mixins'
 import './tooltip'
 import './util'
 
+export * from './title'
 export * from './translate'

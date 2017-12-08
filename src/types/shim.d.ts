@@ -44,7 +44,12 @@ declare module 'vue/types/vue' {
 
   interface VueConstructor {
     util: {
-      defineReactive: (obj: object, key: string, val: any) => void
+      defineReactive: (
+        obj: object,
+        key: string,
+        val: any,
+        customSetter?: any,
+      ) => void
       warn: (msg: string) => void
     }
   }

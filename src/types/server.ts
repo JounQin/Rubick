@@ -8,5 +8,6 @@ export interface ServerContext {
   axios: AxiosInstance
   locale: LOCALE
   state: object
+  title: string
   translate: Translate
 }

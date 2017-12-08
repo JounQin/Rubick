@@ -24,6 +24,11 @@ export default (store: Store<any>) => {
             name: 'login',
             path: '/login/:type(account)?',
             component: () => import('views/landing/Login.vue'),
+            meta: {
+              title() {
+                return `${this.params.type ? 'account' : 'user'}_login`
+              },
+            },
           },
           {
             name: 'register',

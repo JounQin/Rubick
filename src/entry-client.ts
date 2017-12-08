@@ -1,6 +1,8 @@
 import axios from 'axios'
 import Vue, { ComponentOptions } from 'vue'
 
+import { routeTitle, translate } from 'plugins'
+
 import createApp from './app'
 
 const { app, router, store, prepare, ready } = createApp(axios)
@@ -10,9 +12,15 @@ const { __INITIAL_STATE__: initialState } = window
 const routerReady = () => {
   ready()
 
+  translate.$watch(() => {
+    document.title = routeTitle(router.currentRoute)
+  })
+
   router.beforeResolve(async (to, from, next) => {
     const matched = router.getMatchedComponents(to)
     const prevMatched = router.getMatchedComponents(from)
+
+    document.title = routeTitle(to)
 
     if (!prevMatched) {
       return next()

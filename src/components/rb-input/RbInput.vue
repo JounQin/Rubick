@@ -4,6 +4,8 @@ div(:class="[$style.input, { [$style.active]: active, [$style.focus]: focus }]"
     @focus="active = focus = true"
     @blur="blur"
     tabIndex="1")
+  div(:class="$style.left", v-if="$slots.left")
+    slot(name="left")
   input(v-if="maxNum === 1",
         v-model="model"
         :type="type"
@@ -181,6 +183,7 @@ export default class RbInput extends Vue {
   display: flex;
   margin-bottom: 20px;
   border: 1px solid $border-color;
+  background-color: $reverse-color;
   padding: 0 16px;
   outline: 0;
 
@@ -289,6 +292,12 @@ export default class RbInput extends Vue {
         }
       }
     }
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
   }
 
   .right {

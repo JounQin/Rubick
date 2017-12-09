@@ -57,6 +57,7 @@ if (__DEV__) {
   app.use(
     proxy(serverHost, {
       port: serverPort + 1,
+      preserveReqSession: true,
       filter: ctx => ctx.url.startsWith('/api'),
     }),
   )
@@ -203,6 +204,9 @@ app.use(async (ctx, next) => {
       switch ((ctx.status = e.status || 500)) {
         case 302:
           ctx.redirect(e.url)
+          return res.end()
+        case 401:
+          ctx.redirect(`/login?next=${url}`)
           return res.end()
         case 404:
           return res.end('404 | Page Not Found')

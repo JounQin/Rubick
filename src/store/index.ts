@@ -1,4 +1,5 @@
 import { AxiosInstance } from 'axios'
+import { Context } from 'koa'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -7,8 +8,8 @@ import createModules from './modules'
 
 Vue.use(Vuex)
 
-export default (axios: AxiosInstance) =>
+export default (axios: AxiosInstance, ctx?: Context) =>
   new Vuex.Store<RootState>({
     strict: __DEV__,
-    modules: createModules(axios),
+    modules: createModules(axios, ctx),
   })

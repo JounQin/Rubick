@@ -1,4 +1,5 @@
 import { AxiosInstance } from 'axios'
+import { Context } from 'koa'
 import { Component, Vue } from 'vue-property-decorator'
 
 import 'plugins'
@@ -14,8 +15,8 @@ Component.registerHooks([
   'beforeRouteUpdate',
 ])
 
-export default (axios: AxiosInstance) => {
-  const store = createStore(axios)
+export default (axios: AxiosInstance, ctx?: Context) => {
+  const store = createStore(axios, ctx)
   const router = createRouter()
 
   const app = new Vue({
@@ -24,7 +25,11 @@ export default (axios: AxiosInstance) => {
     render: h => h(App),
   })
 
-  const prepare = async () => await store.dispatch('commonCheck')
+  const prepare = async () => {
+    if (!/^\/login$/.test(ctx.path)) {
+      await store.dispatch('commonCheck')
+    }
+  }
 
   const ready = () => {
     router.beforeEach((to, from, next) => {

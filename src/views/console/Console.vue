@@ -8,18 +8,21 @@ div(:class="$style.console")
       nav-list(:navConfig="navConfig")
   div(:class="$style.rightPanel")
     header
+      nav-regions
     router-view
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
 import NavList from './NavList.vue'
+import NavRegions from './NavRegions.vue'
 
 import NAV_CONFIG from './nav-config'
 
 @Component({
   components: {
     NavList,
+    NavRegions,
   },
 })
 export default class Console extends Vue {
@@ -69,6 +72,7 @@ export default class Console extends Vue {
     align-items: center;
     flex-basis: 50px;
     background-color: $toolbar-bg-color;
+    padding: 0 20px;
   }
 }
 </style>

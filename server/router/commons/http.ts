@@ -1,4 +1,5 @@
 import axios from 'axios'
+import * as _debug from 'debug'
 import { Context } from 'koa'
 import * as _qs from 'qs'
 
@@ -24,6 +25,8 @@ interface JakiroOptions {
   qs?: boolean
 }
 
+const debug = _debug('rubick:jakiro')
+
 export const jakiro = async <T = any>({
   ctx,
   url = ctx.url,
@@ -43,7 +46,7 @@ export const jakiro = async <T = any>({
   const { user } = ctx.session
 
   headers = {
-    ...ctx.headers,
+    // ...ctx.headers,
     ...headers,
     'Alauda-Request-ID': ctx.get('alauda-request-id'),
     'User-Agent': 'rubick/v1.0',
@@ -65,7 +68,7 @@ export const jakiro = async <T = any>({
     })
   } catch (e) {
     resp = {
-      data: e.response.data,
+      data: e.response && e.response.data,
       status: 502,
       error: e.message,
     } as any
@@ -85,5 +88,15 @@ export const jakiro = async <T = any>({
     }
   }
 
-  return { result, status } as any
+  result = Array.isArray(result) ? { result } : result
+
+  debug('\nurl:%s\nresult: %O\nstatus:%d', url, result, status)
+
+  if (result.errors) {
+    result.error = result.errors[0]
+    result.code = result.error.code
+    delete result.errors
+  }
+
+  return { result, status }
 }

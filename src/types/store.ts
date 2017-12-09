@@ -11,8 +11,9 @@ export interface Region {
 }
 
 export interface CommonState {
+  invalid: boolean
   user: User
-  regions?: Region[]
+  regions: Region[]
 }
 export interface RootState {
   common: CommonState

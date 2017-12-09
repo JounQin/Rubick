@@ -1,4 +1,5 @@
 import { AxiosInstance } from 'axios'
+import { Context } from 'koa'
 
 const modulesContext = require.context('./modules', false, /\.ts$/)
 
@@ -9,8 +10,8 @@ const chunks = modulesContext.keys().reduce((modules: any, key: string) => {
 
 const moduleNames = Object.keys(chunks)
 
-export default (axios: AxiosInstance) =>
+export default (axios: AxiosInstance, ctx?: Context) =>
   moduleNames.reduce((modules: any, moduleName) => {
-    modules[moduleName] = chunks[moduleName](axios)
+    modules[moduleName] = chunks[moduleName](axios, ctx)
     return modules
   }, {})

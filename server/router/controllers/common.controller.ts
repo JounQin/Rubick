@@ -5,6 +5,7 @@ import { Controller, RequestMapping } from '../decorators'
 
 import { TOKEN, jakiro } from 'commons'
 import { User } from 'types'
+import { INCORRECT_AUTHENTICATION_CREDENTIALS } from 'utils'
 
 @Controller
 export class CommonController {
@@ -15,10 +16,19 @@ export class CommonController {
     let regions
 
     if (user) {
-      const { result } = await jakiro({
+      const { result, status } = await jakiro({
         ctx,
         url: `/regions/${user.namespace}`,
       })
+
+      const { code } = result
+
+      if (status >= 400 && code === INCORRECT_AUTHENTICATION_CREDENTIALS) {
+        ctx.session = null
+        ctx.body = result
+        ctx.status = status
+        return
+      }
 
       regions = result
     }

@@ -78,6 +78,7 @@ export default class NavItem extends Vue {
     :global(.fa) {
       width: 32px;
       text-align: center;
+      font-size: 12px;
 
       &:last-child {
         transform: scale(0.6);

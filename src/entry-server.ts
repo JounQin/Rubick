@@ -21,7 +21,7 @@ export default (context: ServerContext) =>
       translate: $t,
     })
 
-    const { app, router, store, prepare, ready } = createApp(context.axios)
+    const { app, router, store, prepare, ready } = createApp(context.axios, ctx)
 
     const { url } = ctx
     const { fullPath } = router.resolve(url).route
@@ -32,6 +32,10 @@ export default (context: ServerContext) =>
 
     try {
       await prepare()
+
+      if (store.state.common.invalid && /^\/login$/.test(ctx.path)) {
+        return reject({ status: 401 })
+      }
     } catch (e) {
       return reject(e)
     }

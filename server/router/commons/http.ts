@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Context } from 'koa'
 import * as _qs from 'qs'
 
+import { API_PREFIX_REGEXP } from './constants'
 import { ENV, getEnv } from './env'
 
 export enum HTTP_METHOD {
@@ -14,8 +15,8 @@ export enum HTTP_METHOD {
 }
 
 interface JakiroOptions {
-  ctx?: Context
-  url: string
+  ctx: Context
+  url?: string
   method?: HTTP_METHOD
   data?: string | object | any[]
   headers?: { [key: string]: string }
@@ -25,30 +26,31 @@ interface JakiroOptions {
 
 export const jakiro = async <T = any>({
   ctx,
-  url,
-  method = HTTP_METHOD.GET,
-  data,
+  url = ctx.url,
+  method = ctx.method,
+  data = ctx.request.body,
   headers,
-  params,
+  params = ctx.query,
   qs,
 }: JakiroOptions): Promise<{ result: T; status: number }> => {
+  url = url.replace(API_PREFIX_REGEXP, '/')
   url = getEnv(ENV.API_SERVER_URL) + (/^\/v[12]/.test(url) ? url : `/v1${url}`)
 
   if (qs) {
     data = _qs.stringify(data)
   }
 
+  const { user } = ctx.session
+
   headers = {
-    'User-Agent': 'rubick/v1.0',
+    ...ctx.headers,
     ...headers,
+    'Alauda-Request-ID': ctx.get('alauda-request-id'),
+    'User-Agent': 'rubick/v1.0',
   }
 
-  if (ctx) {
-    const requestId = ctx.get('alauda-request-id')
-
-    if (requestId) {
-      headers['Alauda-Request-ID'] = requestId
-    }
+  if (user) {
+    headers.Authorization = `Token ${user.token}`
   }
 
   let resp

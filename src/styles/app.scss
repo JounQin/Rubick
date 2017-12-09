@@ -10,6 +10,11 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
+
 html,
 body {
   height: 100%;
@@ -25,7 +30,9 @@ body {
 
 #app {
   display: flex;
-  min-height: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   > * {
     flex: 1;

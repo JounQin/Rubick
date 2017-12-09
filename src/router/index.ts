@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { Store } from 'vuex'
-
-import RouterView from './RouterView.vue'
 
 Vue.use(VueRouter)
 
-export default (store: Store<any>) => {
-  const router = new VueRouter({
+const RouterView = Vue.extend({
+  render: h => h('router-view'),
+})
+
+export default () =>
+  new VueRouter({
     mode: 'history',
     fallback: false,
     routes: [
@@ -74,6 +75,3 @@ export default (store: Store<any>) => {
       },
     ],
   })
-
-  return router
-}

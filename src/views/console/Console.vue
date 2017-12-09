@@ -7,6 +7,7 @@ div(:class="$style.console")
     nav
       nav-list(:navConfig="navConfig")
   div(:class="$style.rightPanel")
+    header
     router-view
 </template>
 <script lang="ts">
@@ -53,10 +54,21 @@ export default class Console extends Vue {
     display: flex;
     flex-direction: column;
     flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }
 
 .right-panel {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+
+  > header {
+    display: flex;
+    align-items: center;
+    flex-basis: 50px;
+    background-color: $toolbar-bg-color;
+  }
 }
 </style>

@@ -7,7 +7,6 @@ import { Controller, Method, RequestMapping } from '../decorators'
 
 import {
   CAPTCHA_SESSION,
-  HTTP_METHOD,
   TOKEN,
   VERIFICATION_CODE_COOKIE,
   jakiro,
@@ -28,9 +27,8 @@ export class LandingController {
     const data = request.body
 
     const { result, status } = await jakiro({
+      ctx,
       url: '/generate-api-token',
-      method: HTTP_METHOD.POST,
-      data,
       headers: {
         CLIENT: ctx.ips.length ? ctx.ips.join(', ') : ctx.ip,
       },
@@ -46,6 +44,7 @@ export class LandingController {
     ctx.session.user = result
 
     const { result: profile } = await jakiro({
+      ctx,
       url: `/auth/${data.organization || data.username}/profile`,
     })
 

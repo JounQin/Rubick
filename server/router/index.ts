@@ -7,7 +7,7 @@ import * as session from 'koa-session'
 
 import config from '../../build/config'
 
-import { API_PREFIX, ENV, MODE, getEnv } from './commons'
+import { API_PREFIX, ENV, MODE, getEnv, jakiro } from './commons'
 import { injectAllRoutes } from './decorators'
 
 import './controllers'
@@ -35,6 +35,23 @@ export default (app?: Koa) => {
       bodyParser(),
       router.routes(),
       router.allowedMethods(),
+      async (ctx, next) => {
+        if (
+          !ctx.matched.length &&
+          /^\/api/.test(ctx.url) &&
+          !/\.[a-z]{2-4}\d?$/.test(ctx.path)
+        ) {
+          const { result, status } = await jakiro({ ctx })
+
+          ctx.body = result
+
+          if (status !== 404) {
+            ctx.status = status
+          }
+        }
+
+        await next()
+      },
     ]),
   )
 

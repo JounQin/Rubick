@@ -16,7 +16,7 @@ Component.registerHooks([
 
 export default (axios: AxiosInstance) => {
   const store = createStore(axios)
-  const router = createRouter(store)
+  const router = createRouter()
 
   const app = new Vue({
     router,
@@ -35,6 +35,9 @@ export default (axios: AxiosInstance) => {
         next({
           path: '/login',
           replace: true,
+          query: {
+            next: to.fullPath,
+          },
         })
         return
       }

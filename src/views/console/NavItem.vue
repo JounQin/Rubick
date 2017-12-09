@@ -4,7 +4,7 @@ li(:class="[$style.item, { [$style.active]: active, [$style.expanded]: expanded 
       @click="expanded = !expanded")
     i.fa(:class="'fa-' + item.icon")
     span {{ $t('nav_' + item.text) }}
-    i.fa(:class="`fa-${item.active ? 'minus': 'plus'}`")
+    i.fa(:class="`fa-${expanded ? 'minus': 'plus'}`")
   div(v-else-if="item.text === 'locale'"
       v-tooltip.right="$t('switch_lang_tips')"
       @click="$t.toggleLocale()")
@@ -37,7 +37,7 @@ export default class NavItem extends Vue {
   }
 
   created() {
-    this.expanded = this.active
+    this.expanded = this.item.items && this.active
   }
 }
 </script>

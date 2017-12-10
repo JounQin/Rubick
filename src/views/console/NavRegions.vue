@@ -28,7 +28,7 @@ export default class NavRegions extends Vue {
 
   get region() {
     const { regions } = this
-    return regions ? regions[0].id : this.regionId
+    return this.regionId || (regions && regions[0].id)
   }
 
   set region(id: string) {

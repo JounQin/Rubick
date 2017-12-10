@@ -11,7 +11,6 @@ export interface Region {
 }
 
 export interface CommonState {
-  invalid: boolean
   user: User
   regions: Region[]
 }

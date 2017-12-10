@@ -15,21 +15,11 @@ Component.registerHooks([
   'beforeRouteUpdate',
 ])
 
-export default (axios: AxiosInstance, ctx?: Context) => {
+export default async (axios: AxiosInstance, ctx?: Context) => {
   const store = createStore(axios, ctx)
   const router = createRouter()
 
-  const app = new Vue({
-    router,
-    store,
-    render: h => h(App),
-  })
-
-  const prepare = async () => {
-    if (!/^\/login$/.test(ctx.path)) {
-      await store.dispatch('commonCheck')
-    }
-  }
+  const prepare = async () => await store.dispatch('loginCheck')
 
   const ready = () => {
     router.beforeEach((to, from, next) => {
@@ -50,6 +40,17 @@ export default (axios: AxiosInstance, ctx?: Context) => {
       next()
     })
   }
+
+  if (!ctx && !window.__INITIAL_STATE__) {
+    await prepare()
+    ready()
+  }
+
+  const app = new Vue({
+    router,
+    store,
+    render: h => h(App),
+  })
 
   return { app, router, store, prepare, ready }
 }

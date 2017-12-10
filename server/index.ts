@@ -7,8 +7,10 @@ import * as _debug from 'debug'
 import { minify } from 'html-minifier'
 import * as Koa from 'koa'
 import * as proxy from 'koa-better-http-proxy'
+import * as compose from 'koa-compose'
 import * as compress from 'koa-compress'
 import * as logger from 'koa-logger'
+import * as session from 'koa-session'
 import * as serve from 'koa-static'
 import * as lruCache from 'lru-cache'
 import * as mkdirp from 'mkdirp'
@@ -51,7 +53,9 @@ const getTemplate = (tempPath: string) => {
 
 const app = new Koa()
 
-app.use(compress()).use(logger())
+app.keys = getEnv(ENV.APP_KEYS, MODE.STR_ARR)
+
+app.use(compose([session({}, app), compress(), logger()]))
 
 if (__DEV__) {
   app.use(
@@ -138,7 +142,7 @@ app.use(async (ctx, next) => {
   const locale = originalLocale || acceptLanguage.get(ctx.get(ACCEPT_LANGUAGE))
 
   if (!originalLocale) {
-    ctx.cookies.set(LOCALE_COOKIE, locale)
+    ctx.cookies.set(LOCALE_COOKIE, locale, { httpOnly: false })
   }
 
   ctx.set(DEFAULT_HEADERS)

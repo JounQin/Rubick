@@ -7,12 +7,13 @@ import { Controller, Method, RequestMapping } from '../decorators'
 
 import {
   CAPTCHA_SESSION,
+  HTTP_METHOD,
   TOKEN,
   VERIFICATION_CODE_COOKIE,
   jakiro,
   sendSms,
   toInt,
-} from '../commons'
+} from 'commons'
 
 const randomCode = () => toInt(Math.random() * 9000 + 1000) + ''
 
@@ -20,6 +21,11 @@ const getImage = (input: string) => new CaptchaPng2(80, 30, input).getBuffer()
 
 @Controller
 export class LandingController {
+  @RequestMapping('/login')
+  async loginCheck(ctx: Context) {
+    ctx.body = omit(ctx.session.user, TOKEN)
+  }
+
   @RequestMapping('/login', Method.POST)
   async login(ctx: Context) {
     const { request } = ctx
@@ -41,11 +47,12 @@ export class LandingController {
       return
     }
 
-    ctx.session.user = result
+    ctx.user = ctx.session.user = result
 
     const { result: profile } = await jakiro({
       ctx,
       url: `/auth/${data.organization || data.username}/profile`,
+      method: HTTP_METHOD.GET,
     })
 
     let callbackUrl

@@ -9,7 +9,8 @@
     "noImplicitAny": true,
     "paths": {
       "*": ["src/*", "server/router/*"]
-    }
+    },
+    "sourceMap": true
   },
   "exclude": ["node_modules"]
 }

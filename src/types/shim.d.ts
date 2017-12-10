@@ -1,5 +1,7 @@
 import { AxiosStatic } from 'axios'
 import VUE from 'vue'
+import { Route } from 'vue-router'
+import { Store } from 'vuex'
 
 import { RootState, Translate } from 'types'
 
@@ -57,7 +59,7 @@ declare module 'vue/types/vue' {
 
 declare module 'vue/types/options' {
   interface ComponentOptions<V extends VUE> {
-    asyncData?: (arg: object | void) => any
+    asyncData?: (params: { store: Store<RootState>; route: Route }) => any
     title?: string | (() => string)
     validator?: any
   }

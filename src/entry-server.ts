@@ -1,8 +1,8 @@
-import axios from 'axios'
-import Vue, { ComponentOptions } from 'vue'
+import _axios from 'axios'
 
 import { routeTitle, translate } from 'plugins'
 import { ServerContext } from 'types'
+import { INCORRECT_AUTHENTICATION_CREDENTIALS } from 'utils'
 
 import createApp from './app'
 
@@ -12,16 +12,25 @@ export default (context: ServerContext) =>
 
     const { ctx } = context
 
-    const $t = translate.create(context.locale)
+    const axios = (context.axios = _axios.create({ headers: ctx.headers }))
+    const $t = (context.translate = translate.create(context.locale))
 
-    Object.assign(context, {
-      axios: axios.create({
-        headers: ctx.headers,
-      }),
-      translate: $t,
-    })
+    axios.interceptors.response.use(
+      response => response,
+      e => {
+        const { data, headers } = e.response
 
-    const { app, router, store, prepare, ready } = createApp(context.axios, ctx)
+        ctx.set(headers)
+
+        reject(
+          data.code === INCORRECT_AUTHENTICATION_CREDENTIALS
+            ? { status: 401 }
+            : data,
+        )
+      },
+    )
+
+    const { app, router, store, prepare, ready } = await createApp(axios, ctx)
 
     const { url } = ctx
     const { fullPath } = router.resolve(url).route
@@ -30,15 +39,7 @@ export default (context: ServerContext) =>
       return reject({ status: 302, url: fullPath })
     }
 
-    try {
-      await prepare()
-
-      if (store.state.common.invalid && /^\/login$/.test(ctx.path)) {
-        return reject({ status: 401 })
-      }
-    } catch (e) {
-      return reject(e)
-    }
+    await prepare()
 
     ready()
 
@@ -63,17 +64,13 @@ export default (context: ServerContext) =>
 
       try {
         await Promise.all(
-          matched.map(
-            ({ asyncData }: ComponentOptions<Vue>) =>
-              asyncData &&
-              asyncData({
-                store,
-                route,
-              }),
-          ),
+          matched.map(({ options }: any) => {
+            const { asyncData } = options || { asyncData: null }
+            return asyncData && asyncData({ store, route })
+          }),
         )
       } catch (e) {
-        return reject(e)
+        return reject(e.response ? e.response.data : e)
       }
 
       if (__DEV__) {

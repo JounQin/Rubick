@@ -24,6 +24,9 @@ import NAV_CONFIG from './nav-config'
     NavList,
     NavRegions,
   },
+  async asyncData({ store }) {
+    await store.dispatch('fetchRegions')
+  },
 })
 export default class Console extends Vue {
   navConfig = NAV_CONFIG

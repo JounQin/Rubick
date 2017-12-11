@@ -1,11 +1,11 @@
 <template lang="pug">
-div(:class="$style.wrapper")
-  rb-input(:selections="regions"
-          displayField="name"
-          valueField="id"
-          v-model="region")
-    router-link(to="/region", slot="left")
-      i.fa.fa-server
+rb-input(:class="$style.rcInput"
+         :selections="regions"
+         displayField="name"
+         valueField="id"
+         v-model="region")
+  router-link(to="/region", slot="left")
+    i.fa.fa-server
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
@@ -37,13 +37,22 @@ export default class NavRegions extends Vue {
 }
 </script>
 <style lang="scss" module>
-.wrapper > div {
+.rc-input:global(.rc-input) {
   margin-bottom: 0;
   border-radius: 14px;
+  cursor: pointer;
 
-  > input {
+  > :global(.left) {
+    padding-left: 12px;
+  }
+
+  > :global(.input) {
     padding: 6px 8px;
-    border-left: 1px solid $border-color;
+    border-left: 1px solid $dividing-line-color;
+  }
+
+  > :global(.right) {
+    padding-right: 12px;
   }
 
   > :global(.list-unstyled) {

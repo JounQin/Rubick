@@ -3,7 +3,7 @@
 $bg-color: #f1f1f1;
 $border-color: rgba(34, 36, 38, 0.15);
 $reverse-color: #fff;
-$card-bg-color: #fff;
+$card-bg-color: $reverse-color;
 $btn-tip-bg-color: #e8e8e8;
 $link-color: #4aaee7;
 $focus-color: #85b7d9;
@@ -19,3 +19,4 @@ $logo-bg-color: #1b95cd;
 $toolbar-bg-color: #24a7e3;
 $console-panel-bg-color: #35444c;
 $nav-focus-color: #3c4b55;
+$dividing-line-color: #eee;

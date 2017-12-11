@@ -1,26 +1,29 @@
 <template lang="pug">
-div(:class="[$style.input, { [$style.active]: active, [$style.focus]: focus }]"
+.rc-input(:class="[$style.rcInput, { [$style.active]: active, [$style.focus]: focus }]"
     @click="toggleActive",
-    @focus="active = focus = true"
+    @focus="onFocus"
     @blur="blur"
     tabIndex="1")
-  div(:class="$style.left", v-if="$slots.left")
+  .left(:class="$style.left", v-if="$slots.left")
     slot(name="left")
-  input(v-if="maxNum === 1",
+  input(v-if="!selections || (maxNum === 1 && !model)"
         v-model="model"
+        :class="$style.input"
         :type="type"
         :readonly="selections"
-        autocomplete="new-password"
+        ref="input"
         @focus="active = focus = true"
         @blur="blur")
-  ul.list-unstyled(v-if="maxNum !== 1", :class="$style.selected")
-    li(v-for="(value, index) of selected", @click.stop="") {{ display(value) }}
-      i.fa.fa-remove(@click.stop="removeSelected(value, index)")
+  template(v-else)
+    .input(v-if="maxNum === 1", :class="$style.input") {{ model }}
+    ul.list-unstyled(v-else, :class="$style.selected")
+      li(v-for="(value, index) of selected", @click.stop="") {{ display(value) }}
+        i.fa.fa-remove(@click.stop="removeSelected(value, index)")
   transition(name="scale-y")
     ul.list-unstyled(v-if="selectOptions", v-show="selectionsActive", :class="$style.selections")
       li(v-for="selection of selectOptions", @click.stop="toggleSelection(selection)") {{ displayField ? selection[displayField] : selection }}
   span(:class="[$style.label, {[$style.active]: active}]") {{ label }}
-  div(:class="$style.right")
+  .right(:class="$style.right")
     span(v-if="$slots.error", :class="$style.error")
       slot(name="error")
     rb-captcha(v-if="captcha", :type="captcha", :disabled="captchaDisabled", :addon="captchaData")
@@ -96,6 +99,15 @@ export default class RbInput extends Vue {
 
   get shouldActive() {
     return !!(this.maxNum === 1 ? this.model : this.selected.length)
+  }
+
+  onFocus() {
+    const { input } = this.$refs
+    if (input) {
+      ;(input as HTMLInputElement).focus()
+    } else {
+      this.active = this.focus = true
+    }
   }
 
   display(value: Input) {
@@ -178,22 +190,13 @@ export default class RbInput extends Vue {
 }
 </script>
 <style lang="scss" module>
-.input {
+.rc-input {
   position: relative;
   display: flex;
   margin-bottom: 20px;
   border: 1px solid $border-color;
   background-color: $reverse-color;
-  padding: 0 16px;
   outline: 0;
-
-  > input {
-    padding: 10px 0;
-    flex: 1;
-    border: 0;
-    outline: 0;
-    background-color: transparent;
-  }
 
   &:not(:global(.invalid)) {
     &.focus {
@@ -213,103 +216,112 @@ export default class RbInput extends Vue {
     border-color: $invalid-border-color;
     background-color: $invalid-bg-color;
 
-    > input {
-      + .label {
-        color: $invalid-color;
-      }
+    .input + .label {
+      color: $invalid-color;
     }
   }
+}
 
-  .label {
-    position: absolute;
-    top: 50%;
-    left: 16px;
-    transform: translate3d(0, -50%, 0);
-    transition: top 0.5s, transform 0.5s;
-    color: $text-desc-color;
+.input {
+  padding: 10px 16px;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  line-height: 16px;
+  background-color: transparent;
+}
 
-    &.active {
-      top: 0;
-      transform: translate3d(0, -50%, 0) scale(0.8);
-      background-color: $card-bg-color;
+.label {
+  display: inline-block;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  padding: 0 2px;
+  transform: translate3d(0, -50%, 0);
+  transition: top 0.5s, transform 0.5s;
+  color: $text-desc-color;
+
+  &.active {
+    top: 0;
+    transform: translate3d(0, -50%, 0) scale(0.8);
+    background-color: $card-bg-color;
+  }
+}
+
+$selection-height: 32px;
+
+.selections {
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 0 -1px;
+  max-height: $selection-height * 3;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: $reverse-color;
+  border: 1px solid $border-color;
+  border-top: 0;
+
+  > li {
+    height: $selection-height;
+    line-height: $selection-height;
+    padding: 0 10px;
+
+    &:hover {
+      cursor: pointer;
+      color: rgba(black, 0.95);
+      background-color: rgba(black, 0.05);
     }
   }
+}
 
-  $selection-height: 32px;
+.selected {
+  flex: 1;
+  min-height: 36px;
+  margin-bottom: 0;
+  padding-top: 8px;
 
-  .selections {
-    position: absolute;
-    z-index: 1;
-    top: 100%;
-    left: 0;
-    right: 0;
-    margin: 0 -1px;
-    max-height: $selection-height * 3;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: $reverse-color;
-    border: 1px solid $border-color;
-    border-top: 0;
+  > li {
+    display: inline-flex;
+    padding: 3px 10px;
+    border-radius: 3px;
+    background-color: $btn-tip-bg-color;
+    box-shadow: inset 0 0 0 1px rgba(34, 36, 38, 0.15);
+    cursor: pointer;
+    align-items: center;
+    margin-bottom: 3px;
+    margin-right: 5px;
 
-    > li {
-      height: $selection-height;
-      line-height: $selection-height;
-      padding: 0 10px;
+    > i {
+      margin-left: 5px;
+      padding: 2px;
+      font-size: 12px;
+      opacity: 0.5;
 
       &:hover {
-        cursor: pointer;
-        color: rgba(black, 0.95);
-        background-color: rgba(black, 0.05);
+        opacity: 1;
       }
     }
   }
+}
 
-  .selected {
-    flex: 1;
-    min-height: 36px;
-    margin-bottom: 0;
-    padding-top: 6px;
+.left {
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+}
 
-    > li {
-      display: inline-flex;
-      padding: 4px 10px;
-      border-radius: 3px;
-      background-color: $btn-tip-bg-color;
-      box-shadow: inset 0 0 0 1px rgba(34, 36, 38, 0.15);
-      cursor: pointer;
-      align-items: center;
-      margin-bottom: 6px;
-      margin-right: 5px;
+.right {
+  display: flex;
+  align-items: center;
+}
 
-      > i {
-        margin-left: 5px;
-        padding: 2px;
-        font-size: 12px;
-        opacity: 0.5;
-
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-  }
-
-  .left {
-    display: flex;
-    align-items: center;
-    padding-right: 10px;
-  }
-
-  .right {
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-  }
-
-  .error {
-    margin-right: 5px;
-    font-size: 12px;
-    color: $invalid-color;
-  }
+.error {
+  margin-right: 5px;
+  font-size: 12px;
+  color: $invalid-color;
 }
 </style>

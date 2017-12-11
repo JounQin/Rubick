@@ -20,7 +20,7 @@ main
              v-model="_self[type]"
              :type="type.indexOf('password') !== -1 ? 'password' : 'text'"
              @input="$v[type].$touch()")
-      template(v-if="$v[type].$error.required", slot="error") {{ $t('required') }}
+      template(v-if="$v[type].$dirty && !$v[type].required", slot="error") {{ $t('required') }}
     rb-btn.btn-block(type="submit", :disabled="$v.$invalid") {{ $t('register') }}
   .tips.text-center
     router-link(to="/login") {{ $t('login_tips') }}

@@ -30,6 +30,14 @@ import NAV_CONFIG from './nav-config'
 })
 export default class Console extends Vue {
   navConfig = NAV_CONFIG
+
+  mounted() {
+    this.$root.$el.style.height = '100%'
+  }
+
+  destoryed() {
+    this.$root.$el.style.height = null
+  }
 }
 </script>
 <style lang="scss" module>

@@ -20,7 +20,6 @@ $img-height: 72px;
   padding: $spacing;
   align-items: center;
   justify-content: center;
-  overflow-x: hidden;
   color: #494949;
 
   header {

@@ -30,7 +30,7 @@ export default (context: ServerContext) =>
       },
     )
 
-    const { app, router, store, prepare, ready } = await createApp(axios, ctx)
+    const { app, router, store, ready } = createApp(axios, ctx)
 
     const { url } = ctx
     const { fullPath } = router.resolve(url).route
@@ -38,8 +38,6 @@ export default (context: ServerContext) =>
     if (fullPath !== url) {
       return reject({ status: 302, url: fullPath })
     }
-
-    await prepare()
 
     ready()
 

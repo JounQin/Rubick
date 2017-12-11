@@ -12,7 +12,8 @@ export interface Region {
 
 export interface CommonState {
   user: User
-  regions: Region[]
+  checked?: boolean
+  regions?: Region[]
 }
 export interface RootState {
   common: CommonState

@@ -6,15 +6,17 @@ import { CommonState, User } from 'types'
 
 enum TYPES {
   SET_USER = 'SET_USER',
+  SET_CHECKED = 'SET_CHECKED',
   SET_REGIONS = 'SET_REGIONS',
 }
 
 export default (axios: AxiosInstance, ctx?: Context) => {
-  const state: CommonState = { user: {} as User, regions: null }
+  const state: CommonState = { user: {} as User }
 
   const actions = {
     async loginCheck({ commit }: Store<CommonState>) {
       const { data: user } = await axios.get('/login')
+      commit(TYPES.SET_CHECKED, true)
       commit(TYPES.SET_USER, user)
     },
     setUser({ commit }: Store<CommonState>, user: User) {
@@ -27,6 +29,9 @@ export default (axios: AxiosInstance, ctx?: Context) => {
   }
 
   const mutations = {
+    [TYPES.SET_CHECKED](s: CommonState, checked: boolean) {
+      s.checked = checked
+    },
     [TYPES.SET_USER](s: CommonState, user: User) {
       s.user = user
     },

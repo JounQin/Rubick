@@ -15,26 +15,29 @@ Component.registerHooks([
   'beforeRouteUpdate',
 ])
 
-export default async (axios: AxiosInstance, ctx?: Context) => {
+export default (axios: AxiosInstance, ctx?: Context) => {
   const store = createStore(axios, ctx)
   const router = createRouter()
 
-  const prepare = async () => await store.dispatch('loginCheck')
-
   const ready = () => {
-    router.beforeEach((to, from, next) => {
-      if (
-        to.matched.some(route => route.meta.auth) &&
-        !store.state.common.user.namespace
-      ) {
-        next({
-          path: '/login',
-          replace: true,
-          query: {
-            next: to.fullPath,
-          },
-        })
-        return
+    router.beforeEach(async (to, from, next) => {
+      if (to.matched.some(route => route.meta.auth)) {
+        const { common } = store.state
+
+        if (!common.checked) {
+          await store.dispatch('loginCheck')
+        }
+
+        if (!common.user.namespace) {
+          next({
+            path: '/login',
+            replace: true,
+            query: {
+              next: to.fullPath,
+            },
+          })
+          return
+        }
       }
 
       next()
@@ -42,7 +45,6 @@ export default async (axios: AxiosInstance, ctx?: Context) => {
   }
 
   if (!ctx && !window.__INITIAL_STATE__) {
-    await prepare()
     ready()
   }
 
@@ -52,5 +54,5 @@ export default async (axios: AxiosInstance, ctx?: Context) => {
     render: h => h(App),
   })
 
-  return { app, router, store, prepare, ready }
+  return { app, router, store, ready }
 }

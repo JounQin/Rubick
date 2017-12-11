@@ -23,37 +23,36 @@ injectAllRoutes(router)
 export default (app?: Koa) => {
   const provided = !!app
 
+  const middlewares: Koa.Middleware[] = [
+    bodyParser(),
+    router.routes(),
+    router.allowedMethods(),
+    async (ctx, next) => {
+      if (
+        !ctx.matched.length &&
+        /^\/api/.test(ctx.url) &&
+        !/\.[a-z]{2-4}\d?$/.test(ctx.path)
+      ) {
+        const { result, status } = await jakiro({ ctx })
+
+        ctx.body = result
+
+        if (status !== 404) {
+          ctx.status = status
+        }
+      }
+
+      await next()
+    },
+  ]
+
   if (!app) {
     app = new Koa()
+    app.keys = getEnv(ENV.APP_KEYS, MODE.STR_ARR)
+    middlewares.unshift(session({}, app))
   }
 
-  app.keys = getEnv(ENV.APP_KEYS, MODE.STR_ARR)
-
-  app.use(
-    compose([
-      session({}, app),
-      bodyParser(),
-      router.routes(),
-      router.allowedMethods(),
-      async (ctx, next) => {
-        if (
-          !ctx.matched.length &&
-          /^\/api/.test(ctx.url) &&
-          !/\.[a-z]{2-4}\d?$/.test(ctx.path)
-        ) {
-          const { result, status } = await jakiro({ ctx })
-
-          ctx.body = result
-
-          if (status !== 404) {
-            ctx.status = status
-          }
-        }
-
-        await next()
-      },
-    ]),
-  )
+  app.use(compose(middlewares))
 
   if (provided) {
     return

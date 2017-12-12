@@ -40,7 +40,7 @@ const createTranslate = (DEFAULT_LOCALE = ZH) => {
 
   instance.toggleLocale = (locale: LOCALE = TOGGLE_LOCALE[instance.locale]) => {
     if (locale !== instance.locale) {
-      setCookie(LOCALE_COOKIE, (instance.locale = locale), Infinity)
+      setCookie(LOCALE_COOKIE, (instance.locale = locale), Infinity, '/')
       setDocLang(locale)
     }
   }

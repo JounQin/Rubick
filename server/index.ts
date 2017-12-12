@@ -21,9 +21,9 @@ import { BundleRenderer, createBundleRenderer } from 'vue-server-renderer'
 import * as koaPkg from 'koa/package.json'
 import * as vuePkg from 'vue/package.json'
 
-import { ACCEPT_LANGUAGE, ENV, MODE, getEnv } from 'commons'
+import { ACCEPT_LANGUAGE, ENV, MODE, SESSION_CONFIG, getEnv } from 'commons'
 import { LOCALE } from 'types'
-import { LOCALE_COOKIE } from 'utils'
+import { INFINITY_DATE, LOCALE_COOKIE } from 'utils'
 
 import config, { globals, paths } from '../build/config'
 import startRouter from './router'
@@ -55,7 +55,7 @@ const app = new Koa()
 
 app.keys = getEnv(ENV.APP_KEYS, MODE.STR_ARR)
 
-app.use(compose([session({}, app), compress(), logger()]))
+app.use(compose([session(SESSION_CONFIG, app), compress(), logger()]))
 
 if (__DEV__) {
   app.use(
@@ -142,7 +142,11 @@ app.use(async (ctx, next) => {
   const locale = originalLocale || acceptLanguage.get(ctx.get(ACCEPT_LANGUAGE))
 
   if (!originalLocale) {
-    ctx.cookies.set(LOCALE_COOKIE, locale, { httpOnly: false })
+    ctx.cookies.set(LOCALE_COOKIE, locale, {
+      httpOnly: false,
+      path: '/',
+      expires: new Date(INFINITY_DATE),
+    })
   }
 
   ctx.set(DEFAULT_HEADERS)

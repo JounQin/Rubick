@@ -32,6 +32,7 @@ export default () =>
             name: 'container',
             path: '/container',
             component: RouterView,
+            redirect: '/container/application',
             children: [
               {
                 name: 'application',

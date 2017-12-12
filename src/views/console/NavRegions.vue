@@ -3,13 +3,14 @@ rb-input(:class="$style.navRegions"
          :selections="regions"
          displayField="name"
          valueField="id"
-         v-model="region")
+         :value="regionId",
+         @input="setRegionId($event)")
   router-link(to="/region", slot="left")
     i.fa.fa-server
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { State } from 'vuex-class'
+import { Action, State } from 'vuex-class'
 
 import { Region, RootState } from 'types'
 
@@ -24,16 +25,11 @@ export default class NavRegions extends Vue {
   @State((state: RootState) => state.common.regions)
   regions: Region[]
 
-  regionId: string = null
+  @State((state: RootState) => state.common.regionId)
+  regionId: string
 
-  get region() {
-    const { regions } = this
-    return this.regionId || (regions && regions[0].id)
-  }
-
-  set region(id: string) {
-    this.regionId = id
-  }
+  @Action
+  setRegionId(regionId: string) {}
 }
 </script>
 <style lang="scss" module>

@@ -1,3 +1,5 @@
+import { INFINITY_DATE } from './constants'
+
 export const getCookie = (name: string) =>
   decodeURIComponent(
     document.cookie.replace(
@@ -26,9 +28,7 @@ export const setCookie = (
     switch (end.constructor) {
       case Number:
         sExpires =
-          end === Infinity
-            ? '; expires=Fri, 31 Dec 9999 23:59:59 GMT'
-            : '; max-age=' + end
+          end === Infinity ? `; expires=${INFINITY_DATE}` : '; max-age=' + end
         break
       case String:
         sExpires = '; expires=' + end

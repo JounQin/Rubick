@@ -29,7 +29,7 @@
   transition(name="scale-y")
     ul.list-unstyled(v-if="selectOptions", v-show="selectionsActive", :class="$style.selections")
       li(v-for="selection of selectOptions"
-         :class="{ [$style.selectedItem]: (valueField ? selection[valueField] : selection) === input }"
+         :class="{ [$style.selectedItem]: (valueField ? selection[valueField] : selection) === value }"
          @click.stop="toggleSelection(selection)") {{ displayField ? selection[displayField] : selection }}
 </template>
 <script lang="ts">
@@ -68,11 +68,11 @@ export default class RbInput extends Vue {
   @Model(INPUT, {
     type: [String, Number, Array],
   })
-  input: Input | Input[]
+  value: Input | Input[]
 
   get model() {
-    const { input } = this
-    return this.selections ? this.display(input as Input) : input
+    const { value } = this
+    return this.selections ? this.display(value as Input) : value
   }
 
   set model(model) {
@@ -95,7 +95,7 @@ export default class RbInput extends Vue {
     )
   }
 
-  active = !!(Array.isArray(this.input) ? this.input.length : this.input)
+  active = !!(Array.isArray(this.value) ? this.value.length : this.value)
   focus = false
   selectionsActive = false
   selected: string[] = []

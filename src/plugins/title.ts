@@ -3,18 +3,21 @@ import { Route } from 'vue-router'
 
 import { translate } from './translate'
 
-export const breadCrumbs = (route: Route) =>
+export const breadCrumbs = (route: Route, $t = translate) =>
   route.matched.reduce((prev, { meta, name, path }) => {
     const { title } = meta
-    const text =
+    let text =
       title && typeof title === 'function'
         ? title.call(route, route)
         : title || name
 
     if (text) {
+      text = snakeCase(text)
+      const nav = 'nav_' + text
+      const tNav = $t(nav)
       prev.push({
         link: path,
-        text,
+        text: nav === tNav ? $t(text) : tNav,
       })
     }
 
@@ -22,13 +25,8 @@ export const breadCrumbs = (route: Route) =>
   }, [])
 
 export const routeTitle = (route: Route, $t = translate) => {
-  const title = breadCrumbs(route)
-    .map(({ text }) => {
-      text = snakeCase(text)
-      const nav = 'nav_' + text
-      const tNav = $t(nav)
-      return nav === tNav ? $t(text) : tNav
-    })
+  const title = breadCrumbs(route, $t)
+    .map(({ text }) => text)
     .join(' - ')
   const prefix = $t('alauda')
   return title ? `${prefix} - ${title}` : prefix

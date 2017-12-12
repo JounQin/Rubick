@@ -9,3 +9,5 @@ export const CCP_CONFIG = {
   SERVER_PORT: getEnv(ENV.CCP_SERVERPORT),
   SOFT_VERSION: getEnv(ENV.CCP_SOFTVERSION),
 }
+
+export const SESSION_CONFIG = {}

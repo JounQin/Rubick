@@ -12,8 +12,8 @@ import {
   VERIFICATION_CODE_COOKIE,
   jakiro,
   sendSms,
-  toInt,
 } from 'commons'
+import { toInt } from 'utils'
 
 const randomCode = () => toInt(Math.random() * 9000 + 1000) + ''
 

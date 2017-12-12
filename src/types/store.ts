@@ -19,6 +19,7 @@ export interface CommonState {
   user: User
   checked?: boolean
   regions?: Region[]
+  regionId?: string
   profile?: Profile
 }
 export interface RootState {

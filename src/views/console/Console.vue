@@ -11,10 +11,18 @@ div(:class="$style.console")
       nav-regions
       div(:class="$style.whitespace")
       nav-menus
+    div(:class="$style.breadCrumbs")
+      ol.list-unstyled
+        li(v-for="({link, text}, i) of routes")
+          span(v-if="i") /
+          span(v-if="!i || i === routes.length - 1") {{ text }}
+          router-link(v-else, :to="link") {{ text }}
     router-view
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+
+import { breadCrumbs } from 'plugins'
 
 import NavList from './NavList.vue'
 import NavRegions from './NavRegions.vue'
@@ -34,6 +42,10 @@ import NAV_CONFIG from './nav-config'
 })
 export default class Console extends Vue {
   navConfig = NAV_CONFIG
+
+  get routes() {
+    return breadCrumbs(this.$route, this.$t)
+  }
 
   mounted() {
     this.$root.$el.style.height = '100%'
@@ -93,5 +105,26 @@ export default class Console extends Vue {
 
 .whitespace {
   flex: 1;
+}
+
+.bread-crumbs {
+  padding: 10px 20px;
+  background-color: $reverse-color;
+
+  > ol {
+    margin-bottom: 0;
+
+    > li {
+      display: inline-block;
+
+      > * {
+        padding: 0 5px;
+      }
+
+      > span {
+        color: $bread-crumb-color;
+      }
+    }
+  }
 }
 </style>

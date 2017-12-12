@@ -3,7 +3,7 @@ import { Context } from 'koa'
 import { Controller, RequestMapping } from '../decorators'
 
 import { jakiro } from 'commons'
-import { User } from 'types'
+import { Profile, Region, User } from 'types'
 
 @Controller
 export class CommonController {
@@ -11,8 +11,8 @@ export class CommonController {
   async commonCheck(ctx: Context) {
     const user: User = ctx.session.user
 
-    let profile
-    let regions
+    let profile: Profile
+    let regions: Region[]
 
     try {
       const [

@@ -7,7 +7,14 @@ import * as session from 'koa-session'
 
 import config from '../../build/config'
 
-import { API_PREFIX, ENV, MODE, getEnv, jakiro } from './commons'
+import {
+  API_PREFIX,
+  ENV,
+  MODE,
+  SESSION_CONFIG,
+  getEnv,
+  jakiro,
+} from './commons'
 import { injectAllRoutes } from './decorators'
 
 import './controllers'
@@ -49,7 +56,7 @@ export default (app?: Koa) => {
   if (!app) {
     app = new Koa()
     app.keys = getEnv(ENV.APP_KEYS, MODE.STR_ARR)
-    middlewares.unshift(session({}, app))
+    middlewares.unshift(session(SESSION_CONFIG, app))
   }
 
   app.use(compose(middlewares))

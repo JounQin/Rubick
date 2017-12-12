@@ -1,5 +1,5 @@
 <template lang="pug">
-rb-input(:class="$style.rcInput"
+rb-input(:class="$style.navRegions"
          :selections="regions"
          displayField="name"
          valueField="id"
@@ -37,22 +37,49 @@ export default class NavRegions extends Vue {
 }
 </script>
 <style lang="scss" module>
-.rc-input:global(.rc-input) {
+.nav-regions:global(.rc-input) {
+  $radius: 14px;
+
   margin-bottom: 0;
-  border-radius: 14px;
+  border-radius: $radius;
   cursor: pointer;
 
-  > :global(.left) {
-    padding-left: 12px;
-  }
+  :global {
+    .content:hover {
+      .input,
+      .right {
+        background-color: $bage-bg-color;
+      }
+    }
 
-  > :global(.input) {
-    padding: 6px 8px;
-    border-left: 1px solid $dividing-line-color;
-  }
+    .left {
+      padding-left: 12px;
+      border-top-left-radius: $radius;
+      border-bottom-left-radius: $radius;
 
-  > :global(.right) {
-    padding-right: 12px;
+      &:hover {
+        background-color: $bage-bg-color;
+
+        ~ :global(.input) {
+          background-color: transparent;
+        }
+
+        ~ :global(.right) {
+          background-color: transparent;
+        }
+      }
+    }
+
+    .input {
+      padding: 6px 20px;
+      border-left: 1px solid $dividing-line-color;
+    }
+
+    .right {
+      padding-right: 12px;
+      border-top-right-radius: $radius;
+      border-bottom-right-radius: $radius;
+    }
   }
 
   > :global(.list-unstyled) {

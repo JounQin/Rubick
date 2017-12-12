@@ -12,5 +12,9 @@
   "nav_mirror": "Mirror",
   "nav_docs": "Documents",
   "nav_locale": "中文（简体）",
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "user_center": "User Center",
+  "account_center": "Account Center",
+  "permission_management": "Permissions",
+  "logout": "Logout"
 }

@@ -12,5 +12,9 @@
   "nav_mirror": "免费加速器",
   "nav_docs": "用户文档",
   "nav_locale": "English",
-  "dashboard": "概览"
+  "dashboard": "概览",
+  "user_center": "用户中心",
+  "account_center": "账号中心",
+  "permission_management": "权限管理",
+  "logout": "退出登录"
 }

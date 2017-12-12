@@ -9,6 +9,8 @@ div(:class="$style.console")
   div(:class="$style.rightPanel")
     header
       nav-regions
+      div(:class="$style.whitespace")
+      nav-menus
     router-view
 </template>
 <script lang="ts">
@@ -16,6 +18,7 @@ import { Component, Vue } from 'vue-property-decorator'
 
 import NavList from './NavList.vue'
 import NavRegions from './NavRegions.vue'
+import NavMenus from './NavMenus.vue'
 
 import NAV_CONFIG from './nav-config'
 
@@ -23,9 +26,10 @@ import NAV_CONFIG from './nav-config'
   components: {
     NavList,
     NavRegions,
+    NavMenus,
   },
   async asyncData({ store }) {
-    await store.dispatch('fetchRegions')
+    await store.dispatch('fetchCommon')
   },
 })
 export default class Console extends Vue {
@@ -85,5 +89,9 @@ export default class Console extends Vue {
     background-color: $toolbar-bg-color;
     padding: 0 20px;
   }
+}
+
+.whitespace {
+  flex: 1;
 }
 </style>

@@ -4,30 +4,33 @@
     @focus="onFocus"
     @blur="blur"
     tabIndex="1")
-  .left(:class="$style.left", v-if="$slots.left")
-    slot(name="left")
-  input(v-if="!selections || (maxNum === 1 && !model)"
-        v-model="model"
-        :class="$style.input"
-        :type="type"
-        :readonly="selections"
-        ref="input"
-        @focus="active = focus = true"
-        @blur="blur")
-  template(v-else)
-    .input(v-if="maxNum === 1", :class="$style.input") {{ model }}
-    ul.list-unstyled(v-else, :class="$style.selected")
-      li(v-for="(value, index) of selected", @click.stop="") {{ display(value) }}
-        i.fa.fa-remove(@click.stop="removeSelected(value, index)")
+  .content(:class="$style.content")
+    .left(:class="$style.left", v-if="$slots.left")
+      slot(name="left")
+    input(v-if="!selections || (maxNum === 1 && !model)"
+          v-model="model"
+          :class="$style.input"
+          :type="type"
+          :readonly="selections"
+          ref="input"
+          @focus="active = focus = true"
+          @blur="blur")
+    template(v-else)
+      .input(v-if="maxNum === 1", :class="$style.input") {{ model }}
+      ul.list-unstyled(v-else, :class="$style.selected")
+        li(v-for="(value, index) of selected", @click.stop="") {{ display(value) }}
+          i.fa.fa-remove(@click.stop="removeSelected(value, index)")
+    span(:class="[$style.label, {[$style.active]: active}]") {{ label }}
+    .right(:class="$style.right")
+      span(v-if="$slots.error", :class="$style.error")
+        slot(name="error")
+      rb-captcha(v-if="captcha", :type="captcha", :disabled="captchaDisabled", :addon="captchaData")
+      i.fa.fa-caret-down(v-if="selections")
   transition(name="scale-y")
     ul.list-unstyled(v-if="selectOptions", v-show="selectionsActive", :class="$style.selections")
-      li(v-for="selection of selectOptions", @click.stop="toggleSelection(selection)") {{ displayField ? selection[displayField] : selection }}
-  span(:class="[$style.label, {[$style.active]: active}]") {{ label }}
-  .right(:class="$style.right")
-    span(v-if="$slots.error", :class="$style.error")
-      slot(name="error")
-    rb-captcha(v-if="captcha", :type="captcha", :disabled="captchaDisabled", :addon="captchaData")
-    i.fa.fa-caret-down(v-if="selections")
+      li(v-for="selection of selectOptions"
+         :class="{ [$style.selectedItem]: (valueField ? selection[valueField] : selection) === input }"
+         @click.stop="toggleSelection(selection)") {{ displayField ? selection[displayField] : selection }}
 </template>
 <script lang="ts">
 import { Component, Model, Prop, Vue } from 'vue-property-decorator'
@@ -192,7 +195,6 @@ export default class RbInput extends Vue {
 <style lang="scss" module>
 .rc-input {
   position: relative;
-  display: flex;
   margin-bottom: 20px;
   border: 1px solid $border-color;
   background-color: $reverse-color;
@@ -220,6 +222,10 @@ export default class RbInput extends Vue {
       color: $invalid-color;
     }
   }
+}
+
+.content {
+  display: flex;
 }
 
 .input {
@@ -258,7 +264,7 @@ $selection-height: 32px;
   left: 0;
   right: 0;
   margin: 0 -1px;
-  max-height: $selection-height * 3;
+  max-height: $selection-height * 3 + 1px;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: $reverse-color;
@@ -269,11 +275,21 @@ $selection-height: 32px;
     height: $selection-height;
     line-height: $selection-height;
     padding: 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: rgba(black, 0.87);
 
-    &:hover {
-      cursor: pointer;
-      color: rgba(black, 0.95);
+    &.selected-item {
+      font-weight: 700;
+      color: rgba(65, 76, 94, 0.7);
       background-color: rgba(black, 0.05);
+    }
+
+    &:not(.selected-item):hover {
+      cursor: pointer;
+      color: #53bce5;
+      background-color: #d6eef8;
     }
   }
 }
@@ -281,6 +297,7 @@ $selection-height: 32px;
 .selected {
   flex: 1;
   min-height: 36px;
+  margin-left: 16px;
   margin-bottom: 0;
   padding-top: 8px;
 
@@ -317,6 +334,10 @@ $selection-height: 32px;
 .right {
   display: flex;
   align-items: center;
+
+  > i {
+    margin-right: 10px;
+  }
 }
 
 .error {

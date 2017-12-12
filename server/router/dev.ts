@@ -1,3 +1,13 @@
+import { exec } from 'shelljs'
+
 import startRouter from '.'
 
-startRouter()
+exec('kill -9 $(lsof -i:4001 -t) 2> /dev/null', (code, stdout, stderr) => {
+  if (stderr) {
+    // tslint:disable-next-line no-console
+    console.error(stderr)
+    return
+  }
+
+  startRouter()
+})

@@ -46,7 +46,6 @@ export const jakiro = async <T = any>({
   const { user } = ctx.session
 
   headers = {
-    // ...ctx.headers,
     ...headers,
     'Alauda-Request-ID': ctx.get('alauda-request-id'),
     'User-Agent': 'rubick/v1.0',
@@ -67,9 +66,10 @@ export const jakiro = async <T = any>({
       headers,
     })
   } catch (e) {
+    const { response } = e
     resp = {
-      data: e.response && e.response.data,
-      status: 502,
+      data: response.data,
+      status: response.status,
       error: e.message,
     } as any
   }
@@ -84,18 +84,22 @@ export const jakiro = async <T = any>({
     result = {
       code: 'malformed_jakiro_response',
       source: '1019',
-      message: resp.error || resp.text,
+      status,
+      error: resp.error,
     }
   }
-
-  result = Array.isArray(result) ? { result } : result
 
   debug('\nurl:%s\nresult: %O\nstatus:%d', url, result, status)
 
   if (result.errors) {
     result.error = result.errors[0]
     result.code = result.error.code
+    result.status = status
     delete result.errors
+  }
+
+  if (result.error) {
+    throw result
   }
 
   return { result, status }

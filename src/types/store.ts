@@ -5,6 +5,11 @@ export interface User {
   token?: string
 }
 
+export interface Profile {
+  company: string
+  logo_file: string
+}
+
 export interface Region {
   id: string
   name: string
@@ -14,6 +19,7 @@ export interface CommonState {
   user: User
   checked?: boolean
   regions?: Region[]
+  profile?: Profile
 }
 export interface RootState {
   common: CommonState

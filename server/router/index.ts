@@ -33,12 +33,12 @@ export default (app?: Koa) => {
         /^\/api/.test(ctx.url) &&
         !/\.[a-z]{2-4}\d?$/.test(ctx.path)
       ) {
-        const { result, status } = await jakiro({ ctx })
-
-        ctx.body = result
-
-        if (status !== 404) {
-          ctx.status = status
+        try {
+          const { result } = await jakiro({ ctx })
+          ctx.body = result
+        } catch (e) {
+          ctx.body = e
+          ctx.status = e.status
         }
       }
 

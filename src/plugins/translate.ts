@@ -32,12 +32,10 @@ const createTranslate = (DEFAULT_LOCALE = ZH) => {
   const watchers: Array<(prev?: LOCALE, curr?: LOCALE) => void> = []
 
   const instance: Translate = (key: string, params?: StrObj) => {
-    const value = translations[instance.locale][key]
-    return (
-      (value &&
-        value.replace(/{([^{}]+)}/g, (matched, $0) => params[$0.trim()])) ||
-      key
-    )
+    let value = translations[instance.locale][key]
+    value =
+      value && value.replace(/{([^{}]+)}/g, (matched, $0) => params[$0.trim()])
+    return value == null ? key : value
   }
 
   instance.toggleLocale = (locale: LOCALE = TOGGLE_LOCALE[instance.locale]) => {

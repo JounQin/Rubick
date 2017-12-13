@@ -4,8 +4,8 @@ div(tabindex="1"
     @click="active = !active"
     @blur="active = false")
   div(:class="$style.content")
-    span(v-if="user.username") {{ user.username }}@
-    | {{ user.namespace }}
+    span(v-if="namespace") {{ username }}@
+    | {{ namespace }}
     i.fa.fa-caret-down
     img(:src="profile.logo_file")
   transition(name="scale-y")
@@ -13,7 +13,7 @@ div(tabindex="1"
       li
         router-link(to="/user")
           i.fa.fa-user
-          | {{ $t((user.username ? 'user' : 'account') + '_center') }}
+          | {{ $t((username ? 'user' : 'account') + '_center') }}
       li
         router-link(to="/permission")
           i.fa.fa-group
@@ -25,15 +25,16 @@ div(tabindex="1"
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Action, State } from 'vuex-class'
+import { Action, Getter, State } from 'vuex-class'
 
 import { Profile, RootState, User } from 'types'
 import { confirm } from 'utils'
 
 @Component
 export default class NavMenus extends Vue {
-  @State((state: RootState) => state.common.user)
-  user: User
+  @Getter('username') username: string
+  @Getter('namespace') namespace: string
+
   @State((state: RootState) => state.common.profile)
   profile: Profile
 

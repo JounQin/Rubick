@@ -1,3 +1,5 @@
+import { Store } from 'vuex'
+
 export interface User {
   namespace: string
   username?: string
@@ -22,6 +24,13 @@ export interface CommonState {
   regionId?: string
   profile?: Profile
 }
+
 export interface RootState {
   common: CommonState
+}
+
+export type RootStore = Store<RootState>
+
+export type CommonStore = Store<CommonState> & {
+  rootState: RootState
 }

@@ -3,6 +3,7 @@ rb-input(:class="$style.navRegions"
          :selections="regions"
          displayField="name"
          valueField="id"
+         :emptyText="$t('no_available_region')"
          :value="regionId",
          @input="setRegionId($event)")
   router-link(to="/region", slot="left")

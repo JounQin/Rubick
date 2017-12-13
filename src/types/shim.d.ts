@@ -1,4 +1,4 @@
-import { AxiosStatic } from 'axios'
+import { AxiosInstance } from 'axios'
 import VUE from 'vue'
 import { Route } from 'vue-router'
 import { Store } from 'vuex'
@@ -40,7 +40,7 @@ declare module 'vue/types/vue' {
   interface Vue {
     $t: Translate
     $v: any
-    $http: AxiosStatic
+    $http: AxiosInstance
     $modal: RbModal
     $style: any
     $util: {
@@ -63,7 +63,13 @@ declare module 'vue/types/vue' {
 
 declare module 'vue/types/options' {
   interface ComponentOptions<V extends VUE> {
-    asyncData?: (params: { store: Store<RootState>; route: Route }) => any
+    asyncData?: (
+      params: {
+        axios: AxiosInstance
+        store: Store<RootState>
+        route: Route
+      },
+    ) => any
     title?: string | (() => string)
     validator?: any
   }

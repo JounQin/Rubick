@@ -10,7 +10,7 @@ export const getCookie = (name: string) =>
       ),
       '$1',
     ),
-  )
+  ) || null
 
 export const setCookie = (
   name: string,

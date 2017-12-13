@@ -61,12 +61,14 @@ export default (context: ServerContext) =>
       context.title = routeTitle(route, $t)
 
       try {
-        await Promise.all(
-          matched.map(({ options }: any) => {
-            const { asyncData } = options || { asyncData: null }
-            return asyncData && asyncData({ store, route })
-          }),
-        )
+        let promise = Promise.resolve()
+        matched.forEach(({ options }: any) => {
+          const { asyncData } = options || { asyncData: null }
+          promise = promise.then(
+            () => asyncData && asyncData({ axios, store, route }),
+          )
+        })
+        await promise
       } catch (e) {
         return reject(e.response ? e.response.data : e)
       }

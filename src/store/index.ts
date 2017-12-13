@@ -13,3 +13,5 @@ export default (axios: AxiosInstance, ctx?: Context) =>
     strict: __DEV__,
     modules: createModules(axios, ctx),
   })
+
+export * from './chunks'

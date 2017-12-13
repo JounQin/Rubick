@@ -35,7 +35,7 @@ const routerReady = () => {
         await Promise.all(
           activated.map(({ options }: any) => {
             const { asyncData } = options || { asyncData: null }
-            return asyncData && asyncData({ store, route: to })
+            return asyncData && asyncData({ axios, store, route: to })
           }),
         )
       } catch (e) {

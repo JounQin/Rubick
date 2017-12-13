@@ -31,10 +31,10 @@ export class CommonController {
 
       profile = profileResult
       regions = regionsResult
-    } catch (e) {
+    } catch ({ result, status }) {
       ctx.session = null
-      ctx.body = e
-      ctx.status = e.status
+      ctx.body = result
+      ctx.status = status
       return
     }
 

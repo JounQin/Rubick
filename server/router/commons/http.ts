@@ -66,11 +66,10 @@ export const jakiro = async <T = any>({
       headers,
     })
   } catch (e) {
-    const { response } = e
     resp = {
-      data: response.data,
-      status: response.status,
+      data: e.response.data,
       error: e.message,
+      status: e.response.status,
     } as any
   }
 
@@ -84,7 +83,6 @@ export const jakiro = async <T = any>({
     result = {
       code: 'malformed_jakiro_response',
       source: '1019',
-      status,
       error: resp.error,
     }
   }
@@ -94,12 +92,11 @@ export const jakiro = async <T = any>({
   if (result.errors) {
     result.error = result.errors[0]
     result.code = result.error.code
-    result.status = status
     delete result.errors
   }
 
   if (result.error) {
-    throw result
+    throw { result, status }
   }
 
   return { result, status }

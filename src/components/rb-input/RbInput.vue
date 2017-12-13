@@ -7,7 +7,7 @@
   .content(:class="$style.content")
     .left(:class="$style.left", v-if="$slots.left")
       slot(name="left")
-    input(v-if="!selections || (maxNum === 1 && !model)"
+    input(v-if="!emptyText && (!selections || (maxNum === 1 && !model))"
           v-model="model"
           :class="$style.input"
           :type="type"
@@ -16,7 +16,7 @@
           @focus="active = focus = true"
           @blur="blur")
     template(v-else)
-      .input(v-if="maxNum === 1", :class="$style.input") {{ model }}
+      .input(v-if="emptyText || maxNum === 1", :class="$style.input") {{ model || emptyText }}
       ul.list-unstyled(v-else, :class="$style.selected")
         li(v-for="(value, index) of selected", @click.stop="") {{ display(value) }}
           i.fa.fa-remove(@click.stop="removeSelected(value, index)")
@@ -27,7 +27,7 @@
       rb-captcha(v-if="captcha", :type="captcha", :disabled="captchaDisabled", :addon="captchaData")
       i.fa.fa-caret-down(v-if="selections")
   transition(name="scale-y")
-    ul.list-unstyled(v-if="selectOptions", v-show="selectionsActive", :class="$style.selections")
+    ul.list-unstyled(v-if="!emptyText && selectOptions", v-show="selectionsActive", :class="$style.selections")
       li(v-for="selection of selectOptions"
          :class="{ [$style.selectedItem]: (valueField ? selection[valueField] : selection) === value }"
          @click.stop="toggleSelection(selection)") {{ displayField ? selection[displayField] : selection }}
@@ -60,6 +60,7 @@ export default class RbInput extends Vue {
   @Prop() selections: Selection[]
   @Prop() displayField: string
   @Prop() valueField: string
+  @Prop() emptyText: string
   @Prop({ default: 1 })
   maxNum: number
 

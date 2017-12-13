@@ -1,4 +1,5 @@
 export * from './form'
+export * from './modal'
 export * from './nav'
 export * from './object'
 export * from './plugin'

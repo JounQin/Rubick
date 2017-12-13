@@ -7,5 +7,8 @@
   "login": "Login",
   "question_mark": "?",
   "colon": ":",
-  "note": "Note"
+  "note": "Note",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "system_message": "System Message"
 }

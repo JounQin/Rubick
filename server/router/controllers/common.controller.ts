@@ -43,4 +43,10 @@ export class CommonController {
       regions,
     }
   }
+
+  @RequestMapping('/logout')
+  logout(ctx: Context) {
+    ctx.session = null
+    ctx.body = null
+  }
 }

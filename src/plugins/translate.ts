@@ -1,3 +1,4 @@
+import { intersection } from 'lodash'
 import Vue from 'vue'
 
 import { LOCALE, StrObj, Translate } from 'types'
@@ -12,6 +13,11 @@ const TOGGLE_LOCALE = {
   [ZH]: EN,
 }
 
+const LOCALE_KEYS: { [key: string]: string[] } = {
+  [EN]: [],
+  [ZH]: [],
+}
+
 const translations: {
   [locale: string]: {
     [key: string]: string
@@ -20,6 +26,21 @@ const translations: {
   const module = context(key)
   const lang = key.match(I18N_REGEX)[1]
   const matched = modules[lang] || (modules[lang] = {})
+
+  if (__DEV__) {
+    const keys = LOCALE_KEYS[lang]
+    const moduleKeys = Object.keys(module)
+
+    const duplicates = intersection(keys, moduleKeys)
+
+    if (duplicates.length) {
+      // tslint:disable-next-line no-console
+      console.warn('detect duplicate keys:', duplicates)
+    }
+
+    keys.push(...moduleKeys)
+  }
+
   Object.assign(matched, module)
   return modules
 }, {})

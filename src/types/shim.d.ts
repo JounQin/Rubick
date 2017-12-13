@@ -5,6 +5,8 @@ import { Store } from 'vuex'
 
 import { RootState, Translate } from 'types'
 
+import { RbModal } from 'components'
+
 declare global {
   interface NodeModule {
     hot: {
@@ -39,6 +41,8 @@ declare module 'vue/types/vue' {
     $t: Translate
     $v: any
     $http: AxiosStatic
+    $modal: RbModal
+    $style: any
     $util: {
       [key: string]: any
     }

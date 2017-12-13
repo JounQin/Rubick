@@ -45,6 +45,12 @@ export default (axios: AxiosInstance, ctx?: Context) => {
         commit(TYPES.SET_REGION_ID, regions[0].id)
       }
     },
+    async logout({ commit }: Store<CommonState>) {
+      await axios.get('/logout')
+      commit(TYPES.SET_USER, {})
+      commit(TYPES.SET_REGIONS, null)
+      commit(TYPES.SET_REGION_ID, null)
+    },
   }
 
   const mutations = {
@@ -63,7 +69,7 @@ export default (axios: AxiosInstance, ctx?: Context) => {
     [TYPES.SET_REGION_ID](s: CommonState, regionId: string) {
       s.regionId = regionId
       if (!ctx) {
-        setCookie(REGION_COOKIE, regionId, Infinity, '/')
+        setCookie(REGION_COOKIE, regionId, regionId ? Infinity : -1, '/')
       }
     },
   }

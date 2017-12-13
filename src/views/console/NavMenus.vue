@@ -19,15 +19,16 @@ div(tabindex="1"
           i.fa.fa-group
           | {{ $t('permission_management') }}
       li
-        div(:class="$style.logout")
+        div(:class="$style.logout", @click="confirmLogout")
           i.fa.fa-sign-out
           | {{ $t('logout') }}
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { State } from 'vuex-class'
+import { Action, State } from 'vuex-class'
 
 import { Profile, RootState, User } from 'types'
+import { confirm } from 'utils'
 
 @Component
 export default class NavMenus extends Vue {
@@ -37,6 +38,21 @@ export default class NavMenus extends Vue {
   profile: Profile
 
   active: boolean = null
+
+  @Action('logout')
+  logout() {}
+
+  confirmLogout() {
+    confirm({
+      tipText: `<div class="${this.$style
+        .tip}"><i class="fa fa-question-circle"></i>${this.$t('logout')}</div>`,
+      confirm: async () => {
+        await this.logout()
+        this.$modal.close()
+        this.$router.replace('/login')
+      },
+    })
+  }
 }
 </script>
 <style lang="scss" module>
@@ -94,6 +110,18 @@ export default class NavMenus extends Vue {
         margin-right: 5px;
       }
     }
+  }
+}
+
+.tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 28px;
+    color: $primary-color;
+    margin-right: 20px;
   }
 }
 </style>

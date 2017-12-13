@@ -41,7 +41,7 @@ export const setCookie = (
   document.cookie =
     encodeURIComponent(name) +
     '=' +
-    encodeURIComponent(value) +
+    encodeURIComponent(value == null ? '' : value) +
     sExpires +
     (domain ? '; domain=' + domain : '') +
     (path ? '; path=' + path : '') +

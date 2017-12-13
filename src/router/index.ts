@@ -3,9 +3,11 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const RouterView = Vue.extend({
-  render: h => h('router-view'),
-})
+const RouterView = (name: string) =>
+  Vue.extend({
+    name,
+    render: h => h('router-view'),
+  })
 
 export default () =>
   new VueRouter({
@@ -31,18 +33,19 @@ export default () =>
           {
             name: 'container',
             path: '/container',
-            component: RouterView,
-            redirect: '/container/application',
+            component: RouterView('Container'),
+            redirect: '/application',
             children: [
               {
                 name: 'application',
-                path: 'application',
-                component: () => import('views/container/Application.vue'),
+                path: '/application',
+                component: () =>
+                  import('views/container/application/Application.vue'),
               },
               {
                 name: 'service',
-                path: 'service',
-                component: () => import('views/container/Service.vue'),
+                path: '/service',
+                component: () => import('views/container/service/Service.vue'),
               },
             ],
           },

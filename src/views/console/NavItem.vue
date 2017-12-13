@@ -19,10 +19,10 @@ li(:class="[$style.item, { [$style.active]: active, [$style.expanded]: expanded 
                     :class="$style.subItems"
                     :style="{ height: expanded ? 32 * item.items.length + 'px' : 0 }")
     li(v-for="{ text } of item.items")
-      router-link(:to="'/' + item.text + '/' + text") {{ $t('nav_' + text) }}
+      router-link(:to="'/' + text") {{ $t('nav_' + text) }}
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 import { NavItem as NavItemType } from 'types'
 
@@ -33,11 +33,12 @@ export default class NavItem extends Vue {
   expanded: boolean = null
 
   get active() {
-    return this.$route.fullPath.startsWith('/' + this.item.text)
+    return this.$route.matched.some(({ name }) => name === this.item.text)
   }
 
-  created() {
-    this.expanded = this.item.items && this.active
+  @Watch('active', { immediate: true })
+  activeChange() {
+    this.expanded = this.active
   }
 }
 </script>

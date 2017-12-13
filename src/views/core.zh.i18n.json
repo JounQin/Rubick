@@ -10,5 +10,11 @@
   "note": "注",
   "cancel": "取消",
   "confirm": "确定",
-  "system_message": "系统消息"
+  "system_message": "系统消息",
+  "name": "名称",
+  "status": "状态",
+  "type": "类型",
+  "label": "标签",
+  "quota_space": "资源空间",
+  "action": "操作"
 }

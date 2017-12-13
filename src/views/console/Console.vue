@@ -17,7 +17,8 @@ div(:class="$style.console")
           span(v-if="i") /
           span(v-if="!i || i === routes.length - 1") {{ text }}
           router-link(v-else, :to="link") {{ text }}
-    router-view
+    div(:class="$style.view")
+      router-view
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
@@ -126,5 +127,9 @@ export default class Console extends Vue {
       }
     }
   }
+}
+
+.view {
+  padding: 15px;
 }
 </style>

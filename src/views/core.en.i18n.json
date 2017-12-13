@@ -10,5 +10,11 @@
   "note": "Note",
   "cancel": "Cancel",
   "confirm": "Confirm",
-  "system_message": "System Message"
+  "system_message": "System Message",
+  "name": "Name",
+  "status": "Status",
+  "type": "Type",
+  "label": "Label",
+  "quota_space": "Quota Space",
+  "action": "Action"
 }

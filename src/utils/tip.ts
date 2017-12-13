@@ -10,7 +10,7 @@ const tip: any = {}
       : Vue.prototype.$modal.open({
           id: TIP_ID,
           component: new Promise(resolve => {
-            ;(require as any).ensure([], (require: any) =>
+            require.ensure([], require =>
               resolve(require('components/rb-modal/RbTipModal.vue')),
             )
           }),

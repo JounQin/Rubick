@@ -1,23 +1,61 @@
 <template lang="pug">
-
+table.table
+  thead
+    tr
+      td {{ $t('name') }}
+      td {{ $t('status') }}
+      td {{ $t('type') }}
+      td {{ $t('label') }}
+      td {{ $t('quota_space') }}
+      td {{ $t('action') }}
+  tbody
+    tr(v-for="{ app_name, current_status, type, labels, space_name } of applications")
+      td {{ app_name }}
+      td {{ current_status }}
+      td {{ type }}
+      td
+        rb-popover
+          span {{ labels ? labels.length : 0 }}
+          template(slot="popover")
+            ul.list-unstyled
+              li(v-for="{ key, value } of labels") {{ key }}: {{ value }}
+      td {{ space_name || 'N/A'}}
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { Module } from 'vuex'
+import { AxiosInstance } from 'axios'
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Module, Store } from 'vuex'
+import { Action, State } from 'vuex-class'
 
 import { applicationModule } from 'store'
+import { Application, RootState } from 'types'
 
 const MODULE_NAME = 'application'
 
+const fetchApplications = async (
+  axios: AxiosInstance,
+  store: Store<RootState>,
+) => {
+  store.registerModule(MODULE_NAME, applicationModule(axios), {
+    preserveState: !__SERVER__,
+  })
+  await store.dispatch(MODULE_NAME + '/fetchApplications')
+}
+
 @Component({
   async asyncData({ axios, store }) {
-    store.registerModule(MODULE_NAME, applicationModule(axios), {
-      preserveState: true,
-    })
-    await store.dispatch(MODULE_NAME + '/fetchApplications')
+    await fetchApplications(axios, store)
   },
 })
-export default class Application extends Vue {}
+export default class ApplicationComponent extends Vue {
+  @State((state: RootState) => state.application.applications)
+  applications: Application[]
+
+  @Watch('$store.state.common.regionId')
+  async regionChange() {
+    await fetchApplications(this.$http, this.$store)
+  }
+}
 </script>
 <style lang="scss" module>
 

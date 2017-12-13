@@ -108,6 +108,7 @@ const webpackConfig: webpack.Configuration = {
       ...globals,
       SERVER_PREFIX: JSON.stringify(config.publicPath),
     }),
+    new webpack.SourceMapDevToolPlugin({ test: /\.(css|js|ts)$/ }),
     new ExtractTextPlugin({
       filename: 'app.[chunkhash].css',
       disable: __DEV__,

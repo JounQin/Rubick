@@ -15,7 +15,7 @@ export const applicationModule = (
   }
 
   const actions: ActionTree<ApplicationState, RootState> = {
-    async fetchApplications({ commit, rootState, rootGetters }) {
+    async fetchApplications({ commit, rootGetters }) {
       const { regionName } = rootGetters
       if (!regionName) {
         return

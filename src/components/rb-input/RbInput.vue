@@ -27,7 +27,7 @@
       rb-captcha(v-if="captcha", :type="captcha", :disabled="captchaDisabled", :addon="captchaData")
       i.fa.fa-caret-down(v-if="selections")
   transition(name="scale-y")
-    ul.list-unstyled(v-if="!emptyText && selectOptions", v-show="selectionsActive", :class="$style.selections")
+    ul.list-unstyled(v-if="selectOptions && selectOptions.length", v-show="selectionsActive", :class="$style.selections")
       li(v-for="selection of selectOptions"
          :class="{ [$style.selectedItem]: (valueField ? selection[valueField] : selection) === value }"
          @click.stop="toggleSelection(selection)") {{ displayField ? selection[displayField] : selection }}

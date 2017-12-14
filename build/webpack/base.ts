@@ -15,7 +15,14 @@ const SCSS_LOADERS = ExtractTextPlugin.extract({
   use: [
     {
       loader: 'css-loader',
-      options: { minimize, sourceMap },
+      options: {
+        minimize: minimize && {
+          discardComments: {
+            removeAll: true,
+          },
+        },
+        sourceMap,
+      },
     },
     {
       loader: 'postcss-loader',

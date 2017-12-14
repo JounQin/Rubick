@@ -13,8 +13,6 @@ const VUE_ENV = 'client'
 
 const { devTool } = config
 
-const sourceMap = !!devTool
-
 const { __DEV__, NODE_ENV } = globals
 
 const debug = _debug('rubick:webpack:client')
@@ -49,15 +47,7 @@ if (!devTool) {
   debug(`Enable plugins for ${NODE_ENV} (UglifyJS).`)
 
   clientConfig.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: !sourceMap,
-      compress: {
-        unused: true,
-        dead_code: true,
-        warnings: false,
-      },
-      comments: false,
-    }),
+    new webpack.optimize.UglifyJsPlugin({ comments: false }),
   )
 }
 

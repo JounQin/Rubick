@@ -6177,7 +6177,7 @@ watchpack@^1.4.0:
     chokidar "^1.7.0"
     graceful-fs "^4.1.2"
 
-webpack-dev-middleware@2.0.1:
+webpack-dev-middleware@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-2.0.1.tgz#22c8ecef27f08fca6dfa95504d57f66a8f37cc13"
   dependencies:

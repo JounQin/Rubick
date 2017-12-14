@@ -129,9 +129,9 @@
     "@types/koa" "*"
     "@types/node" "*"
 
-"@types/koa-logger@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@types/koa-logger/-/koa-logger-2.0.3.tgz#1a5cbe8fc881f263af8bc01dbdd940c57c8619a7"
+"@types/koa-logger@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/koa-logger/-/koa-logger-3.1.0.tgz#133acdbc56d87b5a559cab25528b087381a8fc0d"
   dependencies:
     "@types/koa" "*"
 
@@ -255,7 +255,7 @@
   dependencies:
     "@types/source-map" "*"
 
-"@types/v8flags@github:types/npm-v8flags#de224ae1cd5fd7dbb4e7158a6cc7a29e5315930d":
+"@types/v8flags@types/npm-v8flags#de224ae1cd5fd7dbb4e7158a6cc7a29e5315930d":
   version "2.0.0"
   resolved "https://codeload.github.com/types/npm-v8flags/tar.gz/de224ae1cd5fd7dbb4e7158a6cc7a29e5315930d"
 
@@ -293,7 +293,7 @@
     "@types/tapable" "*"
     "@types/uglify-js" "*"
 
-"@types/yn@github:types/npm-yn#ca75f6c82940fae6a06fb41d2d37a6aa9b4ea8e9":
+"@types/yn@types/npm-yn#ca75f6c82940fae6a06fb41d2d37a6aa9b4ea8e9":
   version "2.0.0"
   resolved "https://codeload.github.com/types/npm-yn/tar.gz/ca75f6c82940fae6a06fb41d2d37a6aa9b4ea8e9"
 

@@ -17,8 +17,8 @@ export default (
   axios: AxiosInstance,
   ctx?: Context,
 ): Module<CommonState, RootState> => {
-  const state = {
-    user: null as User,
+  const state: CommonState = {
+    user: null,
     regionId: ctx ? ctx.cookies.get(REGION_COOKIE) : getCookie(REGION_COOKIE),
   }
 

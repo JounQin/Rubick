@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios'
 import { ActionTree, Module, MutationTree } from 'vuex'
 
-import { Application, ApplicationState, RootState } from 'types'
+import { ApplicationState, RootState } from 'types'
 
 enum TYPES {
   SET_APPLICATIONS = 'SET_APPLICATIONS',
@@ -10,8 +10,8 @@ enum TYPES {
 export const applicationModule = (
   axios: AxiosInstance,
 ): Module<ApplicationState, RootState> => {
-  const state = {
-    applications: [] as Application[],
+  const state: ApplicationState = {
+    applications: [],
   }
 
   const actions: ActionTree<ApplicationState, RootState> = {

@@ -14,9 +14,9 @@
     "start": "env-cmd --fallback .env.local env-cmd .env ts-node -r tsconfig-paths/register server",
     "build:client": "env-cmd --fallback .env.local env-cmd .env webpack --config build/webpack/client.ts --color --progress",
     "build:server": "env-cmd --fallback .env.local env-cmd .env webpack --config build/webpack/server.ts --color --progress",
-    "build": "rimraf dist && yarn build:client && yarn build:server",
+    "build": "rimraf dist && concurrently \"npm run build:client\" \"npm run build:server\"",
     "lint": "tslint -p . -e 'node_modules/**' -t stylish '**/*.ts'",
-    "lint:fix": "yarn lint --fix",
+    "lint:fix": "npm run lint -- --fix",
     "precommit": "lint-staged",
     "pm2": "pm2 start --name=rubick npm -- start"
   },

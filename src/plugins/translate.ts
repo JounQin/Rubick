@@ -49,7 +49,7 @@ const setDocLang = (locale: LOCALE) => {
   document.documentElement.setAttribute(Lang, locale)
 }
 
-const createTranslate = (DEFAULT_LOCALE = ZH) => {
+const createTranslate = (instanceLocale = ZH) => {
   const watchers: Array<(prev?: LOCALE, curr?: LOCALE) => void> = []
 
   const instance: Translate = (key: string, params?: StrObj) => {
@@ -79,12 +79,22 @@ const createTranslate = (DEFAULT_LOCALE = ZH) => {
 
   instance.create = createTranslate
 
-  Vue.util.defineReactive(instance, Locale, DEFAULT_LOCALE, () => {
-    const prev = instance.locale
-    setImmediate(() =>
-      watchers.forEach(watcher => watcher(prev, instance.locale)),
-    )
+  Object.defineProperty(instance, Locale, {
+    configurable: true,
+    get() {
+      return instanceLocale
+    },
+    set(locale) {
+      if (locale === instanceLocale) {
+        return
+      }
+      const prev = instanceLocale
+      instanceLocale = locale
+      watchers.forEach(watcher => watcher(prev, locale))
+    },
   })
+
+  Vue.util.defineReactive(instance, Locale, instanceLocale)
 
   return instance
 }

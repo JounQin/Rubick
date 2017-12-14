@@ -27,13 +27,14 @@
       rb-captcha(v-if="captcha", :type="captcha", :disabled="captchaDisabled", :addon="captchaData")
       i.fa.fa-caret-down(v-if="selections")
   transition(name="scale-y")
-    ul.list-unstyled(v-if="selectOptions && selectOptions.length", v-show="selectionsActive", :class="$style.selections")
+    ul.list-unstyled(v-if="selectOptions.length", v-show="selectionsActive", :class="$style.selections")
       li(v-for="selection of selectOptions"
          :class="{ [$style.selectedItem]: (valueField ? selection[valueField] : selection) === value }"
          @click.stop="toggleSelection(selection)") {{ displayField ? selection[displayField] : selection }}
 </template>
 <script lang="ts">
-import { Component, Model, Prop, Vue } from 'vue-property-decorator'
+import {} from 'lodash'
+import { Component, Model, Prop, Vue, Watch } from 'vue-property-decorator'
 
 import { BasicObj, Input } from 'types'
 
@@ -64,7 +65,13 @@ export default class RbInput extends Vue {
   @Prop({ default: 1 })
   maxNum: number
 
-  selectOptions: Selection[] = this.selections ? [...this.selections] : null
+  selectOptions: Selection[] = this.selections ? [...this.selections] : []
+
+  @Watch('selections')
+  selectionsChange(prev: Selection[], curr: Selection[]) {
+    this.selectOptions = this.selections ? [...this.selections] : []
+    this.selected = []
+  }
 
   @Model(INPUT, {
     type: [String, Number, Array],

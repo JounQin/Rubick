@@ -173,12 +173,25 @@ export default class Register extends Vue {
   Selections: { [key: string]: { display: string; value: string }[] } = {}
 
   @Watch('$t.locale', { immediate: true })
-  translate() {
+  localeChange() {
     for (let [key, values] of Object.entries(SelectionsType)) {
-      this.Selections[key] = values.map(value => ({
-        display: this.$t(snakeCase(value)),
-        value,
-      }))
+      let selections = this.Selections[key]
+
+      if (!selections) {
+        selections = this.Selections[key] = []
+      }
+
+      values.forEach((value, index) => {
+        const display = this.$t(snakeCase(value))
+        if (selections[index]) {
+          selections[index].display = display
+        } else {
+          selections[index] = {
+            display,
+            value,
+          }
+        }
+      })
     }
   }
 

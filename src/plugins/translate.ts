@@ -2,7 +2,7 @@ import { intersection } from 'lodash'
 import Vue from 'vue'
 
 import { LOCALE, StrObj, Translate } from 'types'
-import { LOCALE_COOKIE, Lang, Locale, getCookie, setCookie } from 'utils'
+import { LOCALE_COOKIE, Locale, getCookie } from 'utils'
 
 const context = require.context('../views', true, I18N_REGEX)
 
@@ -45,10 +45,6 @@ const translations: {
   return modules
 }, {})
 
-const setDocLang = (locale: LOCALE) => {
-  document.documentElement.setAttribute(Lang, locale)
-}
-
 const createTranslate = (instanceLocale = ZH) => {
   const watchers: Array<(prev?: LOCALE, curr?: LOCALE) => void> = []
 
@@ -60,21 +56,18 @@ const createTranslate = (instanceLocale = ZH) => {
   }
 
   instance.toggleLocale = (locale: LOCALE = TOGGLE_LOCALE[instance.locale]) => {
-    if (locale !== instance.locale) {
-      setCookie(LOCALE_COOKIE, (instance.locale = locale), Infinity, '/')
-      setDocLang(locale)
-    }
-  }
-
-  const unwatch = () => {
-    watchers.length = 0
+    instance.locale = locale
   }
 
   instance.$watch = watcher => {
-    if (!watchers.includes(watcher)) {
+    let index = watchers.indexOf(watcher)
+
+    if (index === -1) {
+      index = watchers.length
       watchers.push(watcher)
     }
-    return unwatch
+
+    return () => watchers.splice(index, 1)
   }
 
   instance.create = createTranslate
@@ -99,17 +92,9 @@ const createTranslate = (instanceLocale = ZH) => {
   return instance
 }
 
-let defaultLocale
-
-if (!__SERVER__) {
-  defaultLocale = (getCookie(LOCALE_COOKIE) as LOCALE) || undefined
-
-  if (defaultLocale && !window.__INITIAL_STATE__) {
-    setDocLang(defaultLocale)
-  }
-}
-
-export const translate = createTranslate(defaultLocale)
+export const translate = createTranslate(
+  (!__SERVER__ && (getCookie(LOCALE_COOKIE) as LOCALE)) || undefined,
+)
 
 Object.defineProperty(
   Vue.prototype,

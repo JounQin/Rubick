@@ -1,7 +1,14 @@
 import axios from 'axios'
 
 import { routeTitle, translate } from 'plugins'
-import { INCORRECT_AUTHENTICATION_CREDENTIALS } from 'utils'
+import { LOCALE } from 'types'
+import {
+  INCORRECT_AUTHENTICATION_CREDENTIALS,
+  LOCALE_COOKIE,
+  Lang,
+  getCookie,
+  setCookie,
+} from 'utils'
 
 import createApp from './app'
 
@@ -9,9 +16,15 @@ const { app, router, store, ready } = createApp(axios)
 
 const { __INITIAL_STATE__: initialState } = window
 
+const setDocLang = (locale: LOCALE) => {
+  document.documentElement.setAttribute(Lang, locale)
+}
+
 const routerReady = () => {
-  translate.$watch(() => {
+  translate.$watch((prev, curr) => {
     document.title = routeTitle(router.currentRoute)
+    setCookie(LOCALE_COOKIE, curr, Infinity, '/')
+    setDocLang(curr)
   })
 
   router.beforeResolve(async (to, from, next) => {
@@ -73,6 +86,7 @@ if (initialState) {
     routerReady()
   })
 } else {
+  setDocLang(getCookie(LOCALE_COOKIE) as LOCALE)
   routerReady()
 }
 

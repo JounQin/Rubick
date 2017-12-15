@@ -1,7 +1,8 @@
 import _axios from 'axios'
+import { createTranslator } from 'vue-translator'
 
-import { routeTitle, translate } from 'plugins'
-import { ServerContext } from 'types'
+import { routeTitle } from 'plugins'
+import { Locale, ServerContext } from 'types'
 import { INCORRECT_AUTHENTICATION_CREDENTIALS } from 'utils'
 
 import createApp from './app'
@@ -13,7 +14,11 @@ export default (context: ServerContext) =>
     const { ctx } = context
 
     const axios = (context.axios = _axios.create({ headers: ctx.headers }))
-    const $t = (context.translate = translate.create(context.locale))
+    const $t = (context.translator = createTranslator(
+      context.locale,
+      null,
+      Locale.EN,
+    ))
 
     axios.interceptors.response.use(
       response => response,

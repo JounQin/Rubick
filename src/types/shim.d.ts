@@ -1,9 +1,10 @@
 import { AxiosInstance } from 'axios'
 import VUE from 'vue'
 import { Route } from 'vue-router'
+import { Translator } from 'vue-translator'
 import { Store } from 'vuex'
 
-import { RootState, Translate } from 'types'
+import { RootState } from 'types'
 
 import { RbModal } from 'components'
 
@@ -44,20 +45,12 @@ declare global {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $t: Translate
     $v: any
     $http: AxiosInstance
     $modal: RbModal
     $style: any
     $util: {
       [key: string]: any
-    }
-  }
-
-  interface VueConstructor {
-    util: {
-      defineReactive: (obj: object, key: string, val: any) => void
-      warn: (msg: string) => void
     }
   }
 }

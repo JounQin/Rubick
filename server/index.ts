@@ -22,13 +22,13 @@ import * as koaPkg from 'koa/package.json'
 import * as vuePkg from 'vue/package.json'
 
 import { ACCEPT_LANGUAGE, ENV, MODE, SESSION_CONFIG, getEnv } from 'commons'
-import { LOCALE } from 'types'
+import { Locale } from 'types'
 import { INFINITY_DATE, LOCALE_COOKIE } from 'utils'
 
 import config, { globals, paths } from '../build/config'
 import startRouter from './router'
 
-acceptLanguage.languages([LOCALE.ZH, LOCALE.EN])
+acceptLanguage.languages([Locale.ZH, Locale.EN])
 
 const minimize = !config.devTool
 const { __DEV__ } = globals

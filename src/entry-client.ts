@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-import { routeTitle, translate } from 'plugins'
-import { LOCALE } from 'types'
+import { routeTitle } from 'plugins'
+import { Locale } from 'types'
 import {
   INCORRECT_AUTHENTICATION_CREDENTIALS,
+  LANG,
   LOCALE_COOKIE,
-  Lang,
   getCookie,
   setCookie,
 } from 'utils'
@@ -14,19 +14,19 @@ import createApp from './app'
 
 const { app, router, store, ready } = createApp(axios)
 
+app.$watch('$t.locale', curr => {
+  document.title = routeTitle(router.currentRoute)
+  setCookie(LOCALE_COOKIE, curr, Infinity, '/')
+  setDocLang(curr)
+})
+
 const { __INITIAL_STATE__: initialState } = window
 
-const setDocLang = (locale: LOCALE) => {
-  document.documentElement.setAttribute(Lang, locale)
+const setDocLang = (locale: Locale) => {
+  document.documentElement.setAttribute(LANG, locale)
 }
 
 const routerReady = () => {
-  translate.$watch((prev, curr) => {
-    document.title = routeTitle(router.currentRoute)
-    setCookie(LOCALE_COOKIE, curr, Infinity, '/')
-    setDocLang(curr)
-  })
-
   router.beforeResolve(async (to, from, next) => {
     const matched = router.getMatchedComponents(to)
     const prevMatched = router.getMatchedComponents(from)
@@ -86,7 +86,7 @@ if (initialState) {
     routerReady()
   })
 } else {
-  setDocLang(getCookie(LOCALE_COOKIE) as LOCALE)
+  setDocLang(getCookie(LOCALE_COOKIE) as Locale)
   routerReady()
 }
 

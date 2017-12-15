@@ -1,12 +1,13 @@
 import { intersection } from 'lodash'
 import Vue from 'vue'
+import VueTranslator from 'vue-translator'
 
-import { LOCALE, StrObj, Translate } from 'types'
-import { LOCALE_COOKIE, Locale, getCookie } from 'utils'
+import { Locale } from 'types'
+import { LOCALE_COOKIE, getCookie } from 'utils'
 
 const context = require.context('../views', true, I18N_REGEX)
 
-const { EN, ZH } = LOCALE
+const { EN, ZH } = Locale
 
 const TOGGLE_LOCALE = {
   [EN]: ZH,
@@ -45,66 +46,13 @@ const translations: {
   return modules
 }, {})
 
-const createTranslate = (instanceLocale = ZH) => {
-  const watchers: Array<(prev?: LOCALE, curr?: LOCALE) => void> = []
+Vue.use(VueTranslator, {
+  defaultLocale: Locale.EN,
+  locale: (!__SERVER__ && (getCookie(LOCALE_COOKIE) as Locale)) || undefined,
+  translations,
+})
 
-  const instance: Translate = (key: string, params?: StrObj) => {
-    let value = translations[instance.locale][key]
-    value =
-      value && value.replace(/{([^{}]+)}/g, (matched, $0) => params[$0.trim()])
-    return value == null ? key : value
-  }
-
-  instance.toggleLocale = (locale: LOCALE = TOGGLE_LOCALE[instance.locale]) => {
-    instance.locale = locale
-  }
-
-  instance.$watch = watcher => {
-    let index = watchers.indexOf(watcher)
-
-    if (index === -1) {
-      index = watchers.length
-      watchers.push(watcher)
-    }
-
-    return () => watchers.splice(index, 1)
-  }
-
-  instance.create = createTranslate
-
-  Object.defineProperty(instance, Locale, {
-    configurable: true,
-    get() {
-      return instanceLocale
-    },
-    set(locale) {
-      if (locale === instanceLocale) {
-        return
-      }
-      const prev = instanceLocale
-      instanceLocale = locale
-      watchers.forEach(watcher => watcher(prev, locale))
-    },
-  })
-
-  Vue.util.defineReactive(instance, Locale, instanceLocale)
-
-  return instance
+const { translator } = Vue
+;(translator as any).toggleLocale = () => {
+  translator.locale = TOGGLE_LOCALE[translator.locale as Locale]
 }
-
-export const translate = createTranslate(
-  (!__SERVER__ && (getCookie(LOCALE_COOKIE) as LOCALE)) || undefined,
-)
-
-Object.defineProperty(
-  Vue.prototype,
-  '$t',
-  __SERVER__
-    ? {
-        configurable: __DEV__,
-        get() {
-          return this.$ssrContext.translate
-        },
-      }
-    : { value: translate, writable: __DEV__ },
-)

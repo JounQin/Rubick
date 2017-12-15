@@ -1,5 +1,5 @@
-export const Lang = 'lang'
-export const Locale = 'locale'
+export const LANG = 'lang'
+export const LOCALE = 'locale'
 export const LOCALE_COOKIE = 'LOCALE_COOKIE'
 export const REGION_COOKIE = 'REGION_COOKIE'
 

@@ -43,9 +43,9 @@ export default (app?: Koa) => {
         try {
           const { result } = await jakiro({ ctx })
           ctx.body = result
-        } catch (e) {
-          ctx.body = e
-          ctx.status = e.status
+        } catch ({ result, status }) {
+          ctx.body = result
+          ctx.status = status
         }
       }
 

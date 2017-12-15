@@ -1,9 +1,9 @@
 import { snakeCase } from 'lodash'
+import Vue from 'vue'
 import { Route } from 'vue-router'
+import { Translator } from 'vue-translator'
 
-import { translate } from './translate'
-
-export const breadCrumbs = (route: Route, $t = translate) =>
+export const breadCrumbs = (route: Route, $t: Translator = Vue.translator) =>
   route.matched.reduce((prev, { meta, name, path }) => {
     const { title } = meta
     let text =
@@ -24,7 +24,7 @@ export const breadCrumbs = (route: Route, $t = translate) =>
     return prev
   }, [])
 
-export const routeTitle = (route: Route, $t = translate) => {
+export const routeTitle = (route: Route, $t: Translator = Vue.translator) => {
   const title = breadCrumbs(route, $t)
     .map(({ text }) => text)
     .join(' - ')

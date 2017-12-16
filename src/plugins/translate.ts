@@ -53,6 +53,7 @@ Vue.use(VueTranslator, {
 })
 
 const { translator } = Vue
-;(translator as any).toggleLocale = () => {
+
+translator.toggleLocale = () => {
   translator.locale = TOGGLE_LOCALE[translator.locale as Locale]
 }

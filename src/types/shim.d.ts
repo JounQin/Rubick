@@ -1,7 +1,6 @@
 import { AxiosInstance } from 'axios'
 import VUE from 'vue'
 import { Route } from 'vue-router'
-import { Translator } from 'vue-translator'
 import { Store } from 'vuex'
 
 import { RootState } from 'types'
@@ -66,5 +65,11 @@ declare module 'vue/types/options' {
     ) => any
     title?: string | (() => string)
     validator?: any
+  }
+}
+
+declare module 'vue-translator/dist/esm/translator' {
+  export interface Translator {
+    toggleLocale?(): void
   }
 }

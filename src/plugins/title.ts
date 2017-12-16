@@ -14,7 +14,7 @@ export const breadCrumbs = (route: Route, $t: Translator = Vue.translator) =>
     if (text) {
       text = snakeCase(text)
       const nav = 'nav_' + text
-      const tNav = $t(nav)
+      const tNav = $t(nav, null, true)
       prev.push({
         link: path,
         text: nav === tNav ? $t(text) : tNav,

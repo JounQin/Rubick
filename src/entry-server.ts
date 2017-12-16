@@ -14,11 +14,10 @@ export default (context: ServerContext) =>
     const { ctx } = context
 
     const axios = (context.axios = _axios.create({ headers: ctx.headers }))
-    const $t = (context.translator = createTranslator(
-      context.locale,
-      null,
-      Locale.EN,
-    ))
+    const $t = (context.translator = createTranslator({
+      defaultLocale: Locale.EN,
+      locale: context.locale,
+    }))
 
     axios.interceptors.response.use(
       response => response,

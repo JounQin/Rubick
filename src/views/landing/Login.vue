@@ -30,6 +30,14 @@ import RbInput from 'components/rb-input/RbInput.vue'
   components: {
     RbInput,
   },
+  translator: {
+    zh: {
+      register_tips: '没有账号？现在注册',
+    },
+    en: {
+      register_tips: 'Need an account? Register now',
+    },
+  },
   validator: {
     account: {
       minLength: 1,

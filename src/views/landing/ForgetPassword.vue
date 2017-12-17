@@ -28,6 +28,18 @@ import RbInput from 'components/rb-input/RbInput.vue'
   components: {
     RbInput,
   },
+  translator: {
+    zh: {
+      mobile_or_email: '手机号或邮箱',
+      captcha: '验证码',
+      verify_now: '立即验证',
+    },
+    en: {
+      mobile_or_email: 'Mobile or Email',
+      captcha: 'Captcha',
+      verify_now: 'Verify Now',
+    },
+  },
   validator: {
     mobileOrEmail: {
       minLength: 1,

@@ -1,5 +1,6 @@
 {
   "locale": "中文",
+  "switch_lang_tips": "Click to switch to English",
   "alauda": "灵雀云",
   "account": "账号",
   "username": "用户名",
@@ -16,5 +17,12 @@
   "type": "类型",
   "label": "标签",
   "quota_space": "资源空间",
-  "action": "操作"
+  "action": "操作",
+  "required": "必填项",
+  "email": "邮箱",
+  "confirm_password": "确认密码",
+  "mobile": "手机号",
+  "image_captcha": "图形验证码",
+  "verification_code": "手机验证码",
+  "send_verification_code": "获取验证码"
 }

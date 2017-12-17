@@ -10,6 +10,21 @@ div(:class="$style.landing")
       img(src="~assets/logo-large.svg")
   router-view
 </template>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component({
+  translator: {
+    zh: {
+      login_tips: '已有账号？现在登录',
+    },
+    en: {
+      login_tips: 'Already have an account? Login now',
+    },
+  },
+})
+export default class Landing extends Vue {}
+</script>
 <style lang="scss" module>
 $spacing: 30px;
 $img-height: 72px;

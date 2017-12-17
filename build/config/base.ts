@@ -45,6 +45,7 @@ export const vendors = [
   'regenerator-runtime/runtime',
   'vue',
   'vue-router',
+  'vue-translator',
   'vuex',
 ]
 

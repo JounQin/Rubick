@@ -1,5 +1,6 @@
 {
   "locale": "English",
+  "switch_lang_tips": "点击切换至中文版",
   "alauda": "Alauda",
   "account": "Account",
   "username": "Username",
@@ -16,5 +17,12 @@
   "type": "Type",
   "label": "Label",
   "quota_space": "Quota Space",
-  "action": "Action"
+  "action": "Action",
+  "required": "required",
+  "email": "Email",
+  "confirm_password": "Confirm Password",
+  "mobile": "Mobile",
+  "image_captcha": "Captcha",
+  "verification_code": "Verification Code",
+  "send_verification_code": "Send"
 }

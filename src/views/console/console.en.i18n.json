@@ -1,21 +1,12 @@
 {
-  "nav_board": "Board",
   "nav_dashboard": "Overview",
-  "nav_infrastructure": "Infrastructure",
   "nav_container": "Container",
   "nav_application": "Applications",
   "nav_service": "Services",
   "nav_template": "Templates",
   "nav_envfile": "Envfiles",
   "nav_configuration": "Configurations",
-  "nav_others": "Others",
   "nav_mirror": "Mirror",
   "nav_docs": "Documents",
-  "nav_locale": "中文（简体）",
-  "no_available_region": "No Available Region",
-  "dashboard": "Dashboard",
-  "user_center": "User Center",
-  "account_center": "Account Center",
-  "permission_management": "Permissions",
-  "logout": "Logout"
+  "nav_locale": "中文（简体）"
 }

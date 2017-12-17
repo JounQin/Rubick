@@ -1,4 +1,4 @@
-import { intersection } from 'lodash'
+import { intersection, merge } from 'lodash'
 import Vue from 'vue'
 import VueTranslator from 'vue-translator'
 
@@ -49,6 +49,7 @@ const translations: {
 Vue.use(VueTranslator, {
   defaultLocale: Locale.EN,
   locale: (!__SERVER__ && (getCookie(LOCALE_COOKIE) as Locale)) || undefined,
+  merge,
   translations,
 })
 

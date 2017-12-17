@@ -23,6 +23,7 @@ import { Route } from 'vue-router'
 import { Action } from 'vuex-class'
 
 import { Next, User } from 'types'
+import { alert } from 'utils'
 
 import RbInput from 'components/rb-input/RbInput.vue'
 
@@ -33,9 +34,12 @@ import RbInput from 'components/rb-input/RbInput.vue'
   translator: {
     zh: {
       register_tips: '没有账号？现在注册',
+      provided_credentials_not_correct: '用户名/邮箱或密码不正确',
     },
     en: {
       register_tips: 'Need an account? Register now',
+      provided_credentials_not_correct:
+        'username/email or password is incorrect',
     },
   },
   validator: {
@@ -97,7 +101,7 @@ export default class Login extends Vue {
 
       this.$router.push(url)
     } catch (e) {
-      console.error(e)
+      alert(this.$t(e.response.data.code))
     } finally {
       this.submitting = false
     }

@@ -32,22 +32,25 @@ export class LandingController {
 
     const data = request.body
 
-    const { result, status } = await jakiro({
-      ctx,
-      url: '/generate-api-token',
-      headers: {
-        CLIENT: ctx.ips.length ? ctx.ips.join(', ') : ctx.ip,
-      },
-    })
+    let user
 
-    ctx.status = status
+    try {
+      const { result } = await jakiro({
+        ctx,
+        url: '/generate-api-token',
+        headers: {
+          CLIENT: ctx.ips.length ? ctx.ips.join(', ') : ctx.ip,
+        },
+      })
 
-    if (!result.token) {
+      user = result
+    } catch ({ result, status }) {
       ctx.body = result
+      ctx.status = status
       return
     }
 
-    ctx.user = ctx.session.user = result
+    ctx.user = ctx.session.user = user
 
     const { result: profile } = await jakiro({
       ctx,
@@ -65,7 +68,7 @@ export class LandingController {
 
     ctx.body = {
       url: callbackUrl || '/',
-      user: omit(result, TOKEN),
+      user: omit(user, TOKEN),
     }
   }
 

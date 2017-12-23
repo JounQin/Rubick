@@ -23,7 +23,6 @@ import { Route } from 'vue-router'
 import { Action } from 'vuex-class'
 
 import { Next, User } from 'types'
-import { alert } from 'utils'
 
 import RbInput from 'components/rb-input/RbInput.vue'
 
@@ -101,7 +100,7 @@ export default class Login extends Vue {
 
       this.$router.push(url)
     } catch (e) {
-      alert(this.$t(e.response.data.code))
+      this.$tip.alert(this.$t(e.response.data.code))
     } finally {
       this.submitting = false
     }

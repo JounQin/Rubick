@@ -1,4 +1,5 @@
 import * as path from 'path'
+
 import { Options } from 'webpack'
 
 import * as pkg from '../../package.json'
@@ -27,7 +28,7 @@ export const globals = {
 }
 
 export const paths = (() => {
-  const base = (...args: string[]) => path.resolve(__dirname, '../../', ...args)
+  const base = (...args: string[]) => path.resolve(process.cwd(), ...args)
 
   return {
     base,

@@ -51,6 +51,7 @@ declare module 'vue/types/vue' {
     $util: {
       [key: string]: any
     }
+    $tip: any
   }
 }
 

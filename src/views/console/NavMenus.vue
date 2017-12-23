@@ -28,7 +28,6 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Action, Getter, State } from 'vuex-class'
 
 import { Profile, RootState, User } from 'types'
-import { confirm } from 'utils'
 
 @Component
 export default class NavMenus extends Vue {
@@ -44,7 +43,7 @@ export default class NavMenus extends Vue {
   logout() {}
 
   confirmLogout() {
-    confirm({
+    this.$tip.confirm({
       tipText: `<div class="${this.$style
         .tip}"><i class="fa fa-question-circle"></i>${this.$t('logout')}</div>`,
       confirm: async () => {

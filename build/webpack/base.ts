@@ -52,7 +52,7 @@ const webpackConfig: webpack.Configuration = {
     extensions: ['.ts', '.vue', '.js'],
   },
   output: {
-    path: paths.dist(),
+    path: paths.dist('static'),
     publicPath,
     filename: `[name].[${__PROD__ ? 'chunkhash' : 'hash'}].js`,
   },

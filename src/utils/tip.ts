@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 const TIP_ID = '__TIP__'
 
-const tip: any = {}
+export const tip: any = {}
 ;['toast', 'alert', 'confirm', 'prompt'].forEach((value, type) => {
   tip[value] = (props: any) =>
     __SERVER__
@@ -31,8 +31,3 @@ const tip: any = {}
           },
         })
 })
-
-export const toast = tip.toast
-export const alert = tip.alert
-export const confirm = tip.confirm
-export const prompt = tip.prompt

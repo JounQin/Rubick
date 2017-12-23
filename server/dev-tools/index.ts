@@ -12,11 +12,8 @@ import webpackHot from './webpack-hot'
 
 const debug = _debug('rubick:server')
 
-const readFile = (fs: MFS, file: string) => {
-  try {
-    return fs.readFileSync(paths.dist(file), 'utf-8')
-  } catch (e) {}
-}
+const readFile = (fs: MFS, file: string) =>
+  fs.readFileSync(paths.dist(`static/${file}`), 'utf-8')
 
 export default (
   app: Koa,

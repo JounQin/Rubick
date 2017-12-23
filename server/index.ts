@@ -84,7 +84,7 @@ const createRenderer = (bundle: object, options: object) =>
       max: 1000,
       maxAge: 1000 * 60 * 15,
     }),
-    basedir: paths.dist(),
+    basedir: paths.dist('static'),
     runInNewContext: false,
   })
 
@@ -100,12 +100,24 @@ if (__DEV__) {
   )
 } else {
   mfs = fs
-  renderer = createRenderer(require(paths.dist('vue-ssr-server-bundle.json')), {
-    clientManifest: require(paths.dist('vue-ssr-client-manifest.json')),
-    template: getTemplate(templatePath),
-  })
+
+  renderer = createRenderer(
+    JSON.parse(
+      fs
+        .readFileSync(paths.dist('static/vue-ssr-server-bundle.json'))
+        .toString(),
+    ),
+    {
+      clientManifest: JSON.parse(
+        fs
+          .readFileSync(paths.dist('static/vue-ssr-client-manifest.json'))
+          .toString(),
+      ),
+      template: getTemplate(templatePath),
+    },
+  )
   app.use(
-    serve('dist', {
+    serve('dist/static', {
       defer: true,
       maxage: 1000 * 3600 * 24 * 365,
     }),

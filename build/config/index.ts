@@ -1,18 +1,16 @@
-import baseConfig, { Config, globals } from './base'
-import dev from './development'
-import prod from './production'
+import baseConfig, { globals } from './base'
+
+import development from './development'
+import production from './production'
+
+const configs = {
+  development,
+  production,
+}
 
 export * from './base'
 
-const configs: { [key: string]: Config } = {
-  development: {
-    ...baseConfig,
-    ...dev(baseConfig),
-  },
-  production: {
-    ...baseConfig,
-    ...prod(baseConfig),
-  },
+export default {
+  ...baseConfig,
+  ...configs[globals.NODE_ENV](baseConfig),
 }
-
-export default configs[globals.NODE_ENV]

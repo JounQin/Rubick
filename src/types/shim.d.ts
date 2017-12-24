@@ -40,6 +40,9 @@ declare global {
   const INNER_SERVER: string
   const SERVER_PREFIX: string
   const API_PREFIX: string
+
+  // tslint:disable-next-line variable-name
+  const __non_webpack_require__: NodeRequire
 }
 
 declare module 'vue/types/vue' {

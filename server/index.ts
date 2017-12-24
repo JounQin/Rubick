@@ -25,7 +25,7 @@ import { ACCEPT_LANGUAGE, ENV, MODE, SESSION_CONFIG, getEnv } from 'commons'
 import { Locale } from 'types'
 import { INFINITY_DATE, LOCALE_COOKIE } from 'utils'
 
-import config, { globals, paths } from '../build/config'
+import config, { globals, paths, runtimeRequire } from '../build/config'
 import startRouter from './router'
 
 acceptLanguage.languages([Locale.ZH, Locale.EN])
@@ -55,7 +55,7 @@ const app = new Koa()
 
 app.keys = getEnv(ENV.APP_KEYS, MODE.STR_ARR)
 
-app.use(compose([session(SESSION_CONFIG, app), compress(), logger()]))
+app.use(compose([logger(), compress(), session(SESSION_CONFIG, app)]))
 
 if (__DEV__) {
   app.use(
@@ -102,16 +102,10 @@ if (__DEV__) {
   mfs = fs
 
   renderer = createRenderer(
-    JSON.parse(
-      fs
-        .readFileSync(paths.dist('static/vue-ssr-server-bundle.json'))
-        .toString(),
-    ),
+    runtimeRequire(paths.dist('static/vue-ssr-server-bundle.json')),
     {
-      clientManifest: JSON.parse(
-        fs
-          .readFileSync(paths.dist('static/vue-ssr-client-manifest.json'))
-          .toString(),
+      clientManifest: runtimeRequire(
+        paths.dist('static/vue-ssr-client-manifest.json'),
       ),
       template: getTemplate(templatePath),
     },

@@ -39,6 +39,11 @@ export const paths = (() => {
   }
 })()
 
+export const runtimeRequire =
+  typeof __non_webpack_require__ === 'undefined'
+    ? require
+    : __non_webpack_require__
+
 export const alias = {}
 
 export const vendors = [

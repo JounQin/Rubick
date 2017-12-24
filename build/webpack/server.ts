@@ -15,7 +15,7 @@ const debug = _debug('rubick:webpack:client')
 
 debug(`create webpack configuration for NODE_ENV:${NODE_ENV}`)
 
-const lernaModulesDir = paths.base('../node_modules')
+const lernaModulesDir = paths.base('../../node_modules')
 
 export default merge.smart(baseConfig, {
   entry: paths.server('index.ts'),

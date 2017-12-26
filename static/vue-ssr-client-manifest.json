@@ -7,7 +7,7 @@
     "b06871f281fee6b241d60582ae9369b9.ttf",
     "912ec66d7572ff821749319396470bde.svg",
     "204b172dd6571305bf15fe2a7903ccbc.svg",
-    "0.87a104753b06014873fe.js",
+    "0.4714d5b8781a915e9c8f.js",
     "1.acd05951dc29316b2bc4.js",
     "2.8b16283d820021124763.js",
     "3.297b57b232dfc5ff54a6.js",
@@ -17,20 +17,20 @@
     "7.3eb274ea17c12e7b016e.js",
     "8.75090c11804d654d450f.js",
     "app.fb65e941f93f48aab8be.js",
-    "vendors.f26f11c04eced22b1d87.js",
-    "manifest.157066541316d23edf99.js",
+    "vendors.2a8e2ee8f9a1b1b2f640.js",
+    "manifest.da5f531a20199b8b7264.js",
     "app.fb65e941f93f48aab8be.css",
     "favicon.ico",
     "__non-ssr-page__.html"
   ],
   "initial": [
-    "manifest.157066541316d23edf99.js",
-    "vendors.f26f11c04eced22b1d87.js",
+    "manifest.da5f531a20199b8b7264.js",
+    "vendors.2a8e2ee8f9a1b1b2f640.js",
     "app.fb65e941f93f48aab8be.js"
   ],
   "async": [
     "4.f1fd6044513c59eca96e.js",
-    "0.87a104753b06014873fe.js",
+    "0.4714d5b8781a915e9c8f.js",
     "1.acd05951dc29316b2bc4.js",
     "2.8b16283d820021124763.js",
     "3.297b57b232dfc5ff54a6.js",
@@ -40,9 +40,6 @@
     "8.75090c11804d654d450f.js"
   ],
   "modules": {
-    "79826774": [
-      6
-    ],
     "7ef0b39b": [
       16
     ],
@@ -305,13 +302,16 @@
     "76d1c66c": [
       9
     ],
-    "7482c2f4": [
+    "1d5be042": [
       6
     ],
-    "0ffdc341": [
+    "3d8e46f1": [
       6
     ],
-    "5c39fa53": [
+    "27a9f8ab": [
+      6
+    ],
+    "73e62fbd": [
       6
     ],
     "d592f590": [
@@ -320,16 +320,16 @@
     "3d1a876c": [
       6
     ],
-    "c526a7ba": [
+    "8c591ffc": [
       6
     ],
-    "30b943d1": [
+    "4d2007b0": [
       6
     ],
-    "4d8fc88c": [
+    "7cd5151a": [
       6
     ],
-    "ee4b188c": [
+    "063fbebe": [
       6
     ],
     "3c8a5a39": [
@@ -362,7 +362,7 @@
     "16f12623": [
       9
     ],
-    "8cb0c6d0": [
+    "6fc9e942": [
       6
     ],
     "04393c3b": [

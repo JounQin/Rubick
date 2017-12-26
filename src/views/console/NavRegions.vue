@@ -21,14 +21,6 @@ import RbInput from 'components/rb-input/RbInput.vue'
   components: {
     RbInput,
   },
-  translator: {
-    zh: {
-      no_available_region: '暂无可用的集群',
-    },
-    en: {
-      no_available_region: 'No Available Region',
-    },
-  },
 })
 export default class NavRegions extends Vue {
   @State((state: RootState) => state.common.regions)

@@ -16,18 +16,6 @@ import NavItem from './NavItem.vue'
   components: {
     NavItem,
   },
-  translator: {
-    zh: {
-      nav_board: '看板',
-      nav_infrastructure: '交付中心',
-      nav_others: '更多',
-    },
-    en: {
-      nav_board: 'Board',
-      nav_infrastructure: 'Infrastructure',
-      nav_others: 'Others',
-    },
-  },
 })
 export default class NavList extends Vue {
   @Prop() navConfig: NavCategory[]

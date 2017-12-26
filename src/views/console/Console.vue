@@ -40,28 +40,6 @@ import NAV_CONFIG from './nav-config'
   async asyncData({ store }) {
     await store.dispatch('fetchCommon')
   },
-  translator: {
-    zh: {
-      nav_board: '看板',
-      nav_infrastructure: '交付中心',
-      nav_others: '更多',
-      no_available_region: '暂无可用的集群',
-      user_center: '用户中心',
-      account_center: '账号中心',
-      permission_management: '权限管理',
-      logout: '退出登录',
-    },
-    en: {
-      nav_board: 'Board',
-      nav_infrastructure: 'Infrastructure',
-      nav_others: 'Others',
-      no_available_region: 'No Available Region',
-      user_center: 'User Center',
-      account_center: 'Account Center',
-      permission_management: 'Permissions',
-      logout: 'Logout',
-    },
-  },
 })
 export default class Console extends Vue {
   navConfig = NAV_CONFIG

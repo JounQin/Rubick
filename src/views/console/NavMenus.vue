@@ -29,7 +29,22 @@ import { Action, Getter, State } from 'vuex-class'
 
 import { Profile, RootState, User } from 'types'
 
-@Component
+@Component({
+  translator: {
+    zh: {
+      user_center: '用户中心',
+      account_center: '账号中心',
+      permission_management: '权限管理',
+      logout: '退出登录',
+    },
+    en: {
+      user_center: 'User Center',
+      account_center: 'Account Center',
+      permission_management: 'Permissions',
+      logout: 'Logout',
+    },
+  },
+})
 export default class NavMenus extends Vue {
   @Getter('username') username: string
   @Getter('namespace') namespace: string

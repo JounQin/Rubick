@@ -98,7 +98,7 @@
     "@types/koa-logger": "^3.1.0",
     "@types/koa-router": "^7.0.27",
     "@types/koa-session": "^3.0.6",
-    "@types/koa-static": "^3.0.2",
+    "@types/koa-static": "^4.0.0",
     "@types/lodash": "^4.14.91",
     "@types/lru-cache": "^4.1.0",
     "@types/memory-fs": "^0.3.0",

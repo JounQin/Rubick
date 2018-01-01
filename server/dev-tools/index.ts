@@ -55,8 +55,6 @@ export default (
 
   const devMiddleware = webpackDevMiddleware(clientCompiler, {
     publicPath: config.publicPath,
-    quiet: config.quiet,
-    noInfo: config.quiet,
     lazy: false,
     stats: config.stats,
   })

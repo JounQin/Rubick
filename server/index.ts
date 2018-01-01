@@ -217,7 +217,7 @@ app.use(async (ctx, next) => {
     .on('error', (e: { status: number; url: string; stack: any }) => {
       switch ((ctx.status = e.status || 500)) {
         case 302:
-          ctx.redirect(e.url)
+          ctx.set({ Location: e.url })
           return res.end()
         case 401:
           ctx.redirect(`/login?next=${url}`)

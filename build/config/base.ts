@@ -58,7 +58,6 @@ export const vendors = [
 export interface Config {
   serverHost: string
   serverPort: number
-  quiet: boolean
   stats: Options.Stats
   devTool: Options.Devtool
   publicPath: string
@@ -68,7 +67,6 @@ export interface Config {
 const config = {
   serverHost,
   serverPort,
-  quiet: false,
   stats: {
     colors: true,
     modules: false,

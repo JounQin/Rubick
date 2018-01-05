@@ -250,9 +250,9 @@
   dependencies:
     "@types/source-map" "*"
 
-"@types/webpack-dev-middleware@^1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@types/webpack-dev-middleware/-/webpack-dev-middleware-1.12.1.tgz#b11450f0e7243b0e71d8a8613a065cd415bc41da"
+"@types/webpack-dev-middleware@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/webpack-dev-middleware/-/webpack-dev-middleware-2.0.0.tgz#7bc872446c5f77923e1e8a974ad18e186aad065e"
   dependencies:
     "@types/connect" "*"
     "@types/loglevel" "*"

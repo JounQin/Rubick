@@ -198,9 +198,13 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^8.5.2":
+"@types/node@*":
   version "8.5.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.2.tgz#83b8103fa9a2c2e83d78f701a9aa7c9539739aa5"
+
+"@types/node@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.3.0.tgz#3a129cda7c4e5df2409702626892cb4b96546dd5"
 
 "@types/pug@^2.0.4":
   version "2.0.4"
@@ -250,7 +254,7 @@
   dependencies:
     "@types/source-map" "*"
 
-"@types/webpack-dev-middleware@2.0.0":
+"@types/webpack-dev-middleware@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/webpack-dev-middleware/-/webpack-dev-middleware-2.0.0.tgz#7bc872446c5f77923e1e8a974ad18e186aad065e"
   dependencies:

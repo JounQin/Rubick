@@ -1,13 +1,51 @@
 declare module 'sw-precache-webpack-plugin' {
   import { Plugin } from 'webpack'
 
-  namespace SwPrecacheWebpackPlugin {
+  interface SWPrecachePluginOptions {
+    // plugin options
+    dontCacheBustUrlsMatching?: RegExp
+    filename?: string
+    filepath?: string
+    mergeStaticsConfig?: boolean
+    minify?: boolean
+    navigateFallback?: string
+    staticFileGlobsIgnorePatterns?: RegExp[]
+    runtimeCaching?: Array<{
+      urlPattern: RegExp
+      handler:
+        | 'networkFirst'
+        | 'cacheFirst'
+        | 'fastest'
+        | 'cacheOnly'
+        | 'networkOnly'
+      options?: any
+    }>
+
+    // sw-precache options
+    cacheId?: string
+    directoryIndex?: string | false
+    importScripts?: Array<
+      | string
+      | {
+          chunkName?: string
+          filename: string
+        }
+    >
+    replacePrefix?: string
+    staticFileGlobs?: string[]
+    stripPrefix?: string
+    stripPrefixMulti?: {
+      [key: string]: string
+    }
+  }
+
+  namespace SWPrecacheWebpackPlugin {
 
   }
 
-  class SwPrecacheWebpackPlugin extends Plugin {
-    constructor(options: any)
+  class SWPrecacheWebpackPlugin extends Plugin {
+    constructor(options?: SWPrecachePluginOptions)
   }
 
-  export = SwPrecacheWebpackPlugin
+  export = SWPrecacheWebpackPlugin
 }

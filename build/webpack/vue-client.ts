@@ -66,11 +66,12 @@ if (__DEV__) {
   clientConfig.plugins.push(
     new SWPrecacheWebpackPlugin({
       cacheId: 'rubick',
+      directoryIndex: false,
       filename: 'service-worker.js',
       minify: true,
       dontCacheBustUrlsMatching: /./,
       staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/, /\.json$/],
-      stripPrefix: paths.dist().replace(/\\/g, '/'),
+      stripPrefix: paths.dist('static').replace(/\\/g, '/'),
       runtimeCaching: [
         {
           urlPattern: /\//,

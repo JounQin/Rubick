@@ -12,6 +12,7 @@ import * as compress from 'koa-compress'
 import * as logger from 'koa-logger'
 import * as session from 'koa-session'
 import * as serve from 'koa-static'
+import * as staticCache from 'koa-static-cache'
 import * as lruCache from 'lru-cache'
 import * as mkdirp from 'mkdirp'
 import * as re from 'path-to-regexp'
@@ -110,12 +111,26 @@ if (__DEV__) {
       template: getTemplate(templatePath),
     },
   )
-  app.use(
-    serve('dist/static', {
-      defer: true,
-      maxage: 1000 * 3600 * 24 * 365,
-    }),
-  )
+
+  const files: staticCache.StaticCacheFiles = {}
+
+  app
+    .use(
+      serve('dist/static', {
+        defer: true,
+      }),
+    )
+    .use(
+      staticCache(
+        'dist/static',
+        {
+          maxAge: 60 * 60 * 24 * 365,
+        },
+        files,
+      ),
+    )
+
+  files['/service-worker.js'].maxAge = 0
 }
 
 const koaVersion = koaPkg.version
@@ -177,13 +192,13 @@ app.use(async (ctx, next) => {
     STATIC_PATTERN.find(pattern => !!re(pattern).exec(url))
   ) {
     const staticFile = url.split('?')[0].replace(/^\//, '') || 'home'
-    const staticPath = `static/${staticFile}.${locale}.html`
+    const staticPath = `${staticFile}.${locale}.html`
 
     // only /tmp folder is writable in now.sh
     const isNowSh = ctx.hostname.endsWith('.now.sh')
     distPath = isNowSh
       ? path.resolve('/tmp', staticPath)
-      : paths.dist(staticPath)
+      : paths.dist(`static/${staticPath}`)
 
     if (mfs.existsSync(distPath)) {
       if (__DEV__ || isNowSh) {

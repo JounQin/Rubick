@@ -19,14 +19,14 @@ export const tip: any = {}
             destroy: true,
           },
           props: {
-            ...!props || typeof props === 'string'
+            ...(!props || typeof props === 'string'
               ? {
                   tipText: props,
                   confirm() {
                     this.$modal.close(TIP_ID)
                   },
                 }
-              : props,
+              : props),
             type,
           },
         })

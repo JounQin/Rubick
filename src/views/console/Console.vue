@@ -26,8 +26,8 @@ import { Component, Vue } from 'vue-property-decorator'
 import { breadCrumbs } from 'plugins'
 
 import NavList from './NavList.vue'
-import NavRegions from './NavRegions.vue'
 import NavMenus from './NavMenus.vue'
+import NavRegions from './NavRegions.vue'
 
 import NAV_CONFIG from './nav-config'
 

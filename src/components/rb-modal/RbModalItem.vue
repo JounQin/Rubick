@@ -41,7 +41,9 @@ export default {
       this.$modal.close()
     },
     confirmModal() {
-      if (this.disabled) return
+      if (this.disabled) {
+        return
+      }
       this.$emit('confirm')
     },
   },

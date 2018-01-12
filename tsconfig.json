@@ -10,6 +10,11 @@
     "paths": {
       "*": ["src/*", "server/router/*"]
     },
+    "plugins": [
+      {
+        "name": "tslint-language-service"
+      }
+    ],
     "sourceMap": true
   },
   "exclude": ["node_modules"]

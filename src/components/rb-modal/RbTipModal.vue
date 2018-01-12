@@ -18,8 +18,8 @@ import RbModalItem from './RbModalItem.vue'
 export default class RbTipModal extends Vue {
   @Prop() backdrop: boolean
   @Prop() tipText: string
-  @Prop() confirm: Function
-  @Prop() close: Function
+  @Prop() confirm: (...args: any[]) => any
+  @Prop() close: (...args: any[]) => any
   @Prop() confirmText: string
   @Prop() cancelText: string
   @Prop() type: number
@@ -41,19 +41,18 @@ export default class RbTipModal extends Vue {
     this.setToast()
   }
   setToast() {
-    this.type ||
+    if (!this.type) {
       setTimeout(() => {
         this.closeModal()
       }, this.timeout || 2000)
+    }
   }
   closeModal(...args: any[]) {
     this.close ? this.close(...args) : this.$modal.close()
   }
   confirmModal(...args: any[]) {
     this.confirm
-      ? this.confirm(
-          ...(this.type === 3 ? [this.text, ...args] : args),
-        )
+      ? this.confirm(...(this.type === 3 ? [this.text, ...args] : args))
       : Vue.util.warn(
           'you should handle the click event on the confirm btn by yourself!',
         )

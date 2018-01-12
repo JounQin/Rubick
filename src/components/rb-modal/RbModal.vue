@@ -10,7 +10,7 @@ div(v-if="modals.length")
   @click.self.native="handleBackdrop(id, options.backdrop)")
 </template>
 <script lang="ts">
-import { Component, Watch, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 
 import { MODAL_BACKDROP, Modal } from 'types'
 
@@ -67,7 +67,13 @@ export default class RbModal extends Vue {
 
     let modal
 
-    if (!modalId || !(modal = this.getModal(modalId))) return Promise.resolve()
+    if (modalId) {
+      modal = this.getModal(modalId)
+    }
+
+    if (!modalId || !modal) {
+      return Promise.resolve()
+    }
 
     const { options } = modal
 
@@ -75,9 +81,11 @@ export default class RbModal extends Vue {
 
     const modalItem = this.getModalItem(modalId)
 
-    if (!modalItem) return Promise.reject(new TypeError(NON_TRANSITION_ERR))
+    if (!modalItem) {
+      return Promise.reject(new TypeError(NON_TRANSITION_ERR))
+    }
 
-    const callback = (resolve: Function) => {
+    const callback = (resolve: () => void) => {
       options.destroy || destroy
         ? this.removeModal(modalId)
         : this.resetCurrModal(modalId)
@@ -121,13 +129,34 @@ export default class RbModal extends Vue {
       : this.resolve(modal)
   }
 
+  getModal(modalId: string) {
+    return this.modals.find(m => m.id === modalId)
+  }
+
+  getModalIndex(modalId: string) {
+    return this.modals.findIndex(m => m.id === modalId)
+  }
+
+  getModalRef(modalId: string) {
+    return (this.$refs.modal as Vue[])[this.getModalIndex(modalId)]
+  }
+
+  handleBackdrop(id: string, backdrop: MODAL_BACKDROP) {
+    if (backdrop === 'static') {
+      return
+    }
+    this.close(id)
+  }
+
   private resolve(modal: Modal) {
     const { id, component, props, options } = modal
 
     const m = this.getModal(id)
 
     if (m) {
-      component && (m.component = component)
+      if (component) {
+        m.component = component
+      }
       modal = m
     } else if (!component) {
       return Promise.reject(
@@ -148,7 +177,9 @@ export default class RbModal extends Vue {
 
     return promise.then(() => {
       modal.options = opts
-      m || this.modals.push(modal)
+      if (!m) {
+        this.modals.push(modal)
+      }
       this.currModal = modal
 
       return new Promise((resolve, reject) => {
@@ -162,36 +193,23 @@ export default class RbModal extends Vue {
     })
   }
 
-  getModal(modalId: string) {
-    return this.modals.find(m => m.id === modalId)
-  }
-
-  getModalIndex(modalId: string) {
-    return this.modals.findIndex(m => m.id === modalId)
-  }
-
-  getModalRef(modalId: string) {
-    return (this.$refs.modal as Vue[])[this.getModalIndex(modalId)]
-  }
-
   private getModalItem(modalId: string) {
     const modalRef = this.getModalRef(modalId)
     return modalRef && modalRef.$children[0]
   }
 
   private resetCurrModal(modalId: string) {
-    modalId === this.currModalId && (this.currModal = null)
+    if (modalId === this.currModalId) {
+      this.currModal = null
+    }
   }
 
   private removeModal(modalId: string) {
     const modalIndex = this.getModalIndex(modalId)
-    modalIndex + 1 && this.modals.splice(modalIndex, 1)
+    if (modalIndex + 1) {
+      this.modals.splice(modalIndex, 1)
+    }
     this.resetCurrModal(modalId)
-  }
-
-  private handleBackdrop(id: string, backdrop: MODAL_BACKDROP) {
-    if (backdrop === 'static') return
-    this.close(id)
   }
 }
 </script>

@@ -1,4 +1,5 @@
 import * as ExtractTextPlugin from 'extract-text-webpack-plugin'
+import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import * as FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 import * as webpack from 'webpack'
 
@@ -68,6 +69,7 @@ const webpackConfig: webpack.Configuration = {
             module: 'esnext',
             target: 'es5',
           },
+          transpileOnly: true,
         },
       },
       {
@@ -119,6 +121,11 @@ const webpackConfig: webpack.Configuration = {
     new ExtractTextPlugin({
       filename: 'app.[chunkhash].css',
       disable: __DEV__,
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      tsconfig: paths.src('tsconfig.json'),
+      tslint: true,
+      vue: true,
     }),
     ...(__PROD__
       ? [new webpack.optimize.ModuleConcatenationPlugin()]

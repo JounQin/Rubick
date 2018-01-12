@@ -27,7 +27,7 @@ div(tabindex="1"
 import { Component, Vue } from 'vue-property-decorator'
 import { Action, Getter, State } from 'vuex-class'
 
-import { Profile, RootState, User } from 'types'
+import { Profile, RootState } from 'types'
 
 @Component
 export default class NavMenus extends Vue {
@@ -44,8 +44,9 @@ export default class NavMenus extends Vue {
 
   confirmLogout() {
     this.$tip.confirm({
-      tipText: `<div class="${this.$style
-        .tip}"><i class="fa fa-question-circle"></i>${this.$t('logout')}</div>`,
+      tipText: `<div class="${
+        this.$style.tip
+      }"><i class="fa fa-question-circle"></i>${this.$t('logout')}</div>`,
       confirm: async () => {
         await this.logout()
         this.$modal.close()

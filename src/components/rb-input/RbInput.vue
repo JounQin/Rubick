@@ -65,6 +65,16 @@ export default class RbInput extends Vue {
   @Prop({ default: 1 })
   maxNum: number
 
+  @Model(INPUT, {
+    type: [String, Number, Array],
+  })
+  value: Input | Input[]
+
+  active = !!(Array.isArray(this.value) ? this.value.length : this.value)
+  focus = false
+  selectionsActive = false
+  selected: string[] = []
+
   selectOptions: Selection[] = this.selections ? [...this.selections] : []
 
   @Watch('selections')
@@ -73,18 +83,13 @@ export default class RbInput extends Vue {
     this.selected = []
   }
 
-  @Model(INPUT, {
-    type: [String, Number, Array],
-  })
-  value: Input | Input[]
-
   get model() {
     const { value } = this
     return this.selections ? this.display(value as Input) : value
   }
 
   set model(model) {
-    const { displayField, selections, valueField } = this
+    const { selections, valueField } = this
 
     if (!selections) {
       this.$emit(INPUT, model)
@@ -92,9 +97,7 @@ export default class RbInput extends Vue {
     }
 
     const selection = selections.find(
-      selection =>
-        (valueField ? (selection as BasicObj)[valueField] : selection) ===
-        model,
+      s => (valueField ? (s as BasicObj)[valueField] : s) === model,
     )
 
     this.$emit(
@@ -102,11 +105,6 @@ export default class RbInput extends Vue {
       selection && valueField ? (selection as BasicObj)[valueField] : selection,
     )
   }
-
-  active = !!(Array.isArray(this.value) ? this.value.length : this.value)
-  focus = false
-  selectionsActive = false
-  selected: string[] = []
 
   get shouldActive() {
     return !!(this.maxNum === 1 ? this.model : this.selected.length)
@@ -125,9 +123,7 @@ export default class RbInput extends Vue {
     const { displayField, valueField } = this
 
     const selection = this.selections.find(
-      selection =>
-        (valueField ? (selection as BasicObj)[valueField] : selection) ===
-        value,
+      s => (valueField ? (s as BasicObj)[valueField] : s) === value,
     )
 
     return selection && displayField
@@ -150,7 +146,7 @@ export default class RbInput extends Vue {
   toggleSelection(selection: Selection) {
     const value = this.valueField
       ? (selection as BasicObj)[this.valueField]
-      : selection as string
+      : (selection as string)
 
     const { maxNum, selected, selectOptions, valueField } = this
 
@@ -161,9 +157,7 @@ export default class RbInput extends Vue {
       this.selectionsActive = false
     } else if (maxNum === -1 || this.selected.length < this.maxNum) {
       const index = selectOptions.findIndex(
-        selection =>
-          (valueField ? (selection as BasicObj)[valueField] : selection) ===
-          value,
+        s => (valueField ? (s as BasicObj)[valueField] : s) === value,
       )
 
       if (index !== -1) {

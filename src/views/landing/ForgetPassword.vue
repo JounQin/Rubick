@@ -17,10 +17,6 @@ main
 <script lang="ts">
 import { snakeCase } from 'lodash'
 import { Component, Vue } from 'vue-property-decorator'
-import { Route } from 'vue-router'
-import { Action } from 'vuex-class'
-
-import { Next, User } from 'types'
 
 import RbInput from 'components/rb-input/RbInput.vue'
 

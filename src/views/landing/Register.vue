@@ -28,10 +28,6 @@ main
 <script lang="ts">
 import { snakeCase } from 'lodash'
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Route } from 'vue-router'
-import { Action } from 'vuex-class'
-
-import { Next, User } from 'types'
 
 import RbInput from 'components/rb-input/RbInput.vue'
 
@@ -260,11 +256,11 @@ export default class Register extends Vue {
 
   Captchas = Captchas
 
-  Selections: { [key: string]: { display: string; value: string }[] } = {}
+  Selections: { [key: string]: Array<{ display: string; value: string }> } = {}
 
   @Watch('$t.locale', { immediate: true })
   localeChange() {
-    for (let [key, values] of Object.entries(SelectionsType)) {
+    for (const [key, values] of Object.entries(SelectionsType)) {
       let selections = this.Selections[key]
 
       if (!selections) {

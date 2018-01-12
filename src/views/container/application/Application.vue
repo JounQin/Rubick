@@ -22,13 +22,12 @@ table.table
       td {{ space_name || 'N/A'}}
 </template>
 <script lang="ts">
-import axios, { AxiosInstance } from 'axios'
+import { AxiosInstance } from 'axios'
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Module, Store } from 'vuex'
-import { Action, State } from 'vuex-class'
+import { State } from 'vuex-class'
 
 import { applicationModule } from 'store'
-import { Application, ApplicationState, RootState, RootStore } from 'types'
+import { Application, RootStore } from 'types'
 
 const MODULE_NAME = 'application'
 

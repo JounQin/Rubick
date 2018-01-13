@@ -75,7 +75,7 @@
     "qs": "^6.5.1",
     "regenerator-runtime": "^0.11.1",
     "ts-node": "^4.1.0",
-    "tsconfig-paths": "^2.7.3",
+    "tsconfig-paths": "^3.0.0",
     "v-tooltip": "^2.0.0-rc.25",
     "vue": "^2.5.13",
     "vue-class-component": "^6.1.2",

@@ -141,9 +141,9 @@
   dependencies:
     "@types/koa" "*"
 
-"@types/koa-session@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@types/koa-session/-/koa-session-3.0.6.tgz#e45ee03a2e8fcaf277a85f7615997f600d782c53"
+"@types/koa-session@5.7.0":
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/@types/koa-session/-/koa-session-5.7.0.tgz#60b626affac85160233d7a9e23243090ccd13311"
   dependencies:
     "@types/koa" "*"
 
@@ -6153,7 +6153,7 @@ ts-node@^4.1.0:
     v8flags "^3.0.0"
     yn "^2.0.0"
 
-tsconfig-paths@3.1.1:
+tsconfig-paths@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-3.1.1.tgz#368478faed54a247f2c8e59e44cb81418b2ae515"
   dependencies:

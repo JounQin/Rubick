@@ -32,7 +32,9 @@ export default merge.smart(baseConfig, {
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
       __SERVER__: JSON.stringify(true),
     }),
-    new VueSSRServerPlugin(),
+    new VueSSRServerPlugin({
+      filename: '../vue-ssr-server-bundle.json',
+    }),
   ],
   externals: nodeExternals({
     // do not externalize CSS files in case we need to import it from a dep

@@ -39,7 +39,9 @@ const clientConfig = merge.smart(baseConfig, {
       filename: '__non-ssr-page__.html',
       favicon: 'src/assets/favicon.ico',
     }),
-    new VueSSRClientPlugin(),
+    new VueSSRClientPlugin({
+      filename: '../vue-ssr-client-manifest.json',
+    }),
   ],
 })
 
@@ -52,14 +54,7 @@ if (!devTool) {
 }
 
 if (__DEV__) {
-  ;((clientConfig.entry as webpack.Entry).app as string[]).unshift(
-    'webpack-hot-middleware/client',
-  )
-
-  clientConfig.plugins.push(
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-  )
+  clientConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin())
 } else {
   debug(`Enable plugins for ${NODE_ENV} (SWPrecache).`)
 

@@ -4,7 +4,6 @@ import * as path from 'path'
 
 import acceptLanguage from 'accept-language'
 import * as _debug from 'debug'
-import { minify } from 'html-minifier'
 import * as Koa from 'koa'
 import * as proxy from 'koa-better-http-proxy'
 import * as compose from 'koa-compose'
@@ -16,7 +15,6 @@ import * as staticCache from 'koa-static-cache'
 import * as lruCache from 'lru-cache'
 import * as mkdirp from 'mkdirp'
 import * as re from 'path-to-regexp'
-import * as pug from 'pug'
 import { BundleRenderer, createBundleRenderer } from 'vue-server-renderer'
 
 import * as koaPkg from 'koa/package.json'
@@ -26,31 +24,22 @@ import { ACCEPT_LANGUAGE, ENV, MODE, SESSION_CONFIG, getEnv } from 'commons'
 import { Locale } from 'types'
 import { INFINITY_DATE, LOCALE_COOKIE } from 'utils'
 
-import config, { globals, paths, runtimeRequire } from '../build/config'
+import config, { paths, runtimeRequire } from '../build/config'
 import startRouter from './router'
 
 acceptLanguage.languages([Locale.ZH, Locale.EN])
-
-const minimize = !config.devTool
-const { __DEV__ } = globals
 
 const debug = _debug('rubick:server')
 
 const { serverHost, serverPort } = config
 
-const getTemplate = (tempPath: string) => {
-  const tpl = pug.render(fs.readFileSync(tempPath, 'utf-8'), {
-    pretty: minimize,
-    polyfill: !__DEV__,
-  })
-
-  return minimize
-    ? minify(tpl, {
-        collapseWhitespace: true,
-        minifyJS: true,
+const template =
+  process.env.NODE_ENV === 'development'
+    ? // tslint:disable-next-line:no-var-requires
+      require('pug').renderFile(paths.server('template.pug'), {
+        pretty: true,
       })
-    : tpl
-}
+    : fs.readFileSync(paths.dist('template.html'), 'utf-8')
 
 const app = new Koa()
 
@@ -58,7 +47,7 @@ app.keys = getEnv(ENV.APP_KEYS, MODE.STR_ARR)
 
 app.use(compose([logger(), compress(), session(SESSION_CONFIG, app)]))
 
-if (__DEV__) {
+if (process.env.NODE_ENV === 'development') {
   app.use(
     proxy(serverHost, {
       port: serverPort + 1,
@@ -74,12 +63,11 @@ let renderer: BundleRenderer
 let readyPromise: Promise<any>
 let mfs: any
 
-const templatePath = paths.server('template.pug')
-
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
 const createRenderer = (bundle: object, options: object) =>
   createBundleRenderer(bundle, {
     ...options,
+    template,
     inject: false,
     cache: lruCache({
       max: 1000,
@@ -89,26 +77,24 @@ const createRenderer = (bundle: object, options: object) =>
     runInNewContext: false,
   })
 
-if (__DEV__) {
-  readyPromise = require('./dev-tools').default(
-    app,
-    templatePath,
-    getTemplate,
-    (bundle: object, { clientManifest, fs: memoryfs, template }: any) => {
-      renderer = createRenderer(bundle, { clientManifest, template })
+if (process.env.NODE_ENV === 'development') {
+  const { readyPromise: ready, webpackMiddleware } = require('./dev').default(
+    ({ bundle, clientManifest, fs: memoryfs }: any) => {
+      renderer = createRenderer(bundle, { clientManifest })
       mfs = memoryfs
     },
   )
+  readyPromise = ready
+  app.use(webpackMiddleware)
 } else {
   mfs = fs
 
   renderer = createRenderer(
-    runtimeRequire(paths.dist('static/vue-ssr-server-bundle.json')),
+    runtimeRequire(paths.dist('vue-ssr-server-bundle.json')),
     {
       clientManifest: runtimeRequire(
-        paths.dist('static/vue-ssr-client-manifest.json'),
+        paths.dist('vue-ssr-client-manifest.json'),
       ),
-      template: getTemplate(templatePath),
     },
   )
 
@@ -175,7 +161,7 @@ app.use(async (ctx, next) => {
   const { url } = ctx
 
   if (NON_SSR_PATTERN.find(pattern => !!re(pattern).exec(url))) {
-    if (__DEV__) {
+    if (process.env.NODE_ENV === 'development') {
       ctx.body = mfs.createReadStream(paths.dist(INDEX_PAGE))
     } else {
       ctx.url = INDEX_PAGE
@@ -188,7 +174,8 @@ app.use(async (ctx, next) => {
   let distPath: string
 
   if (
-    (!__DEV__ || getEnv(ENV.ENABLE_DEV_STATIC, MODE.BOOLEAN)) &&
+    (process.env.NODE_ENV !== 'development' ||
+      getEnv(ENV.ENABLE_DEV_STATIC, MODE.BOOLEAN)) &&
     STATIC_PATTERN.find(pattern => !!re(pattern).exec(url))
   ) {
     const staticFile = url.split('?')[0].replace(/^\//, '') || 'home'
@@ -201,7 +188,7 @@ app.use(async (ctx, next) => {
       : paths.dist(`static/${staticPath}`)
 
     if (mfs.existsSync(distPath)) {
-      if (__DEV__ || isNowSh) {
+      if (process.env.NODE_ENV === 'development' || isNowSh) {
         ctx.body = mfs.createReadStream(distPath)
       } else {
         ctx.url = staticPath

@@ -16,17 +16,17 @@
     "6.cdcbf86db24402a00bac.js",
     "7.533a37bb835cf0999e7c.js",
     "8.31a1917d1f5ce6bcc09f.js",
-    "app.0e1e2a3385f077b83304.js",
+    "app.6078296db4f9070b9744.js",
     "vendors.e7eabeb2a0ddf659f9a6.js",
-    "manifest.c7e99f36cf2f86ef11e9.js",
-    "app.0e1e2a3385f077b83304.css",
+    "manifest.468e3b50c70ab4041a0c.js",
+    "app.6078296db4f9070b9744.css",
     "favicon.ico",
     "__non-ssr-page__.html"
   ],
   "initial": [
-    "manifest.c7e99f36cf2f86ef11e9.js",
+    "manifest.468e3b50c70ab4041a0c.js",
     "vendors.e7eabeb2a0ddf659f9a6.js",
-    "app.0e1e2a3385f077b83304.js"
+    "app.6078296db4f9070b9744.js"
   ],
   "async": [
     "4.179ed3fb069b115a1b81.js",

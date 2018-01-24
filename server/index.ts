@@ -24,22 +24,25 @@ import { ACCEPT_LANGUAGE, ENV, MODE, SESSION_CONFIG, getEnv } from 'commons'
 import { Locale } from 'types'
 import { INFINITY_DATE, LOCALE_COOKIE } from 'utils'
 
-import config, { paths, runtimeRequire } from '../build/config'
+import {
+  resolve,
+  runtimeRequire,
+  serverHost,
+  serverPort,
+} from '../build/config'
 import startRouter from './router'
 
 acceptLanguage.languages([Locale.ZH, Locale.EN])
 
 const debug = _debug('rubick:server')
 
-const { serverHost, serverPort } = config
-
 const template =
   process.env.NODE_ENV === 'development'
     ? // tslint:disable-next-line:no-var-requires
-      require('pug').renderFile(paths.server('template.pug'), {
+      require('pug').renderFile(resolve('server/template.pug'), {
         pretty: true,
       })
-    : fs.readFileSync(paths.dist('template.html'), 'utf-8')
+    : fs.readFileSync(resolve('dist/template.html'), 'utf-8')
 
 const app = new Koa()
 
@@ -73,7 +76,7 @@ const createRenderer = (bundle: object, options: object) =>
       max: 1000,
       maxAge: 1000 * 60 * 15,
     }),
-    basedir: paths.dist('static'),
+    basedir: resolve('dist/static'),
     runInNewContext: false,
   })
 
@@ -90,10 +93,10 @@ if (process.env.NODE_ENV === 'development') {
   mfs = fs
 
   renderer = createRenderer(
-    runtimeRequire(paths.dist('vue-ssr-server-bundle.json')),
+    runtimeRequire(resolve('dist/vue-ssr-server-bundle.json')),
     {
       clientManifest: runtimeRequire(
-        paths.dist('vue-ssr-client-manifest.json'),
+        resolve('dist/vue-ssr-client-manifest.json'),
       ),
     },
   )
@@ -162,7 +165,7 @@ app.use(async (ctx, next) => {
 
   if (NON_SSR_PATTERN.find(pattern => !!re(pattern).exec(url))) {
     if (process.env.NODE_ENV === 'development') {
-      ctx.body = mfs.createReadStream(paths.dist(INDEX_PAGE))
+      ctx.body = mfs.createReadStream(resolve('dist/' + INDEX_PAGE))
     } else {
       ctx.url = INDEX_PAGE
       await next()
@@ -185,7 +188,7 @@ app.use(async (ctx, next) => {
     const isNowSh = ctx.hostname.endsWith('.now.sh')
     distPath = isNowSh
       ? path.resolve('/tmp', staticPath)
-      : paths.dist(`static/${staticPath}`)
+      : resolve(`dist/static/${staticPath}`)
 
     if (mfs.existsSync(distPath)) {
       if (process.env.NODE_ENV === 'development' || isNowSh) {

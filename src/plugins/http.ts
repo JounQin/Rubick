@@ -1,8 +1,7 @@
 import axios from 'axios'
 import Vue from 'vue'
 
-axios.defaults.baseURL =
-  (__SERVER__ ? INNER_SERVER : SERVER_PREFIX) + API_PREFIX.replace(/^\/+/, '')
+axios.defaults.baseURL = SERVER_PREFIX + API_PREFIX.replace(/^\/+/, '')
 
 Object.defineProperty(
   Vue.prototype,

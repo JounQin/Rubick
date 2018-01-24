@@ -6,11 +6,9 @@ import * as webpack from 'webpack'
 import * as merge from 'webpack-merge'
 import * as nodeExternals from 'webpack-node-externals'
 
-import { globals, paths } from './config'
+import { NODE_ENV, innerServer, resolve } from './config'
 
 import baseConfig from './base'
-
-const { NODE_ENV } = globals
 
 const VUE_ENV = 'server'
 
@@ -21,7 +19,10 @@ debug(
 )
 
 export default merge.smart(baseConfig, {
-  entry: [path.resolve(__dirname, 'element.js'), paths.src('entry-server.ts')],
+  entry: [
+    path.resolve(__dirname, 'element.js'),
+    resolve('src/entry-server.ts'),
+  ],
   target: 'node',
   output: {
     filename: 'server-bundle.js',
@@ -30,6 +31,7 @@ export default merge.smart(baseConfig, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
+      SERVER_PREFIX: JSON.stringify(innerServer),
       __SERVER__: JSON.stringify(true),
     }),
     new VueSSRServerPlugin({

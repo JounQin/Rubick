@@ -5,15 +5,11 @@ import * as VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import * as webpack from 'webpack'
 import * as merge from 'webpack-merge'
 
-import config, { globals, paths } from './config'
+import { NODE_ENV, __DEV__, resolve } from './config'
 
 import baseConfig from './base'
 
 const VUE_ENV = 'client'
-
-const { devTool } = config
-
-const { __DEV__, NODE_ENV } = globals
 
 const debug = _debug('rubick:webpack:client')
 
@@ -23,12 +19,13 @@ debug(
 
 const clientConfig = merge.smart(baseConfig, {
   entry: {
-    app: [paths.src('entry-client.ts')],
+    app: [resolve('src/entry-client.ts')],
   },
   target: 'web',
   plugins: [
     new webpack.DefinePlugin({
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
+      SERVER_PREFIX: JSON.stringify('/'),
       __SERVER__: JSON.stringify(false),
     }),
     // extract vendor chunks for better caching
@@ -57,18 +54,11 @@ const clientConfig = merge.smart(baseConfig, {
   ],
 })
 
-if (!devTool) {
-  debug(`Enable plugins for ${NODE_ENV} (UglifyJS).`)
+if (!__DEV__) {
+  debug(`Enable plugins for ${NODE_ENV} (UglifyJS, SWPrecache).`)
 
   clientConfig.plugins.push(
     new webpack.optimize.UglifyJsPlugin({ comments: false }),
-  )
-}
-
-if (!__DEV__) {
-  debug(`Enable plugins for ${NODE_ENV} (SWPrecache).`)
-
-  clientConfig.plugins.push(
     new SWPrecacheWebpackPlugin({
       cacheId: 'rubick',
       directoryIndex: false,
@@ -76,7 +66,7 @@ if (!__DEV__) {
       minify: true,
       dontCacheBustUrlsMatching: /./,
       staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/, /\.json$/],
-      stripPrefix: paths.dist('static').replace(/\\/g, '/'),
+      stripPrefix: resolve('dist/static').replace(/\\/g, '/'),
       runtimeCaching: [
         {
           urlPattern: /\//,

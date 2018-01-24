@@ -1,11 +1,11 @@
 import { exec } from 'shelljs'
 
-import config from '../../build/config'
+import { serverPort } from '../../build/config'
 
 import startRouter from '.'
 
 exec(
-  `kill -9 $(lsof -i:${config.serverPort + 1} -t) 2> /dev/null`,
+  `kill -9 $(lsof -i:${serverPort + 1} -t) 2> /dev/null`,
   (code, stdout, stderr) => {
     if (stderr) {
       // tslint:disable-next-line no-console

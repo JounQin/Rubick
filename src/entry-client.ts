@@ -84,7 +84,7 @@ const routerReady = () => {
 if (initialState) {
   store.replaceState(initialState)
 
-  if (__PROD__) {
+  if (!__DEV__) {
     delete window.__INITIAL_STATE__
   }
 
@@ -102,7 +102,7 @@ if (module.hot) {
 }
 
 if (
-  __PROD__ &&
+  !__DEV__ &&
   (location.protocol === 'https:' ||
     ['127.0.0.1', 'localhost'].includes(location.hostname)) &&
   navigator.serviceWorker

@@ -27,7 +27,7 @@
   },
   "browserslist": ["> 1% in CN"],
   "lint-staged": {
-    "*.{json,md}": ["prettier --write", "git add"],
+    "*.{json,md,vue}": ["prettier --write", "git add"],
     "*.ts": ["tslint -p . -t stylish --fix", "git add"]
   },
   "nodemonConfig": {

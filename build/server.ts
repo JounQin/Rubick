@@ -3,22 +3,22 @@ import * as fs from 'fs'
 import * as webpack from 'webpack'
 import * as nodeExternals from 'webpack-node-externals'
 
-import { paths } from './config'
+import { resolve } from './config'
 
 import baseConfig from './base'
 
-const lernaModulesDir = paths.base('../../node_modules')
+const lernaModulesDir = resolve('../../node_modules')
 
 const config: webpack.Configuration = {
   ...baseConfig,
-  entry: paths.server('index.ts'),
+  entry: resolve('server/index.ts'),
   target: 'node',
   resolve: {
     extensions: ['.ts', '.js'],
-    modules: [paths.src(), paths.server('router'), 'node_modules'],
+    modules: [resolve('src'), resolve('server/router'), 'node_modules'],
   },
   output: {
-    path: paths.dist(),
+    path: resolve('dist'),
     filename: 'server.js',
     libraryTarget: 'commonjs2',
   },

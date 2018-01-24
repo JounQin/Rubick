@@ -5,6 +5,7 @@
     "interface-name": false,
     "no-empty": false,
     "member-access": false,
+    "no-namespace": [true, "allow-declarations"],
     "no-unused-expression": true,
     "no-unused-variable": true,
     "object-literal-sort-keys": false,

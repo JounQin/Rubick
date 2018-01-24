@@ -3,14 +3,10 @@ import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import * as FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 import * as webpack from 'webpack'
 
-import config, { globals, paths } from './config'
+import { __DEV__, publicPath, resolve } from './config'
 
-const { devTool, publicPath } = config
-
-const { __DEV__, __PROD__ } = globals
-
-const minimize = !devTool
-const sourceMap = !minimize
+const minimize = !__DEV__
+const sourceMap = __DEV__
 
 const SCSS_LOADERS = ExtractTextPlugin.extract({
   use: [
@@ -40,7 +36,7 @@ const SCSS_LOADERS = ExtractTextPlugin.extract({
     {
       loader: 'sass-resources-loader',
       options: {
-        resources: paths.src('styles/_variables.scss'),
+        resources: resolve('src/styles/_variables.scss'),
       },
     },
   ],
@@ -49,15 +45,15 @@ const SCSS_LOADERS = ExtractTextPlugin.extract({
 
 const webpackConfig: webpack.Configuration = {
   resolve: {
-    modules: [paths.src(), 'node_modules'],
+    modules: [resolve('src'), 'node_modules'],
     extensions: ['.ts', '.vue', '.js'],
   },
   output: {
-    path: paths.dist('static'),
+    path: resolve('dist/static'),
     publicPath,
-    filename: `[name].[${__PROD__ ? 'chunkhash' : 'hash'}].js`,
+    filename: `[name].[${__DEV__ ? 'hash' : 'chunkhash'}].js`,
   },
-  devtool: devTool,
+  devtool: __DEV__ ? 'cheap-module-eval-source-map' : false,
   module: {
     rules: [
       {
@@ -78,9 +74,9 @@ const webpackConfig: webpack.Configuration = {
         options: {
           cssModules: {
             camelCase: true,
-            localIdentName: __PROD__
-              ? '[hash:base64]'
-              : '[name]__[local]___[hash:base64:5]',
+            localIdentName: __DEV__
+              ? '[name]__[local]___[hash:base64:5]'
+              : '[hash:base64]',
           },
           loaders: {
             scss: SCSS_LOADERS,
@@ -115,8 +111,19 @@ const webpackConfig: webpack.Configuration = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      ...globals,
-      SERVER_PREFIX: JSON.stringify(config.publicPath),
+      ...Object.entries(process.env).reduce(
+        (result, [key, value]) => {
+          if (key !== 'VUE_ENV') {
+            result[`process.env.${key}`] = JSON.stringify(value)
+          }
+          return result
+        },
+        {} as { [key: string]: string },
+      ),
+      __DEV__,
+      API_PREFIX: JSON.stringify('/api'),
+      NON_INDEX_REGEX: /^(?!.*[/\\](index)\.ts).*\.(ts|vue)$/.toString(),
+      I18N_REGEX: /([\w-]*[\w]+)\.i18n\.json$/.toString(),
     }),
     new webpack.SourceMapDevToolPlugin({ test: /\.(css|js|ts)$/ }),
     new ExtractTextPlugin({
@@ -124,13 +131,13 @@ const webpackConfig: webpack.Configuration = {
       disable: __DEV__,
     }),
     new ForkTsCheckerWebpackPlugin({
-      tsconfig: paths.src('tsconfig.json'),
+      tsconfig: resolve('src/tsconfig.json'),
       tslint: true,
       vue: true,
     }),
-    ...(__PROD__
-      ? [new webpack.optimize.ModuleConcatenationPlugin()]
-      : [new webpack.NoEmitOnErrorsPlugin(), new FriendlyErrorsPlugin()]),
+    ...(__DEV__
+      ? [new webpack.NoEmitOnErrorsPlugin(), new FriendlyErrorsPlugin()]
+      : [new webpack.optimize.ModuleConcatenationPlugin()]),
   ],
 }
 

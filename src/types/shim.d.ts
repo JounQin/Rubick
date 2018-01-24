@@ -33,11 +33,9 @@ declare global {
   }
 
   const __DEV__: boolean
-  const __PROD__: boolean
   const __SERVER__: boolean
   const NON_INDEX_REGEX: RegExp
   const I18N_REGEX: RegExp
-  const INNER_SERVER: string
   const SERVER_PREFIX: string
   const API_PREFIX: string
 

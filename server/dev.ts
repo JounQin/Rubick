@@ -3,7 +3,7 @@ import * as koaWebpack from 'koa-webpack'
 import * as MFS from 'memory-fs'
 import * as webpack from 'webpack'
 
-import { paths } from '../build/config'
+import { resolve } from '../build/config'
 
 import clientConfig from '../build/vue-client'
 import serverConfig from '../build/vue-server'
@@ -43,7 +43,7 @@ export default (cb: any) => {
 
     fs = webpackMiddleware.dev.fileSystem
     clientManifest = JSON.parse(
-      fs.readFileSync(paths.dist('vue-ssr-client-manifest.json')),
+      fs.readFileSync(resolve('dist/vue-ssr-client-manifest.json')),
     )
 
     if (bundle) {
@@ -67,7 +67,7 @@ export default (cb: any) => {
     }
 
     bundle = JSON.parse(
-      mfs.readFileSync(paths.dist('vue-ssr-server-bundle.json')),
+      mfs.readFileSync(resolve('dist/vue-ssr-server-bundle.json')),
     )
 
     if (clientManifest) {

@@ -6,7 +6,7 @@ export const __DEV__ = NODE_ENV === 'development'
 
 export const serverHost = 'localhost'
 
-export const serverPort = 4000
+export const serverPort = process.env.PORT || 4000
 
 export const publicPath = __DEV__ ? `http://${serverHost}:${serverPort}/` : '/'
 

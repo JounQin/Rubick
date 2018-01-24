@@ -3,7 +3,7 @@ import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import * as FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 import * as webpack from 'webpack'
 
-import config, { globals, paths } from '../config'
+import config, { globals, paths } from './config'
 
 const { devTool, publicPath } = config
 

@@ -5,8 +5,8 @@ import * as webpack from 'webpack'
 
 import { paths } from '../build/config'
 
-import clientConfig from '../build/webpack/vue-client'
-import serverConfig from '../build/webpack/vue-server'
+import clientConfig from '../build/vue-client'
+import serverConfig from '../build/vue-server'
 
 const debug = _debug('rubick:server:dev')
 

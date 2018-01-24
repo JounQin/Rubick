@@ -3,7 +3,7 @@ import * as fs from 'fs'
 import * as webpack from 'webpack'
 import * as nodeExternals from 'webpack-node-externals'
 
-import { paths } from '../config'
+import { paths } from './config'
 
 import baseConfig from './base'
 

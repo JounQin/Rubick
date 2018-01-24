@@ -5,7 +5,7 @@ import * as VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import * as webpack from 'webpack'
 import * as merge from 'webpack-merge'
 
-import config, { globals, paths } from '../config'
+import config, { globals, paths } from './config'
 
 import baseConfig from './base'
 
@@ -65,9 +65,7 @@ if (!devTool) {
   )
 }
 
-if (__DEV__) {
-  clientConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin())
-} else {
+if (!__DEV__) {
   debug(`Enable plugins for ${NODE_ENV} (SWPrecache).`)
 
   clientConfig.plugins.push(

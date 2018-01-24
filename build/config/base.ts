@@ -46,15 +46,6 @@ export const runtimeRequire =
 
 export const alias = {}
 
-export const vendors = [
-  'axios',
-  'regenerator-runtime/runtime',
-  'vue',
-  'vue-router',
-  'vue-translator',
-  'vuex',
-]
-
 export interface Config {
   serverHost: string
   serverPort: number

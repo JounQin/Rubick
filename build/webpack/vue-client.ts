@@ -5,7 +5,7 @@ import * as VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import * as webpack from 'webpack'
 import * as merge from 'webpack-merge'
 
-import config, { globals, paths, vendors } from '../config'
+import config, { globals, paths } from '../config'
 
 import baseConfig from './base'
 
@@ -24,7 +24,6 @@ debug(
 const clientConfig = merge.smart(baseConfig, {
   entry: {
     app: [paths.src('entry-client.ts')],
-    vendors,
   },
   target: 'web',
   plugins: [
@@ -32,8 +31,21 @@ const clientConfig = merge.smart(baseConfig, {
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
       __SERVER__: JSON.stringify(false),
     }),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendors' }),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'manifest' }),
+    // extract vendor chunks for better caching
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendors',
+      minChunks: module =>
+        // a module is extracted into the vendors chunk
+        // if it's inside node_modules
+        /node_modules/.test(module.context) &&
+        // and not a CSS file (due to extract-text-webpack-plugin limitation)
+        !/\.css$/.test(module.request),
+    }),
+    // extract webpack runtime & manifest to avoid vendor chunk hash changing
+    // on every build.
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+    }),
     new HtmlWebpackPlugin({
       template: 'src/index.pug',
       filename: '__non-ssr-page__.html',

@@ -48,7 +48,7 @@ const webpackConfig: webpack.Configuration = {
     alias: {
       lodash$: 'lodash-es',
     },
-    modules: [resolve('src'), 'node_modules'],
+    modules: [resolve('src'), resolve('server/router'), 'node_modules'],
     extensions: ['.ts', '.vue', '.js'],
   },
   output: {

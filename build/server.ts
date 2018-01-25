@@ -13,10 +13,6 @@ const config: webpack.Configuration = {
   ...baseConfig,
   entry: resolve('server/index.ts'),
   target: 'node',
-  resolve: {
-    extensions: ['.ts', '.js'],
-    modules: [resolve('src'), resolve('server/router'), 'node_modules'],
-  },
   output: {
     path: resolve('dist'),
     filename: 'server.js',

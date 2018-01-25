@@ -30,6 +30,7 @@ import {
   serverHost,
   serverPort,
 } from '../build/config'
+
 import startRouter from './router'
 
 acceptLanguage.languages([Locale.ZH, Locale.EN])

@@ -45,6 +45,9 @@ const SCSS_LOADERS = ExtractTextPlugin.extract({
 
 const webpackConfig: webpack.Configuration = {
   resolve: {
+    alias: {
+      lodash$: 'lodash-es',
+    },
     modules: [resolve('src'), 'node_modules'],
     extensions: ['.ts', '.vue', '.js'],
   },

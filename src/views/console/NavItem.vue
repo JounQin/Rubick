@@ -44,9 +44,27 @@ export default class NavItem extends Vue {
 </script>
 <style lang="scss" module>
 .item {
+  position: relative;
+
   &:hover,
   &.expanded {
     background-color: $nav-focus-color;
+  }
+
+  &:before {
+    position: absolute;
+    content: '';
+    top: 0;
+    bottom: 0;
+    left: -2px;
+    width: 2px;
+    background-color: $primary-color;
+    transform: scale(0);
+    transition: transform 0.3s;
+  }
+
+  &.active:before {
+    transform: scale(1);
   }
 
   > :first-child {
@@ -120,4 +138,3 @@ export default class NavItem extends Vue {
   }
 }
 </style>
-

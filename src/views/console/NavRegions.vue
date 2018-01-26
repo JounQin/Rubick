@@ -36,6 +36,7 @@ export default class NavRegions extends Vue {
 <style lang="scss" module>
 .nav-regions:global(.rc-input) {
   $radius: 14px;
+  $selection-height: 32px;
 
   margin-bottom: 0;
   border-radius: $radius;
@@ -81,7 +82,7 @@ export default class NavRegions extends Vue {
 
   > :global(.list-unstyled) {
     margin-top: 3px;
-    max-height: unset;
+    max-height: $selection-height * 10 + 1px;
   }
 }
 </style>

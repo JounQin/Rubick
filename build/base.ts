@@ -139,7 +139,11 @@ const webpackConfig: webpack.Configuration = {
       vue: true,
     }),
     ...(__DEV__
-      ? [new webpack.NoEmitOnErrorsPlugin(), new FriendlyErrorsPlugin()]
+      ? [
+          new webpack.NamedChunksPlugin(),
+          new webpack.NamedModulesPlugin(),
+          new FriendlyErrorsPlugin(),
+        ]
       : [new webpack.optimize.ModuleConcatenationPlugin()]),
   ],
 }

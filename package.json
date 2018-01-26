@@ -126,7 +126,7 @@
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",
     "koa-webpack": "^2.0.3",
-    "lint-staged": "^6.0.1",
+    "lint-staged": "^6.1.0",
     "lodash-es": "^4.17.4",
     "memory-fs": "^0.4.1",
     "node-sass": "^4.7.2",

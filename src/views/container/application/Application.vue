@@ -27,7 +27,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { State } from 'vuex-class'
 
 import { applicationModule } from 'store'
-import { Application, RootStore } from 'types'
+import { Application as App, RootStore } from 'types'
 
 const MODULE_NAME = 'application'
 
@@ -49,9 +49,9 @@ const fetchApplications = async (axios: AxiosInstance, store: RootStore) => {
     await fetchApplications(axios, store)
   },
 })
-export default class ApplicationComponent extends Vue {
+export default class Application extends Vue {
   @State(state => state.application.applications)
-  applications: Application[]
+  applications: App[]
 
   @Watch('$store.state.common.regionId')
   async regionChange() {

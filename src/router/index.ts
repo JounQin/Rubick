@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 const RouterView = (name: string) =>
   Vue.extend({
-    name,
+    name: `Route${name}`,
     render: h => h('router-view'),
   })
 
@@ -46,6 +46,32 @@ export default () =>
                 name: 'service',
                 path: '/service',
                 component: () => import('views/container/service/Service.vue'),
+              },
+            ],
+          },
+          {
+            name: 'image',
+            path: '/image',
+            component: RouterView('Image'),
+            redirect: '/image-repository',
+            children: [
+              {
+                name: 'image-repository',
+                path: '/image-repository',
+                component: () =>
+                  import('views/image/image-repository/ImageRepository.vue'),
+              },
+              {
+                name: 'sync-center',
+                path: '/sync-center',
+                component: () =>
+                  import('views/image/sync-center/SyncCenter.vue'),
+              },
+              {
+                name: 'sync-history',
+                path: '/sync-history',
+                component: () =>
+                  import('views/image/sync-history/SyncHistory.vue'),
               },
             ],
           },

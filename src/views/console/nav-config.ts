@@ -34,6 +34,21 @@ const NAV_CONFIG: NavCategory[] = [
           },
         ],
       },
+      {
+        text: NavText.IMAGE,
+        icon: NavIcon.IMAGE,
+        items: [
+          {
+            text: NavText.IMAGE_REPOSITORY,
+          },
+          {
+            text: NavText.SYNC_CENTER,
+          },
+          {
+            text: NavText.SYNC_HISTORY,
+          },
+        ],
+      },
     ],
   },
   {

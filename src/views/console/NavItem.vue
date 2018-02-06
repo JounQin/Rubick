@@ -3,7 +3,7 @@ li(:class="[$style.item, { [$style.active]: active, [$style.expanded]: expanded 
   div(v-if="item.items"
       @click="expanded = !expanded")
     i.fa(:class="'fa-' + item.icon")
-    span {{ $t('nav_' + item.text) }}
+    span {{ $t('nav_' + snakeCase(item.text)) }}
     i.fa(:class="`fa-${expanded ? 'minus': 'plus'}`")
   div(v-else-if="item.text === 'locale'"
       v-tooltip.right="$t('switch_lang_tips')"
@@ -14,14 +14,15 @@ li(:class="[$style.item, { [$style.active]: active, [$style.expanded]: expanded 
               :to="'/' + item.text"
               :class="{ [$style.active]: $route.fullPath.startsWith('/' + item.text) }")
     i.fa(:class="'fa-' + item.icon")
-    span {{ $t('nav_' + item.text) }}
+    span {{ $t('nav_' + snakeCase(item.text)) }}
   ol.list-unstyled(v-if="item.items"
                     :class="$style.subItems"
                     :style="{ height: expanded ? 32 * item.items.length + 'px' : 0 }")
     li(v-for="{ text } of item.items")
-      router-link(:to="'/' + text") {{ $t('nav_' + text) }}
+      router-link(:to="'/' + text") {{ $t('nav_' + snakeCase(text)) }}
 </template>
 <script lang="ts">
+import { snakeCase } from 'lodash'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 import { NavItem as NavItemType } from 'types'
@@ -31,6 +32,7 @@ export default class NavItem extends Vue {
   @Prop() item: NavItemType
 
   expanded: boolean = null
+  snakeCase = snakeCase
 
   get active() {
     return this.$route.matched.some(({ name }) => name === this.item.text)

@@ -1,5 +1,7 @@
 <template lang="pug">
-button.btn(:class="[`btn-${btnStyle}`, { [$style.loading]: loading }]", :type="type", :disabled="disabled || loading")
+button.btn(:class="[`btn-${btnStyle}`, size && `btn-${size}`, { [$style.loading]: loading, }]"
+           :type="type"
+           :disabled="disabled || loading")
   slot
 </template>
 <script lang="ts">
@@ -9,6 +11,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class RbBtn extends Vue {
   @Prop({ default: 'primary' })
   btnStyle: string
+  @Prop() size: string
   @Prop() type: string
   @Prop() disabled: boolean
   @Prop() loading: boolean
@@ -45,4 +48,3 @@ export default class RbBtn extends Vue {
   }
 }
 </style>
-

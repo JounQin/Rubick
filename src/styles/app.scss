@@ -29,6 +29,10 @@ body {
   line-height: (20/14);
 }
 
+input::placeholder {
+  color: $placeholder-color;
+}
+
 #app {
   display: flex;
   min-height: 100%;
@@ -88,6 +92,10 @@ ol {
   border-radius: 3px;
   outline: 0;
 
+  &.btn-xs {
+    padding: 3px 5px;
+  }
+
   &.btn-primary {
     color: $reverse-color;
     border-color: $primary-color;
@@ -107,4 +115,35 @@ ol {
     padding-top: 10px;
     padding-bottom: 10px;
   }
+
+  + .btn {
+    margin-left: 5px;
+  }
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex {
+  flex: 1;
+  max-height: 100%;
+}
+
+@each $i in 30, 50, 60 {
+  .flex-#{$i} {
+    @extend .flex;
+    max-width: $i * 1%;
+  }
+}
+
+@each $i in 10, 20, 30 {
+  .mb-#{$i} {
+    margin-bottom: $i * 1px;
+  }
+}
+
+.scroll-y {
+  overflow-x: hidden;
+  overflow-y: auto;
 }

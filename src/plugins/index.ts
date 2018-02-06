@@ -1,4 +1,5 @@
 import './components'
+import './filters'
 import './http'
 import './mixins'
 import './tooltip'

@@ -4,7 +4,7 @@ import { Context } from 'koa'
 import * as _qs from 'qs'
 
 import { API_PREFIX_REGEXP } from './constants'
-import { ENV, getEnv } from './env'
+import { ENV, MODE, getEnv } from './env'
 
 export enum HTTP_METHOD {
   DELETE = 'delete',
@@ -27,6 +27,9 @@ interface JakiroOptions {
 
 const debug = _debug('rubick:jakiro')
 
+const API_SERVER_URL = getEnv(ENV.API_SERVER_URL)
+const OUTPUT_JAKIRO_RESPONSE = getEnv(ENV.OUTPUT_JAKIRO_RESPONSE, MODE.BOOLEAN)
+
 export const jakiro = async <T = any>({
   ctx,
   url = ctx.url,
@@ -37,7 +40,7 @@ export const jakiro = async <T = any>({
   qs,
 }: JakiroOptions): Promise<{ result: T; status: number }> => {
   url = url.replace(API_PREFIX_REGEXP, '/')
-  url = getEnv(ENV.API_SERVER_URL) + (/^\/v[12]/.test(url) ? url : `/v1${url}`)
+  url = API_SERVER_URL + (/^\/v[12]/.test(url) ? url : `/v1${url}`)
 
   if (qs) {
     data = _qs.stringify(data)
@@ -87,7 +90,15 @@ export const jakiro = async <T = any>({
     }
   }
 
-  debug('\nurl:%s\nresult: %O\nstatus:%d', url, result, status)
+  let debugFormatter = 'url:%s\nstatus:%d'
+  const debugArgs: any[] = [url, status]
+
+  if (OUTPUT_JAKIRO_RESPONSE) {
+    debugFormatter += '\nresult: %O'
+    debugArgs.push(result)
+  }
+
+  debug(debugFormatter, ...debugArgs)
 
   if (result.errors) {
     result.error = result.errors[0]

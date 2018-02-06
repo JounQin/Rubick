@@ -4,6 +4,7 @@ export enum NavIcon {
 
   // delivery
   CONTAINER = 'cubes',
+  IMAGE = 'building',
 
   // others
   MIRROR = 'rocket',
@@ -22,6 +23,12 @@ export enum NavText {
   TEMPLATE = 'template',
   ENVFILE = 'envfile',
   CONFIGURATION = 'configuration',
+
+  // delivery - image
+  IMAGE = 'image',
+  IMAGE_REPOSITORY = 'image-repository',
+  SYNC_CENTER = 'sync-center',
+  SYNC_HISTORY = 'sync-history',
 
   // others
   MIRROR = 'mirror',

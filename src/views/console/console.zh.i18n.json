@@ -6,6 +6,10 @@
   "nav_template": "应用模板",
   "nav_envfile": "环境变量文件",
   "nav_configuration": "配置文件",
+  "nav_image": "镜像",
+  "nav_image_repository": "镜像仓库",
+  "nav_sync_center": "同步中心",
+  "nav_sync_history": "同步历史",
   "nav_mirror": "免费加速器",
   "nav_docs": "用户文档",
   "nav_locale": "English"

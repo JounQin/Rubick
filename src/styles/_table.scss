@@ -1,3 +1,34 @@
 .table {
   width: 100%;
+  max-width: 100%;
+  border-spacing: 0;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.14);
+
+  th,
+  td {
+    padding: $table-cell-padding;
+  }
+
+  thead {
+    th,
+    td {
+      background-color: $reverse-color;
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: $tabel-color;
+      }
+
+      &:nth-child(even) {
+        background-color: $reverse-color;
+      }
+
+      &:hover {
+        background-color: $primary-light-color;
+      }
+    }
+  }
 }

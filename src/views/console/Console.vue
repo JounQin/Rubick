@@ -17,7 +17,7 @@ div(:class="$style.console")
           span(v-if="i") /
           span(v-if="!i || i === routes.length - 1") {{ text }}
           router-link(v-else, :to="link") {{ text }}
-    div(:class="$style.view")
+    .flex.scroll-y(:class="$style.view")
       router-view
 </template>
 <script lang="ts">
@@ -50,6 +50,14 @@ import NAV_CONFIG from './nav-config'
       account_center: '账号中心',
       permission_management: '权限管理',
       logout: '退出登录',
+      filter_by_name: '按名称过滤',
+      create_sync_config: '新增同步配置',
+      image_registry: '镜像仓库源',
+      source_image: '源镜像',
+      dest_registry: '目标仓库源',
+      quota_space: '资源空间',
+      created_time: '创建时间',
+      unit_ge: '个',
     },
     en: {
       nav_board: 'Board',
@@ -60,6 +68,14 @@ import NAV_CONFIG from './nav-config'
       account_center: 'Account Center',
       permission_management: 'Permissions',
       logout: 'Logout',
+      filter_by_name: 'filter by name',
+      create_sync_config: 'Create New Sync Config',
+      image_registry: 'Image Registry',
+      source_image: 'Source Image',
+      dest_registry: 'Destination Registry',
+      quota_space: 'Spaces',
+      created_time: 'Create Time',
+      unit_ge: '',
     },
   },
 })
@@ -82,6 +98,7 @@ export default class Console extends Vue {
 <style lang="scss" module>
 .console {
   display: flex;
+  color: $console-color;
 }
 
 .left-panel {
@@ -153,5 +170,6 @@ export default class Console extends Vue {
 
 .view {
   padding: 15px;
+  min-width: 900px;
 }
 </style>

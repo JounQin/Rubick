@@ -7,6 +7,8 @@ enum TYPES {
   SET_APPLICATIONS = 'SET_APPLICATIONS',
 }
 
+const API_PREFIX = '/applications/'
+
 export const applicationModule = (
   axios: AxiosInstance,
 ): Module<ApplicationState, RootState> => {
@@ -22,14 +24,14 @@ export const applicationModule = (
         return
       }
 
-      const { data: applications } = await axios.get(
-        `/applications/${rootGetters.namespace}`,
+      const { data } = await axios.get(
+        `${API_PREFIX}${rootGetters.namespace}`,
         {
           params: { region: regionName },
         },
       )
 
-      commit(TYPES.SET_APPLICATIONS, applications)
+      commit(TYPES.SET_APPLICATIONS, data)
     },
   }
 

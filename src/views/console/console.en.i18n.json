@@ -6,6 +6,10 @@
   "nav_template": "Templates",
   "nav_envfile": "Envfiles",
   "nav_configuration": "Configurations",
+  "nav_image": "Image",
+  "nav_image_repository": "Image Repository",
+  "nav_sync_center": "Sync Center",
+  "nav_sync_history": "Sync History",
   "nav_mirror": "Mirror",
   "nav_docs": "Documents",
   "nav_locale": "中文（简体）"

@@ -56,16 +56,46 @@ export default () =>
             redirect: '/image-repository',
             children: [
               {
-                name: 'image-repository',
                 path: '/image-repository',
-                component: () =>
-                  import('views/image/image-repository/ImageRepository.vue'),
+                component: RouterView('ImageRepository'),
+                meta: {
+                  title: 'image-repository',
+                },
+                children: [
+                  {
+                    name: 'image-repository',
+                    path: '',
+                    component: () =>
+                      import('views/image/image-repository/ImageRepository.vue'),
+                  },
+                  {
+                    name: 'repository-detail',
+                    path: 'detail/:repositoryName',
+                    component: () =>
+                      import('views/image/image-repository/RepositoryDetail.vue'),
+                  },
+                ],
               },
               {
-                name: 'sync-center',
                 path: '/sync-center',
-                component: () =>
-                  import('views/image/sync-center/SyncCenter.vue'),
+                component: RouterView('SyncCenter'),
+                meta: {
+                  title: 'sync-center',
+                },
+                children: [
+                  {
+                    name: 'sync-center',
+                    path: '',
+                    component: () =>
+                      import('views/image/sync-center/SyncCenter.vue'),
+                  },
+                  {
+                    name: 'sync-config-detail',
+                    path: 'config-detail/:configId',
+                    component: () =>
+                      import('views/image/sync-center/ConfigDetail.vue'),
+                  },
+                ],
               },
               {
                 name: 'sync-history',

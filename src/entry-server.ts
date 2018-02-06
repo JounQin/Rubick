@@ -66,7 +66,7 @@ export default (context: ServerContext) =>
 
       try {
         let promise = Promise.resolve()
-        matched.forEach(({ options }: any) => {
+        matched.forEach(({ options }: any = {}) => {
           const { asyncData } = options || { asyncData: null }
           promise = promise.then(
             () => asyncData && asyncData({ axios, store, route }),

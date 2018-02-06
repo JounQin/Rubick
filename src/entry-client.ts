@@ -53,7 +53,7 @@ const routerReady = () => {
     if (activated.length) {
       try {
         await Promise.all(
-          activated.map(({ options }: any) => {
+          activated.map(({ options }: any = {}) => {
             const { asyncData } = options || { asyncData: null }
             return asyncData && asyncData({ axios, store, route: to })
           }),

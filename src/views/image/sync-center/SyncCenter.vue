@@ -1,7 +1,7 @@
 <template lang="pug">
 main
   .d-flex.mb-10
-    rb-input.flex-30(:placeholder="$t('filter_by_name')")
+    rb-input.flex-30(:placeholder="$t('filter_by_name')", v-model="filteringName")
     .flex
     rb-btn {{ $t('create_sync_config') }}
   table.table
@@ -15,14 +15,16 @@ main
       td {{ $t('created_time') }}
       td {{ $t('action') }}
     tbody
-      tr(v-for="config of syncRegistryConfigs")
-        td {{ config.config_name }}
+      tr(v-for="config of filteredConfigs")
+        td
+          router-link(:to="'/sync-center/config-detail/' + config.config_id") {{ config.config_name }}
         td {{ config.source.info.registry_name }}
         td
           span(v-if="config.source.info.project_name") {{ config.source.info.project_name }} /
-          a {{ config.source.info.repository_name }}
+          router-link(:to="'/image-repository/detail/' + config.source.info.repository_name") {{ config.source.info.repository_name }}
         td
-          a {{ config.dest.length }} {{ $t('unit_ge') }}
+          a(v-if="config.dest.length") {{ config.dest.length }} {{ $t('unit_ge') }}
+          span(v-else) -
         td
           a {{ config.space_name }}
         td {{ config.created_at | formateDate }}
@@ -68,5 +70,15 @@ const fetchSyncRegistryConfigs = async (
 export default class SyncCenter extends Vue {
   @State(state => state.syncCenter.syncRegistryConfigs)
   syncRegistryConfigs: SyncRegistryConfig[]
+
+  filteringName: string = null
+
+  get filteredConfigs() {
+    return this.filteringName
+      ? this.syncRegistryConfigs.filter(({ config_name }) =>
+          config_name.includes(this.filteringName),
+        )
+      : this.syncRegistryConfigs
+  }
 }
 </script>

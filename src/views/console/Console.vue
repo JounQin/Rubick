@@ -153,7 +153,6 @@ export default class Console extends Vue {
 
   > nav {
     position: relative;
-    z-index: 2;
     overflow: hidden;
 
     .nav-collapse {

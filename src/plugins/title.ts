@@ -7,9 +7,8 @@ export const breadCrumbs = (route: Route, $t: Translator = Vue.translator) =>
   route.matched.reduce((prev, { meta, name, path }) => {
     const { title } = meta
     let text =
-      title && typeof title === 'function'
-        ? title.call(route, route)
-        : title || name
+      !path.endsWith('/') &&
+      ((typeof title === 'function' ? title.call(route, route) : title) || name)
 
     if (text) {
       text = snakeCase(text)

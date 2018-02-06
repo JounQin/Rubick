@@ -132,7 +132,7 @@ export default class NavItem extends Vue {
         opacity: 0.7;
       }
 
-      &:global(.router-link-exact-active) {
+      &:global(.router-link-active) {
         background-color: $primary-color;
         opacity: 1;
       }

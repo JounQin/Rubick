@@ -36,8 +36,7 @@ input::placeholder {
 #app {
   display: flex;
   min-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 
   > :first-child {
     flex: 1;

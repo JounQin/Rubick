@@ -20,6 +20,7 @@ table.table
             ul.list-unstyled
               li(v-for="{ key, value } of labels") {{ key }}: {{ value }}
       td {{ space_name || 'N/A'}}
+      td
 </template>
 <script lang="ts">
 import { AxiosInstance } from 'axios'

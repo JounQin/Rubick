@@ -1,15 +1,21 @@
 <template lang="pug">
 div(:class="$style.console")
-  div(:class="$style.leftPanel")
+  div(:class="[$style.leftPanel, { [$style.active]: active }]", @transitionend="collapsed = !active")
     header
       router-link(to="/")
         img(src="~assets/logo-medium.svg")
-    nav
-      nav-list(:navConfig="navConfig")
+    nav.flex
+      .d-flex(:class="$style.navCollapse", @click="active = false")
+        i.fa.fa-caret-left
+      nav-list.scroll-y(:class="$style.navList", :navConfig="navConfig")
+    .d-flex(v-if="collapsed", :class="$style.navCollapse", @click="active = true; collapsed = false")
+      i.fa.fa-caret-right
   div(:class="$style.rightPanel")
     header
+      div(:class="[$style.logo, { [$style.active]: !active }]")
+        img(src="~assets/logo-small.svg")
       nav-regions
-      div(:class="$style.whitespace")
+      .flex
       nav-menus
     div(:class="$style.breadCrumbs")
       ol.list-unstyled
@@ -17,8 +23,9 @@ div(:class="$style.console")
           span(v-if="i") /
           span(v-if="!i || i === routes.length - 1") {{ text }}
           router-link(v-else, :to="link") {{ text }}
-    .flex.scroll-y(:class="$style.view")
-      router-view
+    .flex(:class="$style.viewWrapper")
+      div(:class="$style.view")
+        router-view
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
@@ -80,6 +87,8 @@ import NAV_CONFIG from './nav-config'
   },
 })
 export default class Console extends Vue {
+  active = true
+  collapsed = false
   navConfig = NAV_CONFIG
 
   get routes() {
@@ -104,8 +113,30 @@ export default class Console extends Vue {
 .left-panel {
   display: flex;
   flex-basis: 160px;
+  max-width: 0;
   flex-direction: column;
   background-color: $console-panel-bg-color;
+  transition: all 0.2s;
+
+  &.active {
+    max-width: 160px;
+  }
+
+  > .nav-collapse {
+    left: -2px;
+    height: 200px;
+    height: calc(100% - 200px);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #555;
+    background-color: #eaeaeb;
+
+    &:hover {
+      left: 0;
+      box-shadow: 0 0 5px #aaa;
+      transform: translate3d(0, -50%, 0) scaleY(1.05);
+    }
+  }
 
   > header {
     display: flex;
@@ -121,12 +152,48 @@ export default class Console extends Vue {
   }
 
   > nav {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow-x: hidden;
-    overflow-y: auto;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+
+    .nav-collapse {
+      right: -4px;
+      height: 36px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      color: $reverse-color;
+      background-color: #3e4e59;
+
+      &:hover {
+        right: 0;
+      }
+    }
   }
+}
+
+.nav-collapse {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  width: 16px;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-family: FontAwesome;
+  opacity: 0.8;
+  transform: translate3d(0, -50%, 0);
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.nav-list {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .right-panel {
@@ -143,8 +210,22 @@ export default class Console extends Vue {
   }
 }
 
-.whitespace {
-  flex: 1;
+.logo {
+  display: block;
+  overflow: hidden;
+  transform: scale(0);
+  max-width: 0;
+  transition: all 0.3s;
+
+  &.active {
+    padding-right: 12px;
+    transform: scale(1);
+    max-width: 200px;
+  }
+
+  img {
+    height: 32px;
+  }
 }
 
 .bread-crumbs {
@@ -168,8 +249,16 @@ export default class Console extends Vue {
   }
 }
 
+.view-wrapper {
+  position: relative;
+  overflow: auto;
+}
+
 .view {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   padding: 15px;
-  min-width: 900px;
+  min-width: 1000px;
 }
 </style>

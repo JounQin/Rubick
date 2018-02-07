@@ -1,6 +1,6 @@
 import axios from 'axios'
 import * as crypto from 'crypto'
-import * as moment from 'moment'
+import { format } from 'date-fns'
 
 import { CCP_CONFIG } from './config'
 import { ENV, getEnv } from './env'
@@ -13,7 +13,7 @@ const generateHeaders = () => ({
   Accept: 'application/json',
   'Content-Type': 'application/json;charset=utf-8',
   Authorization: new Buffer(
-    `${ACCOUNT_SID}:${moment().format('YYYYMMDDHHmmss')}`,
+    `${ACCOUNT_SID}:${format(new Date(), 'YYYYMMDDHHmmss')}`,
   ).toString('base64'),
 })
 
@@ -21,7 +21,8 @@ const generateSignature = () =>
   crypto
     .createHash('md5')
     .update(
-      `${ACCOUNT_SID}${CCP_CONFIG.ACCOUNT_TOKEN}${moment().format(
+      `${ACCOUNT_SID}${CCP_CONFIG.ACCOUNT_TOKEN}${format(
+        new Date(),
         'YYYYMMDDHHmmss',
       )}`,
     )

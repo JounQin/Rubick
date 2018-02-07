@@ -20,14 +20,14 @@
     "build:template": "mkdir -p dist/static && ts-node build/template",
     "build:vue:client": "webpack --config build/vue-client.ts --color --progress",
     "build:vue:server": "webpack --config build/vue-server.ts --color --progress",
-    "build":
-      "rimraf dist && yarn dll:restore && env-cmd .env yarn dll:check && env-cmd --fallback .env.local env-cmd .env run-p build:server build:template build:vue:client build:vue:server && yarn dll:cache",
+    "build": "bash build/build.sh",
+    "deploy": "bash build/deploy.sh",
     "sync:pull": "bash build/sync-pull.sh",
     "sync:push": "bash build/sync-push.sh",
     "lint": "tslint -p . -e 'node_modules/**' -t stylish '**/*.ts'",
     "lint:fix": "npm run lint -- --fix",
     "precommit": "lint-staged",
-    "pm2": "bash build/sync-pull.sh && pm2 start --name=rubick npm -- start",
+    "pm2": "pm2 start --name=rubick npm -- start",
     "prune": "yarn install --production --ignore-optional --ignore-scripts --prefer-offline --force"
   },
   "browserslist": ["> 1% in CN"],
@@ -50,7 +50,7 @@
       {
         "files": "*.json",
         "options": {
-          "printWidth": 200
+          "printWidth": 150
         }
       }
     ]

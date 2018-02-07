@@ -2,7 +2,9 @@ language: node_js
 
 node_js: stable
 
-cache: yarn
+cache:
+  - yarn
+  - '.cache'
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash

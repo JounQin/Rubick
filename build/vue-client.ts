@@ -5,7 +5,7 @@ import * as VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import * as webpack from 'webpack'
 import * as merge from 'webpack-merge'
 
-import { NODE_ENV, __DEV__, resolve } from './config'
+import { NODE_ENV, __DEV__, getDllFile, resolve } from './config'
 
 import baseConfig from './base'
 
@@ -27,6 +27,10 @@ const clientConfig = merge.smart(baseConfig, {
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
       SERVER_PREFIX: JSON.stringify('/'),
       __SERVER__: JSON.stringify(false),
+    }),
+    new webpack.DllReferencePlugin({
+      context: resolve(),
+      manifest: resolve('dist/vendors.dll.manifest.json'),
     }),
     // extract vendor chunks for better caching
     new webpack.optimize.CommonsChunkPlugin({
@@ -68,6 +72,10 @@ if (!__DEV__) {
       staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/, /\.json$/],
       stripPrefix: resolve('dist/static').replace(/\\/g, '/'),
       runtimeCaching: [
+        {
+          urlPattern: '/' + getDllFile(),
+          handler: 'cacheFirst',
+        },
         {
           urlPattern: /\//,
           handler: 'networkFirst',

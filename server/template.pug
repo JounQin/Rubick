@@ -13,4 +13,5 @@ html(lang="{{ locale }}")
     | {{{ renderState() }}}
     if polyfill
       script(src="https://cdn.polyfill.io/v2/polyfill.min.js")
+    | {{{ dllScript }}}
     | {{{ renderScripts() }}}

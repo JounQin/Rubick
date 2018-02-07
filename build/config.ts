@@ -19,3 +19,8 @@ export const runtimeRequire =
   typeof __non_webpack_require__ === 'undefined'
     ? require
     : __non_webpack_require__
+
+export const getDllFile = () => {
+  const { name } = runtimeRequire(resolve('dist/vendors.dll.manifest.json'))
+  return `vendors.dll.${name.split('_')[1]}.js`
+}

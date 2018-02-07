@@ -11,7 +11,7 @@ declare module 'sw-precache-webpack-plugin' {
     navigateFallback?: string
     staticFileGlobsIgnorePatterns?: RegExp[]
     runtimeCaching?: Array<{
-      urlPattern: RegExp
+      urlPattern: string | RegExp
       handler:
         | 'networkFirst'
         | 'cacheFirst'

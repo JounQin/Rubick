@@ -25,6 +25,8 @@ import { Locale } from 'types'
 import { INFINITY_DATE, LOCALE_COOKIE } from 'utils'
 
 import {
+  getDllFile,
+  publicPath,
   resolve,
   runtimeRequire,
   serverHost,
@@ -36,6 +38,8 @@ import startRouter from './router'
 acceptLanguage.languages([Locale.ZH, Locale.EN])
 
 const debug = _debug('rubick:server')
+
+const dllScript = `<script src="${publicPath}${getDllFile()}"></script>`
 
 const template =
   process.env.NODE_ENV === 'development'
@@ -209,7 +213,7 @@ app.use(async (ctx, next) => {
 
   const start = Date.now()
 
-  const context = { ctx, locale }
+  const context = { ctx, locale, dllScript }
 
   let html = ''
 

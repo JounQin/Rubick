@@ -1,14 +1,20 @@
 import * as _debug from 'debug'
+import * as _fs from 'fs'
 import * as koaWebpack from 'koa-webpack'
 import * as MFS from 'memory-fs'
 import * as webpack from 'webpack'
 
-import { resolve } from '../build/config'
+import { getDllFile, resolve } from '../build/config'
 
 import clientConfig from '../build/vue-client'
 import serverConfig from '../build/vue-server'
 
 const debug = _debug('rubick:server:dev')
+
+const dllFile = getDllFile()
+const dllFilePath = resolve('dist/static', dllFile)
+
+const dllFileContent = _fs.readFileSync(dllFilePath, 'utf-8')
 
 export default (cb: any) => {
   // tslint:disable-next-line:variable-name
@@ -42,6 +48,7 @@ export default (cb: any) => {
     }
 
     fs = webpackMiddleware.dev.fileSystem
+    fs.writeFileSync(dllFilePath, dllFileContent, 'utf-8')
     clientManifest = JSON.parse(
       fs.readFileSync(resolve('dist/vue-ssr-client-manifest.json')),
     )

@@ -7,13 +7,15 @@ import * as rimraf from 'rimraf'
 
 import * as pkg from '../package.json'
 
-import { resolve } from './config'
+import { NODE_ENV, resolve } from './config'
 
 const debug = _debug('rubick:check-dll')
 
 const versions: {
   [key: string]: string
-} = {}
+} = {
+  NODE_ENV,
+}
 
 Object.keys(pkg.dependencies).forEach(dep => {
   const { version } = require(dep + '/package.json')
@@ -28,7 +30,6 @@ void (() => {
     fs.existsSync(dllCacheFile) &&
     fs.existsSync(resolve('dist/vendors.dll.manifest.json'))
   ) {
-    // tslint:disable-next-line:no-var-requires
     const cache = require(dllCacheFile)
     if (isEqual(cache, versions)) {
       debug('No changes of dependencies, skip')

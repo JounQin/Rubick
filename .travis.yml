@@ -4,7 +4,7 @@ node_js: stable
 
 cache:
   - yarn
-  - '.cache'
+  - directories: .cache
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash

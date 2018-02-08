@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Vue from 'vue'
 
 import { routeTitle } from 'plugins'
 import { Locale } from 'types'
@@ -10,14 +9,8 @@ import {
   getCookie,
   setCookie,
 } from 'utils'
-import { tip } from 'utils/tip'
 
 import createApp from './app'
-
-Object.defineProperty(Vue.prototype, '$tip', {
-  value: tip,
-  writable: __DEV__,
-})
 
 const { app, router, store, ready } = createApp(axios)
 

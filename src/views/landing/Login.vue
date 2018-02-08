@@ -100,7 +100,7 @@ export default class Login extends Vue {
 
       this.$router.push(url)
     } catch (e) {
-      this.$tip.alert(this.$t(e.response.data.code))
+      this.$alert(this.$t(e.response.data.code))
     } finally {
       this.submitting = false
     }

@@ -3,7 +3,7 @@ import VUE from 'vue'
 import { Route } from 'vue-router'
 import { Store } from 'vuex'
 
-import { RootState } from 'types'
+import { RootState, Tip } from 'types'
 
 import { RbModal } from 'components'
 
@@ -52,7 +52,10 @@ declare module 'vue/types/vue' {
     $util: {
       [key: string]: any
     }
-    $tip: any
+    $alert: Tip
+    $confirm: Tip
+    $toast: Tip
+    $prompt: Tip
   }
 }
 

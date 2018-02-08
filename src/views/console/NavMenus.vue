@@ -43,7 +43,7 @@ export default class NavMenus extends Vue {
   logout() {}
 
   confirmLogout() {
-    this.$tip.confirm({
+    this.$confirm({
       tipText: `<div class="${
         this.$style.tip
       }"><i class="fa fa-question-circle"></i>${this.$t('logout')}</div>`,

@@ -82,6 +82,7 @@ export default class NavMenus extends Vue {
 
 .menus {
   position: absolute;
+  z-index: 1;
   top: 100%;
   width: 100%;
   margin-top: 5px;

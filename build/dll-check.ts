@@ -37,7 +37,7 @@ void (() => {
     }
     debug('changes detected, regenerate dll')
   } else {
-    debug('cache or manifest not found, generate dll')
+    debug('no cache or manifest found, generate dll')
   }
 
   rimraf.sync(resolve('.cache'))

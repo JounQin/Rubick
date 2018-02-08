@@ -9,7 +9,7 @@ import * as pkg from '../package.json'
 
 import { NODE_ENV, resolve } from './config'
 
-const debug = _debug('rubick:check-dll')
+const debug = _debug('rubick:dll:check')
 
 const versions: {
   [key: string]: string
@@ -32,7 +32,7 @@ void (() => {
   ) {
     const cache = require(dllCacheFile)
     if (isEqual(cache, versions)) {
-      debug('No changes of dependencies, skip')
+      debug('No changes detected, skip')
       return
     }
     debug('changes detected, regenerate dll')
@@ -40,7 +40,9 @@ void (() => {
     debug('cache or manifest not found, generate dll')
   }
 
+  rimraf.sync(resolve('.cache'))
   rimraf.sync(resolve('dist'))
+
   execSync('yarn build:dll', {
     stdio: 'inherit',
   })

@@ -177,9 +177,9 @@
     "@types/koa-compose" "*"
     "@types/node" "*"
 
-"@types/lodash@^4.14.101":
-  version "4.14.101"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.101.tgz#512f6c9e1749890f4d024e98cb995a63f562d458"
+"@types/lodash@^4.14.102":
+  version "4.14.102"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.102.tgz#586a3e22385fc79b07cef9c5a1c8a5387986fbc8"
 
 "@types/loglevel@*":
   version "1.5.3"
@@ -213,9 +213,9 @@
   version "9.4.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.0.tgz#b85a0bcf1e1cc84eb4901b7e96966aedc6f078d1"
 
-"@types/node@^9.4.1":
-  version "9.4.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.1.tgz#0f636f7837e15d2d73a7f6f3ea0e322eb2a5ab65"
+"@types/node@^9.4.2":
+  version "9.4.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.2.tgz#b109a6c4f64147ccf9476d9e1a6fbf69a10faeb8"
 
 "@types/pug@^2.0.4":
   version "2.0.4"
@@ -6057,9 +6057,9 @@ trim-newlines@^1.0.0:
   dependencies:
     glob "^6.0.4"
 
-ts-loader@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-3.4.0.tgz#c376bc0538d4c441ea8790c3fd841ebfdbfb99d0"
+ts-loader@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-3.5.0.tgz#151d004dcddb4cf8e381a3bf9d6b74c2d957a9c0"
   dependencies:
     chalk "^2.3.0"
     enhanced-resolve "^3.0.0"

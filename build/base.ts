@@ -130,7 +130,7 @@ const webpackConfig: webpack.Configuration = {
     }),
     new webpack.SourceMapDevToolPlugin({ test: /\.(css|js|ts)$/ }),
     new ExtractTextPlugin({
-      filename: 'app.[chunkhash].css',
+      filename: 'app.[contenthash].css',
       disable: __DEV__,
     }),
     new ForkTsCheckerWebpackPlugin({

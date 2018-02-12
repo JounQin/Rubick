@@ -6,7 +6,7 @@ li(:class="[$style.item, { [$style.active]: active, [$style.expanded]: expanded 
     span {{ $t('nav_' + snakeCase(item.text)) }}
     i.fa(:class="`fa-${expanded ? 'minus': 'plus'}`")
   div(v-else-if="item.text === 'locale'"
-      v-tooltip.right="$t('switch_lang_tips')"
+      v-tooltip.right="{ content: $t('switch_lang_tips'), boundariesElement: 'viewport' }"
       @click="$t.toggleLocale()")
     i.fa(:class="'fa-' + item.icon")
     span {{ $t('nav_locale') }}

@@ -1,8 +1,9 @@
 import { RouterView } from './util'
 
 export default {
-  path: 'container',
+  path: '/container',
   component: RouterView('Container'),
+  redirect: '/container/application',
   children: [
     {
       path: 'application',

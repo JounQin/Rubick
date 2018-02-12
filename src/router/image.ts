@@ -3,6 +3,7 @@ import { RouterView } from './util'
 export default {
   path: '/image',
   component: RouterView('Image'),
+  redirect: 'image/image-repository',
   children: [
     {
       path: 'image-repository',

@@ -4,25 +4,22 @@ import { Route } from 'vue-router'
 import { Translator } from 'vue-translator'
 
 export const breadCrumbs = (route: Route, $t: Translator = Vue.translator) => {
-  const matched = route.matched
-  const record = matched[matched.length - 1] || route
+  const { matched } = route
+  const { meta: { title }, path } = matched[matched.length - 1]
 
-  const { meta: { title }, path } = record
   const paths: string =
-    (typeof title === 'function' ? title.call(route, route, record) : title) ||
-    path
+    (typeof title === 'function' ? title.call(route, route) : title) || path
 
   let routePath = ''
 
   return paths.split('/').reduce((crumbs, p) => {
-    if (p && !p.includes(':')) {
-      const sCrumb = snakeCase(p)
-      const nav = 'nav_' + sCrumb
+    if (p && !p.startsWith(':')) {
+      const crumb = snakeCase(p)
+      const nav = 'nav_' + crumb
       const tNav = $t(nav, null, true)
-      routePath = routePath + '/' + p
       crumbs.push({
-        link: routePath,
-        text: nav === tNav ? $t(sCrumb) : tNav,
+        link: (routePath = routePath + '/' + p),
+        text: nav === tNav ? $t(crumb) : tNav,
       })
     }
     return crumbs

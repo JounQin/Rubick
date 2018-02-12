@@ -10,5 +10,14 @@ export default () =>
   new VueRouter({
     mode: 'history',
     fallback: false,
-    routes: [Console, Landing],
+    routes: [
+      Console,
+      Landing,
+      {
+        path: '*',
+        beforeEnter(to, from, next) {
+          next('/')
+        },
+      },
+    ],
   })

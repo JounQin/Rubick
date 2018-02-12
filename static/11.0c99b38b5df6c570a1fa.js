@@ -1,0 +1,1 @@
+webpackJsonp([11],{94:function(e,t,l){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=function(){var e=this,t=e.$createElement;return(e._self._c||t)("router-link",{attrs:{to:"/image/image-repository/detail/123"}},[e._v("detail")])},n=[],a=l(4),u=Object(a.a)(null,r,n,!1,null,null,null);t.default=u.exports}});

@@ -19,7 +19,7 @@ li(:class="[$style.item, { [$style.active]: active, [$style.expanded]: expanded 
                     :class="$style.subItems"
                     :style="{ height: expanded ? 32 * item.items.length + 'px' : 0 }")
     li(v-for="{ text } of item.items")
-      router-link(:to="'/' + text") {{ $t('nav_' + snakeCase(text)) }}
+      router-link(:to="'/' + item.text + '/' + text") {{ $t('nav_' + snakeCase(text)) }}
 </template>
 <script lang="ts">
 import { snakeCase } from 'lodash'
@@ -35,9 +35,8 @@ export default class NavItem extends Vue {
   snakeCase = snakeCase
 
   get active() {
-    const { text } = this.item
-    return this.$route.matched.some(
-      ({ name }) => name && (name === text || name.startsWith(text + '.')),
+    return this.$route.matched.some(({ path }) =>
+      new RegExp('^/' + this.item.text + '/?').test(path),
     )
   }
 

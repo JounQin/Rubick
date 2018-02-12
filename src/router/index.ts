@@ -10,12 +10,5 @@ export default () =>
   new VueRouter({
     mode: 'history',
     fallback: false,
-    routes: [
-      {
-        path: '/',
-        redirect: '/dashboard',
-      },
-      Console,
-      Landing,
-    ],
+    routes: [Console, Landing],
   })

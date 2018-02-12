@@ -19,10 +19,10 @@ div(:class="$style.console")
       nav-menus
     div(:class="$style.breadCrumbs")
       ol.list-unstyled
-        li(v-for="({name, text}, i) of routes")
+        li(v-for="({link, text}, i) of routes")
           span(v-if="i") /
           span(v-if="!i || i === routes.length - 1") {{ text }}
-          router-link(v-else, :to="{ name }") {{ text }}
+          router-link(v-else, :to="link") {{ text }}
     .flex(:class="$style.viewWrapper")
       div(:class="$style.view")
         router-view

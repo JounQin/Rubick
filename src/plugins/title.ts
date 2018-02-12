@@ -3,28 +3,31 @@ import Vue from 'vue'
 import { Route } from 'vue-router'
 import { Translator } from 'vue-translator'
 
-export const breadCrumbs = (route: Route, $t: Translator = Vue.translator) =>
-  route.matched.reduce((prev, { meta, name, path }) => {
-    const { title } = meta
-    const crumbs: string =
-      (typeof title === 'function' ? title.call(route, route) : title) || name
+export const breadCrumbs = (route: Route, $t: Translator = Vue.translator) => {
+  const matched = route.matched
+  const record = matched[matched.length - 1] || route
 
-    if (crumbs) {
-      let routeName: string
-      crumbs.split('.').forEach((crumb, index) => {
-        routeName = routeName ? routeName + '.' + crumb : crumb
-        const sCrumb = snakeCase(crumb)
-        const nav = 'nav_' + sCrumb
-        const tNav = $t(nav, null, true)
-        prev.push({
-          name: routeName,
-          text: nav === tNav ? $t(sCrumb) : tNav,
-        })
+  const { meta: { title }, path } = record
+  const paths: string =
+    (typeof title === 'function' ? title.call(route, route, record) : title) ||
+    path
+
+  let routePath = ''
+
+  return paths.split('/').reduce((crumbs, p) => {
+    if (p && !p.includes(':')) {
+      const sCrumb = snakeCase(p)
+      const nav = 'nav_' + sCrumb
+      const tNav = $t(nav, null, true)
+      routePath = routePath + '/' + p
+      crumbs.push({
+        link: routePath,
+        text: nav === tNav ? $t(sCrumb) : tNav,
       })
     }
-
-    return prev
+    return crumbs
   }, [])
+}
 
 export const routeTitle = (route: Route, $t: Translator = Vue.translator) => {
   const title = breadCrumbs(route, $t)

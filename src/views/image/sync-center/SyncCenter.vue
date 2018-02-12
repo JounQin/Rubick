@@ -17,11 +17,11 @@ main
     tbody
       tr(v-for="config of filteredConfigs")
         td
-          router-link(:to="'/sync-center/' + config.config_id") {{ config.config_name }}
+          router-link(:to="'/image/sync-center/detail/' + config.config_id") {{ config.config_name }}
         td {{ config.source.info.registry_name }}
         td
           span(v-if="config.source.info.project_name") {{ config.source.info.project_name }} /
-          router-link(:to="'/image-repository/' + config.source.info.repository_name") {{ config.source.info.repository_name }}
+          router-link(:to="'/image/image-repository/detail/' + config.source.info.repository_name") {{ config.source.info.repository_name }}
         td
           a(v-if="config.dest.length") {{ config.dest.length }} {{ $t('unit_ge') }}
           span(v-else) -

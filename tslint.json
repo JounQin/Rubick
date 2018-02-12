@@ -16,5 +16,8 @@
         "named-imports-order": "lowercase-last"
       }
     ]
+  },
+  "linterOptions": {
+    "exclude": ["node_modules/**"]
   }
 }

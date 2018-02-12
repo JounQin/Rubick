@@ -24,7 +24,7 @@
     "deploy": "bash build/deploy.sh",
     "sync:pull": "bash build/sync-pull.sh",
     "sync:push": "bash build/sync-push.sh",
-    "lint": "tslint -p . -e 'node_modules/**' -t stylish '**/*.ts'",
+    "lint": "tslint -p . -t stylish '**/*.ts'",
     "precommit": "lint-staged",
     "pm2": "pm2 start --name=rubick npm -- start",
     "prune": "yarn install --production --ignore-optional --ignore-scripts --prefer-offline --force"

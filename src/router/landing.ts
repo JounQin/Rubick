@@ -3,7 +3,6 @@ export default {
   component: () => import('views/landing/Landing.vue'),
   children: [
     {
-      name: 'login',
       path: '/login/:type(account)?',
       component: () => import('views/landing/Login.vue'),
       meta: {
@@ -13,12 +12,10 @@ export default {
       },
     },
     {
-      name: 'register',
       path: '/register',
       component: () => import('views/landing/Register.vue'),
     },
     {
-      name: 'forget-password',
       path: '/forget-password',
       component: () => import('views/landing/ForgetPassword.vue'),
     },

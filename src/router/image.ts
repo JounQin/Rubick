@@ -1,29 +1,42 @@
-import { routeMap } from './util'
+import { RouterView } from './util'
 
-export default routeMap(
-  [
+export default {
+  path: '/image',
+  component: RouterView('Image'),
+  children: [
     {
       path: 'image-repository',
-      component: () =>
-        import('views/image/image-repository/ImageRepository.vue'),
-    },
-    {
-      path: 'image-repository/detail/:repositoryName',
-      component: () =>
-        import('views/image/image-repository/RepositoryDetail.vue'),
+      component: RouterView('ImageRepository'),
+      children: [
+        {
+          path: '',
+          component: () =>
+            import('views/image/image-repository/ImageRepository.vue'),
+        },
+        {
+          path: 'detail/:repositoryName',
+          component: () =>
+            import('views/image/image-repository/RepositoryDetail.vue'),
+        },
+      ],
     },
     {
       path: 'sync-center',
-      component: () => import('views/image/sync-center/SyncCenter.vue'),
-    },
-    {
-      path: 'sync-center/detail/:configId',
-      component: () => import('views/image/sync-center/ConfigDetail.vue'),
+      component: RouterView('SyncCenter'),
+      children: [
+        {
+          path: '',
+          component: () => import('views/image/sync-center/SyncCenter.vue'),
+        },
+        {
+          path: 'detail/:configId',
+          component: () => import('views/image/sync-center/ConfigDetail.vue'),
+        },
+      ],
     },
     {
       path: 'sync-history',
       component: () => import('views/image/sync-history/SyncHistory.vue'),
     },
   ],
-  'image',
-)
+}

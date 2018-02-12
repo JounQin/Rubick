@@ -13,7 +13,7 @@ export default {
       path: '/dashboard',
       component: () => import('views/dashboard/Dashboard.vue'),
     },
-    ...Container,
-    ...Image,
+    Container,
+    Image,
   ],
 }

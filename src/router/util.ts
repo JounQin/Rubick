@@ -1,7 +1,6 @@
-import { RouteConfig } from 'vue-router'
+import Vue, { ComponentOptions } from 'vue'
 
-export const routeMap = (routes: RouteConfig[], prefix: string) =>
-  routes.map(route => {
-    route.path = '/' + prefix + '/' + route.path
-    return route
-  })
+export const RouterView = (name: string): ComponentOptions<Vue> => ({
+  name: `Route${name}`,
+  render: h => h('router-view'),
+})

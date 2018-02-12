@@ -1,7 +1,9 @@
-import { routeMap } from './util'
+import { RouterView } from './util'
 
-export default routeMap(
-  [
+export default {
+  path: 'container',
+  component: RouterView('Container'),
+  children: [
     {
       path: 'application',
       component: () => import('views/container/application/Application.vue'),
@@ -11,5 +13,4 @@ export default routeMap(
       component: () => import('views/container/service/Service.vue'),
     },
   ],
-  'container',
-)
+}

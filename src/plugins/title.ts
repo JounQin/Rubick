@@ -6,17 +6,20 @@ import { Translator } from 'vue-translator'
 export const breadCrumbs = (route: Route, $t: Translator = Vue.translator) =>
   route.matched.reduce((prev, { meta, name, path }) => {
     const { title } = meta
-    let text =
-      !path.endsWith('/') &&
-      ((typeof title === 'function' ? title.call(route, route) : title) || name)
+    const crumbs: string =
+      (typeof title === 'function' ? title.call(route, route) : title) || name
 
-    if (text) {
-      text = snakeCase(text)
-      const nav = 'nav_' + text
-      const tNav = $t(nav, null, true)
-      prev.push({
-        link: path,
-        text: nav === tNav ? $t(text) : tNav,
+    if (crumbs) {
+      let routeName: string
+      crumbs.split('.').forEach((crumb, index) => {
+        routeName = routeName ? routeName + '.' + crumb : crumb
+        const sCrumb = snakeCase(crumb)
+        const nav = 'nav_' + sCrumb
+        const tNav = $t(nav, null, true)
+        prev.push({
+          name: routeName,
+          text: nav === tNav ? $t(sCrumb) : tNav,
+        })
       })
     }
 

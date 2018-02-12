@@ -1,4 +1,5 @@
 {
+  "detail": "Detail",
   "nav_dashboard": "Overview",
   "nav_container": "Container",
   "nav_application": "Applications",
@@ -8,9 +9,7 @@
   "nav_configuration": "Configurations",
   "nav_image": "Image",
   "nav_image_repository": "Image Repository",
-  "nav_repository_detail": "Detail",
   "nav_sync_center": "Sync Center",
-  "nav_sync_config_detail": "Detail",
   "nav_sync_history": "Sync History",
   "nav_mirror": "Mirror",
   "nav_docs": "Documents",

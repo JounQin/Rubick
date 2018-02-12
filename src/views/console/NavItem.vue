@@ -35,7 +35,10 @@ export default class NavItem extends Vue {
   snakeCase = snakeCase
 
   get active() {
-    return this.$route.matched.some(({ name }) => name === this.item.text)
+    const { text } = this.item
+    return this.$route.matched.some(
+      ({ name }) => name && (name === text || name.startsWith(text + '.')),
+    )
   }
 
   @Watch('active', { immediate: true })

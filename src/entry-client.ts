@@ -14,6 +14,22 @@ import createApp from './app'
 
 const { app, router, store, ready } = createApp(axios)
 
+axios.interceptors.response.use(
+  response => response,
+  e => {
+    if (e.response.data.code !== INCORRECT_AUTHENTICATION_CREDENTIALS) {
+      throw e
+    }
+
+    router.replace({
+      path: '/login',
+      query: {
+        next: router.currentRoute.fullPath,
+      },
+    })
+  },
+)
+
 app.$watch('$t.locale', curr => {
   document.title = routeTitle(router.currentRoute)
   setCookie(LOCALE_COOKIE, curr, Infinity, '/')
@@ -51,21 +67,7 @@ const routerReady = () => {
             return asyncData && asyncData({ axios, store, route: to })
           }),
         )
-      } catch (e) {
-        const { response } = e
-        if (
-          response &&
-          response.data.code === INCORRECT_AUTHENTICATION_CREDENTIALS
-        ) {
-          router.replace({
-            path: '/login',
-            query: {
-              next: router.currentRoute.fullPath,
-            },
-          })
-          return
-        }
-      }
+      } catch (e) {}
     }
 
     next()

@@ -84,7 +84,7 @@
     "vue-property-decorator": "^6.0.0",
     "vue-router": "^3.0.1",
     "vue-server-renderer": "^2.5.13",
-    "vue-translator": "^0.7.0",
+    "vue-translator": "^0.7.1",
     "vuex": "^3.0.1",
     "vuex-class": "^0.3.0"
   },
@@ -120,7 +120,7 @@
     "autoprefixer": "^8.0.0",
     "css-loader": "^0.28.9",
     "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^1.1.8",
+    "file-loader": "^1.1.9",
     "font-awesome": "^4.7.0",
     "fonts.css": "^1.5.0",
     "fork-ts-checker-webpack-plugin": "^0.3.0",

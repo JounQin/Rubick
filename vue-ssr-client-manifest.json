@@ -26,6 +26,7 @@
     "manifest.a4a4569f490bdcb061b5.js",
     "app.3f8749d157400e370e8fd9bfa4be7b5e.css",
     "favicon.ico",
+    "vendors.dll.1268d179a757fa61a52c.js",
     "__non-ssr-page__.html"
   ],
   "initial": [
@@ -47,7 +48,8 @@
     "10.7f873b080f678f25162c.js",
     "11.0c99b38b5df6c570a1fa.js",
     "12.e0e8eca292cd49b30b7a.js",
-    "13.7ef4ec54f914264a7553.js"
+    "13.7ef4ec54f914264a7553.js",
+    "vendors.dll.1268d179a757fa61a52c.js"
   ],
   "modules": {
     "29945586": [

@@ -168,9 +168,11 @@ app.use(async (ctx, next) => {
 
   const { url } = ctx
 
-  if (NON_SSR_PATTERN.find(pattern => !!re(pattern).exec(url))) {
+  if (
+    NON_SSR_PATTERN.find(pattern => pattern === '*' || !!re(pattern).exec(url))
+  ) {
     if (process.env.NODE_ENV === 'development') {
-      ctx.body = mfs.createReadStream(resolve('dist/' + INDEX_PAGE))
+      ctx.body = mfs.createReadStream(resolve('dist/static/' + INDEX_PAGE))
     } else {
       ctx.url = INDEX_PAGE
       await next()

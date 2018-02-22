@@ -1,3 +1,4 @@
+import * as AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin'
 import * as _debug from 'debug'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
@@ -46,6 +47,10 @@ const clientConfig = merge.smart(baseConfig, {
     // on every build.
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
+    }),
+    new AddAssetHtmlPlugin({
+      filepath: resolve('dist/static/vendors.dll.*.js'),
+      includeSourcemap: false,
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.pug',

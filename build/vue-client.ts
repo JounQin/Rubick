@@ -1,4 +1,4 @@
-// import * as AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin'
+import * as AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin'
 import * as _debug from 'debug'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
@@ -46,14 +46,14 @@ const clientConfig = merge.smart(baseConfig, {
       context: resolve(),
       manifest: resolve('dist/vendors.dll.manifest.json'),
     }),
-    // new AddAssetHtmlPlugin({
-    //   filepath: resolve('dist/static/vendors.dll.*.js'),
-    //   includeSourcemap: false,
-    // }),
     new HtmlWebpackPlugin({
       template: 'src/index.pug',
       filename: '__non-ssr-page__.html',
       favicon: 'src/assets/favicon.ico',
+    }),
+    new AddAssetHtmlPlugin({
+      filepath: resolve('dist/static/vendors.dll.*.js'),
+      includeSourcemap: false,
     }),
     new VueSSRClientPlugin({
       filename: '../vue-ssr-client-manifest.json',

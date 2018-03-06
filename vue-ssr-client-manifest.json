@@ -1,7 +1,7 @@
 {
   "publicPath": "/",
   "all": [
-    "7.97a0fce9c456dcb4ecc9.js",
+    "8.dc589734525e2b812c33.js",
     "674f50d287a8c48dc19ba404d20fe713.eot",
     "b06871f281fee6b241d60582ae9369b9.ttf",
     "fee66e712a8a08eef5805a46892932ad.woff",
@@ -14,8 +14,8 @@
     "4.08f0c0ee312f2e3a3a1b.js",
     "5.34b3eb903ef8f92a5d97.js",
     "6.2c97b936001f7d3a78bb.js",
+    "7.97a0fce9c456dcb4ecc9.js",
     "912ec66d7572ff821749319396470bde.svg",
-    "8.dc589734525e2b812c33.js",
     "9.7b0033839eda905cc40a.js",
     "10.c00d141e9efc12edc8dd.js",
     "11.27aa25ac955026a98e9d.js",
@@ -27,6 +27,7 @@
     "app.289aca7ff86282c2954dabc8097a6d5f.css",
     "app.ca8962fad249779b7e3aacb1c5d4faac.css",
     "favicon.ico",
+    "vendors.dll.f1610146fb4c5e719f0b.js",
     "__non-ssr-page__.html"
   ],
   "initial": [
@@ -35,7 +36,7 @@
     "app.8594a68547bd57a21d75.js"
   ],
   "async": [
-    "7.97a0fce9c456dcb4ecc9.js",
+    "8.dc589734525e2b812c33.js",
     "0.0f213d7be42e90dae63b.js",
     "1.46180bb9e064a5b2126e.js",
     "2.b56e80495f48f8e05fa8.js",
@@ -43,12 +44,13 @@
     "4.08f0c0ee312f2e3a3a1b.js",
     "5.34b3eb903ef8f92a5d97.js",
     "6.2c97b936001f7d3a78bb.js",
-    "8.dc589734525e2b812c33.js",
+    "7.97a0fce9c456dcb4ecc9.js",
     "9.7b0033839eda905cc40a.js",
     "10.c00d141e9efc12edc8dd.js",
     "11.27aa25ac955026a98e9d.js",
     "12.f9067b505192ea77048a.js",
-    "13.38a14e18665711761423.js"
+    "13.38a14e18665711761423.js",
+    "vendors.dll.f1610146fb4c5e719f0b.js"
   ],
   "modules": {
     "29945586": [

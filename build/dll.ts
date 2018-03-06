@@ -1,11 +1,11 @@
 import * as webpack from 'webpack'
 import * as merge from 'webpack-merge'
 
-import { __DEV__, resolve } from './config'
+import { resolve } from './config'
 
 import baseConfig from './base'
 
-const dllConfig = merge.smart(baseConfig, {
+export default merge.smart(baseConfig, {
   entry: {
     vendors: [
       'axios',
@@ -32,14 +32,3 @@ const dllConfig = merge.smart(baseConfig, {
     }),
   ],
 })
-
-if (!__DEV__) {
-  dllConfig.plugins.push(
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-    }),
-  )
-}
-
-export default dllConfig

@@ -1,4 +1,4 @@
-import * as AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin'
+// import * as AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin'
 import * as _debug from 'debug'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
@@ -23,6 +23,19 @@ const clientConfig = merge.smart(baseConfig, {
     app: [resolve('src/entry-client.ts')],
   },
   target: 'web',
+  optimization: {
+    runtimeChunk: {
+      name: 'manifest',
+    },
+    splitChunks: {
+      name: 'vendors',
+      chunks: 'initial',
+      cacheGroups: {
+        test: ({ context, request }: { context: string; request: string }) =>
+          /node_modules/.test(context) && !/\.css$/.test(request),
+      },
+    },
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.VUE_ENV': JSON.stringify(VUE_ENV),
@@ -33,25 +46,10 @@ const clientConfig = merge.smart(baseConfig, {
       context: resolve(),
       manifest: resolve('dist/vendors.dll.manifest.json'),
     }),
-    // extract vendor chunks for better caching
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendors',
-      minChunks: module =>
-        // a module is extracted into the vendors chunk
-        // if it's inside node_modules
-        /node_modules/.test(module.context) &&
-        // and not a CSS file (due to extract-text-webpack-plugin limitation)
-        !/\.css$/.test(module.request),
-    }),
-    // extract webpack runtime & manifest to avoid vendor chunk hash changing
-    // on every build.
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-    }),
-    new AddAssetHtmlPlugin({
-      filepath: resolve('dist/static/vendors.dll.*.js'),
-      includeSourcemap: false,
-    }),
+    // new AddAssetHtmlPlugin({
+    //   filepath: resolve('dist/static/vendors.dll.*.js'),
+    //   includeSourcemap: false,
+    // }),
     new HtmlWebpackPlugin({
       template: 'src/index.pug',
       filename: '__non-ssr-page__.html',
@@ -67,7 +65,6 @@ if (!__DEV__) {
   debug(`Enable plugins for ${NODE_ENV} (UglifyJS, SWPrecache).`)
 
   clientConfig.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({ comments: false }),
     new SWPrecacheWebpackPlugin({
       cacheId: 'rubick',
       directoryIndex: false,

@@ -23,11 +23,6 @@ const config: webpack.Configuration = {
       ? lernaModulesDir
       : 'node_modules',
   }),
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-    }),
-  ],
 }
 
 export default config

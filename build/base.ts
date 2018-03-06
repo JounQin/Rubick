@@ -3,7 +3,7 @@ import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import * as FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 import * as webpack from 'webpack'
 
-import { __DEV__, publicPath, resolve } from './config'
+import { NODE_ENV, __DEV__, publicPath, resolve } from './config'
 
 const minimize = !__DEV__
 const sourceMap = __DEV__
@@ -44,6 +44,7 @@ const SCSS_LOADERS = ExtractTextPlugin.extract({
 })
 
 const webpackConfig: webpack.Configuration = {
+  mode: NODE_ENV,
   resolve: {
     alias: {
       lodash$: 'lodash-es',
@@ -131,19 +132,14 @@ const webpackConfig: webpack.Configuration = {
     new ExtractTextPlugin({
       filename: 'app.[contenthash].css',
       disable: __DEV__,
+      allChunks: true,
     }),
     new ForkTsCheckerWebpackPlugin({
       tsconfig: resolve('src/tsconfig.json'),
       tslint: true,
       vue: true,
     }),
-    ...(__DEV__
-      ? [
-          new webpack.NamedChunksPlugin(),
-          new webpack.NamedModulesPlugin(),
-          new FriendlyErrorsPlugin(),
-        ]
-      : [new webpack.optimize.ModuleConcatenationPlugin()]),
+    ...(__DEV__ ? [new FriendlyErrorsPlugin()] : []),
   ],
 }
 

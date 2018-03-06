@@ -111,7 +111,7 @@
     "@types/qs": "^6.5.1",
     "@types/rimraf": "^2.0.2",
     "@types/shelljs": "^0.7.8",
-    "@types/webpack": "^3.8.8",
+    "@types/webpack": "^4.0.0",
     "@types/webpack-dev-middleware": "^2.0.0",
     "@types/webpack-hot-middleware": "^2.16.2",
     "@types/webpack-merge": "^4.1.2",

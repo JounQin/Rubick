@@ -3071,9 +3071,9 @@ font-awesome@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
-fonts.css@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/fonts.css/-/fonts.css-1.5.0.tgz#9437af3f23394e8eafef1e4231c8cc73ed5e969a"
+fonts.css@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/fonts.css/-/fonts.css-2.0.0.tgz#097e890a44c982c7df55cca8466e3ce7668b790c"
 
 for-in@^0.1.3:
   version "0.1.8"

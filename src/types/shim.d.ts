@@ -8,26 +8,6 @@ import { RootState, Tip } from 'types'
 import { RbModal } from 'components'
 
 declare global {
-  interface NodeModule {
-    hot: {
-      accept: () => void
-    }
-  }
-
-  interface NodeRequire {
-    <T = any>(path: string): T
-    (paths: string[], callback: (...modules: any[]) => void): void
-    context: (
-      directory: string,
-      useSubdirectories: boolean,
-      regExp: RegExp,
-    ) => any
-    ensure: (
-      paths: string[],
-      callback: (require: <T = any>(path: string) => T) => void,
-    ) => void
-  }
-
   interface Window {
     __INITIAL_STATE__: RootState
   }
@@ -38,9 +18,6 @@ declare global {
   const I18N_REGEX: RegExp
   const SERVER_PREFIX: string
   const API_PREFIX: string
-
-  // tslint:disable-next-line variable-name
-  const __non_webpack_require__: NodeRequire
 }
 
 declare module 'vue/types/vue' {

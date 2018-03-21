@@ -3,6 +3,7 @@ import { Context } from 'koa'
 import { Component, Vue } from 'vue-property-decorator'
 
 import 'plugins'
+import 'styles/app.scss'
 
 import App from './views/App.vue'
 

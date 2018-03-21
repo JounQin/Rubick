@@ -1,47 +1,45 @@
-import * as ExtractTextPlugin from 'extract-text-webpack-plugin'
 import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import * as FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
+import * as MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import * as webpack from 'webpack'
 
-import { NODE_ENV, __DEV__, publicPath, resolve } from './config'
+import { NODE_ENV, __DEV__, hashType, publicPath, resolve } from './config'
 
 const minimize = !__DEV__
 const sourceMap = __DEV__
 
-const SCSS_LOADERS = ExtractTextPlugin.extract({
-  use: [
-    {
-      loader: 'css-loader',
-      options: {
-        minimize: minimize && {
-          discardComments: {
-            removeAll: true,
-          },
+const scssLoaders = (extract?: boolean) => [
+  extract ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+  {
+    loader: 'css-loader',
+    options: {
+      minimize: minimize && {
+        discardComments: {
+          removeAll: true,
         },
-        sourceMap,
       },
+      sourceMap,
     },
-    {
-      loader: 'postcss-loader',
-      options: { sourceMap },
+  },
+  {
+    loader: 'postcss-loader',
+    options: { sourceMap },
+  },
+  {
+    loader: 'resolve-url-loader',
+    options: { sourceMap },
+  },
+  {
+    loader: 'sass-loader',
+    options: { sourceMap: true },
+  },
+  {
+    loader: 'sass-resources-loader',
+    options: {
+      resources: resolve('src/styles/_variables.scss'),
     },
-    {
-      loader: 'resolve-url-loader',
-      options: { sourceMap },
-    },
-    {
-      loader: 'sass-loader',
-      options: { sourceMap: true },
-    },
-    {
-      loader: 'sass-resources-loader',
-      options: {
-        resources: resolve('src/styles/_variables.scss'),
-      },
-    },
-  ],
-  fallback: 'vue-style-loader',
-})
+  },
+]
 
 const webpackConfig: webpack.Configuration = {
   mode: NODE_ENV,
@@ -55,7 +53,7 @@ const webpackConfig: webpack.Configuration = {
   output: {
     path: resolve('dist/static'),
     publicPath,
-    filename: `[name].[${__DEV__ ? 'hash' : 'chunkhash'}].js`,
+    filename: `[name].[${hashType}].js`,
   },
   devtool: __DEV__ ? 'cheap-module-eval-source-map' : false,
   module: {
@@ -83,13 +81,13 @@ const webpackConfig: webpack.Configuration = {
               : '[hash:base64]',
           },
           loaders: {
-            scss: SCSS_LOADERS,
+            scss: scssLoaders(),
           },
         },
       },
       {
         test: /\.scss$/,
-        use: SCSS_LOADERS,
+        use: scssLoaders(true),
       },
       {
         test: /\.(eot|svg|ttf|woff2?)$/,
@@ -129,10 +127,9 @@ const webpackConfig: webpack.Configuration = {
       I18N_REGEX: /([\w-]*[\w]+)\.i18n\.json$/.toString(),
     }),
     new webpack.SourceMapDevToolPlugin({ test: /\.(css|js|ts)$/ }),
-    new ExtractTextPlugin({
-      filename: 'app.[contenthash].css',
-      disable: __DEV__,
-      allChunks: true,
+    new MiniCssExtractPlugin({
+      filename: `[name].[${hashType}].css`,
+      chunkFilename: `[name].[${hashType}].css`,
     }),
     new ForkTsCheckerWebpackPlugin({
       tsconfig: resolve('src/tsconfig.json'),

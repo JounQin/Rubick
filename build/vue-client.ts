@@ -62,7 +62,7 @@ const clientConfig = merge.smart(baseConfig, {
 })
 
 if (!__DEV__) {
-  debug(`Enable plugins for ${NODE_ENV} (UglifyJS, SWPrecache).`)
+  debug(`Enable plugins for ${NODE_ENV} (SWPrecache).`)
 
   clientConfig.plugins.push(
     new SWPrecacheWebpackPlugin({

@@ -112,15 +112,6 @@ const webpackConfig: webpack.Configuration = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      ...Object.entries(process.env).reduce(
-        (result, [key, value]) => {
-          if (key !== 'VUE_ENV') {
-            result[`process.env.${key}`] = JSON.stringify(value)
-          }
-          return result
-        },
-        {} as { [key: string]: string },
-      ),
       __DEV__,
       API_PREFIX: JSON.stringify('/api'),
       NON_INDEX_REGEX: /^(?!.*[/\\](index)\.ts).*\.(ts|vue)$/.toString(),

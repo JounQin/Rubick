@@ -126,7 +126,6 @@ const webpackConfig: webpack.Configuration = {
       NON_INDEX_REGEX: /^(?!.*[/\\](index)\.ts).*\.(ts|vue)$/.toString(),
       I18N_REGEX: /([\w-]*[\w]+)\.i18n\.json$/.toString(),
     }),
-    new webpack.SourceMapDevToolPlugin({ test: /\.(css|js|ts)$/ }),
     new MiniCssExtractPlugin({
       filename: `[name].[${hashType}].css`,
       chunkFilename: `[name].[${hashType}].css`,

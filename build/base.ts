@@ -1,6 +1,7 @@
 import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import * as FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import { VueLoaderPlugin } from 'vue-loader'
 import * as webpack from 'webpack'
 
 import { NODE_ENV, __DEV__, hashType, publicPath, resolve } from './config'
@@ -8,7 +9,10 @@ import { NODE_ENV, __DEV__, hashType, publicPath, resolve } from './config'
 const minimize = !__DEV__
 const sourceMap = __DEV__
 
-const scssLoaders = (extract?: boolean) => [
+const scssLoaders = ({
+  extract,
+  modules,
+}: { extract?: boolean; modules?: boolean } = {}) => [
   extract ? MiniCssExtractPlugin.loader : 'vue-style-loader',
   {
     loader: 'css-loader',
@@ -18,6 +22,11 @@ const scssLoaders = (extract?: boolean) => [
           removeAll: true,
         },
       },
+      modules,
+      camelCase: true,
+      localIdentName: __DEV__
+        ? '[name]__[local]___[hash:base64:5]'
+        : '[hash:base64]',
       sourceMap,
     },
   },
@@ -73,21 +82,22 @@ const webpackConfig: webpack.Configuration = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: {
-          cssModules: {
-            camelCase: true,
-            localIdentName: __DEV__
-              ? '[name]__[local]___[hash:base64:5]'
-              : '[hash:base64]',
-          },
-          loaders: {
-            scss: scssLoaders(),
-          },
-        },
       },
       {
         test: /\.scss$/,
-        use: scssLoaders(true),
+        oneOf: [
+          {
+            resourceQuery: /module/,
+            use: scssLoaders({
+              modules: true,
+            }),
+          } as any,
+          {
+            use: scssLoaders({
+              extract: true,
+            }),
+          },
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff2?)$/,
@@ -98,14 +108,22 @@ const webpackConfig: webpack.Configuration = {
       },
       {
         test: /\.pug$/,
-        use: [
+        oneOf: [
           {
-            loader: 'html-loader',
-            options: {
-              minimize,
-            },
+            resourceQuery: /^\?vue/,
+            loader: 'pug-plain-loader',
           },
-          'pug-html-loader',
+          {
+            use: [
+              {
+                loader: 'html-loader',
+                options: {
+                  minimize,
+                },
+              },
+              'pug-plain-loader',
+            ],
+          },
         ],
       },
     ],
@@ -126,6 +144,7 @@ const webpackConfig: webpack.Configuration = {
       tslint: true,
       vue: true,
     }),
+    new VueLoaderPlugin(),
     ...(__DEV__ ? [new FriendlyErrorsPlugin()] : []),
   ],
 }

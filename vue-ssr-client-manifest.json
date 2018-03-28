@@ -23,8 +23,8 @@
     "13.f3cbb226ca3a492b62b9.js",
     "manifest.f39d56ce85ccfcb795ed.js",
     "vendors.32f3c9dbef92b0349e94.js",
-    "app.8580f5f1f489722b7f2f.css",
-    "app.8580f5f1f489722b7f2f.js",
+    "app.c28a413646bb011458c5.css",
+    "app.c28a413646bb011458c5.js",
     "favicon.ico",
     "vendors.dll.c2b72d9269f5e739b7df.js",
     "__non-ssr-page__.html"
@@ -32,7 +32,7 @@
   "initial": [
     "manifest.f39d56ce85ccfcb795ed.js",
     "vendors.32f3c9dbef92b0349e94.js",
-    "app.8580f5f1f489722b7f2f.js"
+    "app.c28a413646bb011458c5.js"
   ],
   "async": [
     "7.b31a25b942f7a8534251.js",

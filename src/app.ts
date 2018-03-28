@@ -3,7 +3,7 @@ import { Context } from 'koa'
 import { Component, Vue } from 'vue-property-decorator'
 
 import 'plugins'
-import 'styles/app.scss'
+import { REGION_COOKIE, getCookie } from 'utils'
 
 import App from './views/App.vue'
 
@@ -17,8 +17,13 @@ Component.registerHooks([
 ])
 
 export default (axios: AxiosInstance, ctx?: Context) => {
-  const store = createStore(axios, ctx)
+  const store = createStore(axios)
   const router = createRouter()
+
+  store.dispatch(
+    'setRegionId',
+    ctx ? ctx.cookies.get(REGION_COOKIE) : getCookie(REGION_COOKIE),
+  )
 
   const ready = () => {
     router.beforeEach(async (to, from, next) => {

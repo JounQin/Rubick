@@ -1,5 +1,4 @@
-import { AxiosInstance } from 'axios'
-import { ActionTree, Module, MutationTree } from 'vuex'
+import { ActionTree, MutationTree } from 'vuex'
 
 import { ApplicationState, RootState } from 'types'
 
@@ -9,42 +8,38 @@ enum TYPES {
 
 const API_PREFIX = '/applications/'
 
-export const applicationModule = (
-  axios: AxiosInstance,
-): Module<ApplicationState, RootState> => {
-  const state: ApplicationState = {
-    applications: [],
-  }
+const state = (): ApplicationState => ({
+  applications: [],
+})
 
-  const actions: ActionTree<ApplicationState, RootState> = {
-    async fetchApplications({ commit, rootGetters }) {
-      const { regionName } = rootGetters
+const actions: ActionTree<ApplicationState, RootState> = {
+  async fetchApplications({ commit, rootGetters, rootState }) {
+    const { regionName } = rootGetters
 
-      if (!regionName) {
-        return
-      }
+    if (!regionName) {
+      return
+    }
 
-      const { data } = await axios.get(
-        `${API_PREFIX}${rootGetters.namespace}`,
-        {
-          params: { region: regionName },
-        },
-      )
+    const { data } = await rootState.http.get(
+      `${API_PREFIX}${rootGetters.namespace}`,
+      {
+        params: { region: regionName },
+      },
+    )
 
-      commit(TYPES.SET_APPLICATIONS, data)
-    },
-  }
+    commit(TYPES.SET_APPLICATIONS, data)
+  },
+}
 
-  const mutations: MutationTree<ApplicationState> = {
-    [TYPES.SET_APPLICATIONS](s, applications) {
-      s.applications = applications
-    },
-  }
+const mutations: MutationTree<ApplicationState> = {
+  [TYPES.SET_APPLICATIONS](s, applications) {
+    s.applications = applications
+  },
+}
 
-  return {
-    namespaced: true,
-    state,
-    actions,
-    mutations,
-  }
+export const applicationModule = {
+  namespaced: true,
+  state,
+  actions,
+  mutations,
 }

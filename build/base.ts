@@ -93,9 +93,12 @@ const webpackConfig: webpack.Configuration = {
             }),
           } as any,
           {
-            use: scssLoaders({
-              extract: true,
-            }),
+            test: /app\.scss/,
+            resourceQuery: /^\?vue/,
+            use: scssLoaders({ extract: true }),
+          },
+          {
+            use: scssLoaders(),
           },
         ],
       },

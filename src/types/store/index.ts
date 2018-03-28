@@ -1,3 +1,4 @@
+import { AxiosInstance } from 'axios'
 import { Store } from 'vuex'
 
 import { ApplicationState } from './application'
@@ -11,6 +12,7 @@ export * from './sync-center'
 export interface RootState {
   application: ApplicationState
   common: CommonState
+  http: AxiosInstance
   syncCenter: SyncCenterState
 }
 

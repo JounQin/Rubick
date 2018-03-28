@@ -78,6 +78,7 @@ const routerReady = () => {
 
 if (initialState) {
   store.replaceState(initialState)
+  store.dispatch('setHttp', axios)
 
   if (!__DEV__) {
     delete window.__INITIAL_STATE__
@@ -88,6 +89,8 @@ if (initialState) {
     routerReady()
   })
 } else {
+  store.dispatch('setHttp', axios)
+
   setDocLang(getCookie(LOCALE_COOKIE) as Locale)
   routerReady()
 }

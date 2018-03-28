@@ -43,6 +43,8 @@ export default (context: ServerContext) =>
       return reject({ status: 302, url: fullPath })
     }
 
+    store.dispatch('setHttp', axios)
+
     ready()
 
     router.push(url)
@@ -81,7 +83,11 @@ export default (context: ServerContext) =>
         // tslint:disable-next-line:no-console
         console.log(`data pre-fetch: ${Date.now() - (start as number)}ms`)
       }
+
+      store.dispatch('setHttp', null)
+
       context.state = store.state
+
       resolve(app)
     }, reject)
   })

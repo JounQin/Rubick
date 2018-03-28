@@ -23,7 +23,6 @@ table.table
       td
 </template>
 <script lang="ts">
-import { AxiosInstance } from 'axios'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { State } from 'vuex-class'
 
@@ -34,9 +33,9 @@ const MODULE_NAME = 'application'
 
 let registered = false
 
-const fetchApplications = async (axios: AxiosInstance, store: RootStore) => {
+const fetchApplications = async (store: RootStore) => {
   if (!registered) {
-    store.registerModule(MODULE_NAME, applicationModule(axios))
+    store.registerModule(MODULE_NAME, applicationModule)
 
     if (!__SERVER__) {
       registered = true
@@ -46,8 +45,8 @@ const fetchApplications = async (axios: AxiosInstance, store: RootStore) => {
 }
 
 @Component({
-  async asyncData({ axios, store }) {
-    await fetchApplications(axios, store)
+  async asyncData({ store }) {
+    await fetchApplications(store)
   },
 })
 export default class Application extends Vue {
@@ -56,10 +55,9 @@ export default class Application extends Vue {
 
   @Watch('$store.state.common.regionId')
   async regionChange() {
-    await fetchApplications(this.$http, this.$store)
+    await fetchApplications(this.$store)
   }
 }
 </script>
 <style lang="scss" module>
-
 </style>

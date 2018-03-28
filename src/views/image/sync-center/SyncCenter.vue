@@ -37,7 +37,6 @@ main
             i.fa.fa-trash-o
 </template>
 <script lang="ts">
-import { AxiosInstance } from 'axios'
 import { Component, Vue } from 'vue-property-decorator'
 import { State } from 'vuex-class'
 
@@ -48,12 +47,9 @@ const MODULE_NAME = 'syncCenter'
 
 let registered = false
 
-const fetchSyncRegistryConfigs = async (
-  axios: AxiosInstance,
-  store: RootStore,
-) => {
+const fetchSyncRegistryConfigs = async (store: RootStore) => {
   if (!registered) {
-    store.registerModule(MODULE_NAME, syncCenterModule(axios))
+    store.registerModule(MODULE_NAME, syncCenterModule)
 
     if (!__SERVER__) {
       registered = true
@@ -63,8 +59,8 @@ const fetchSyncRegistryConfigs = async (
 }
 
 @Component({
-  asyncData({ axios, store }) {
-    return fetchSyncRegistryConfigs(axios, store)
+  asyncData({ store }) {
+    return fetchSyncRegistryConfigs(store)
   },
 })
 export default class SyncCenter extends Vue {

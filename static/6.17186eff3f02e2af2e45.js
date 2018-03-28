@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{183:function(t,e,i){"use strict";i.r(e);var n=i(3),r=Object(n.a)({},function(){var t=this.$createElement;return(this._self._c||t)("router-link",{attrs:{to:"/image/image-repository/detail/123"}},[this._v("detail")])},[],!1,null,null,null);e.default=r.exports}}]);

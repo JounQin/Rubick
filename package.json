@@ -60,7 +60,7 @@
     "captchapng2": "^1.0.3",
     "date-fns": "^2.0.0-alpha.7",
     "debug": "^3.1.0",
-    "env-cmd": "^7.0.0",
+    "env-cmd": "^8.0.0",
     "koa": "^2.5.0",
     "koa-better-http-proxy": "^0.2.4",
     "koa-bodyparser": "^4.2.0",

@@ -8,5 +8,7 @@ export const formateDate = (date: string, formatter: boolean | string) =>
     date,
     typeof formatter === 'string'
       ? formatter
-      : formatter ? DATE_FORMATTER : DATE_TIME_FORMATTER,
+      : formatter
+        ? DATE_FORMATTER
+        : DATE_TIME_FORMATTER,
   )

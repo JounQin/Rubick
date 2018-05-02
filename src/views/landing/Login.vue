@@ -89,7 +89,9 @@ export default class Login extends Vue {
     this.submitting = true
 
     try {
-      const { data: { url, user } } = await this.$http.post('/login', {
+      const {
+        data: { url, user },
+      } = await this.$http.post('/login', {
         organization: this.account,
         username: this.username,
         password: this.password,

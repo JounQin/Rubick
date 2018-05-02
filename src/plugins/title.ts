@@ -5,7 +5,10 @@ import { Translator } from 'vue-translator'
 
 export const breadCrumbs = (route: Route, $t: Translator = Vue.translator) => {
   const { matched } = route
-  const { meta: { title }, path } = matched[matched.length - 1]
+  const {
+    meta: { title },
+    path,
+  } = matched[matched.length - 1]
 
   const paths: string =
     (typeof title === 'function' ? title.call(route, route) : title) || path

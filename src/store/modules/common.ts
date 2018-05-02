@@ -39,7 +39,9 @@ const actions: ActionTree<CommonState, RootState> = {
     commit(TYPES.SET_REGION_ID, regionId)
   },
   async fetchCommon({ commit, getters: g, rootState }) {
-    const { data: { regions, profile } } = await rootState.http.get('/common')
+    const {
+      data: { regions, profile },
+    } = await rootState.http.get('/common')
     commit(TYPES.SET_PROFILE, profile)
 
     commit(TYPES.SET_REGIONS, regions)

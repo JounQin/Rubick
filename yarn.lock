@@ -211,7 +211,7 @@
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@types/lru-cache/-/lru-cache-4.1.0.tgz#ef69ce9c3ebb46bd146f0d80f0c1ce38b0508eae"
 
-"@types/memory-fs@*", "@types/memory-fs@^0.3.0":
+"@types/memory-fs@*":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@types/memory-fs/-/memory-fs-0.3.0.tgz#847596a94f9a9688a2e342f4017fcc0050e8e2da"
   dependencies:

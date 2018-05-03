@@ -1,4 +1,4 @@
-import * as path from 'path'
+import path from 'path'
 
 const DEV = 'development'
 const PROD = 'production'

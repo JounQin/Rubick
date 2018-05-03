@@ -1,10 +1,10 @@
-import * as AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin'
-import * as _debug from 'debug'
-import * as HtmlWebpackPlugin from 'html-webpack-plugin'
-import * as SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
-import * as VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
-import * as webpack from 'webpack'
-import * as merge from 'webpack-merge'
+import AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin'
+import _debug from 'debug'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
+import VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
+import webpack from 'webpack'
+import merge from 'webpack-merge'
 
 import { NODE_ENV, __DEV__, getDllFile, resolve } from './config'
 

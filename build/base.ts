@@ -1,8 +1,8 @@
-import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
-import * as FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
-import * as MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { VueLoaderPlugin } from 'vue-loader'
-import * as webpack from 'webpack'
+import webpack from 'webpack'
 
 import { NODE_ENV, __DEV__, hashType, publicPath, resolve } from './config'
 

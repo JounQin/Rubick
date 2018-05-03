@@ -1,9 +1,9 @@
-import * as _debug from 'debug'
-import * as Koa from 'koa'
-import * as bodyParser from 'koa-bodyparser'
-import * as compose from 'koa-compose'
-import * as KoaRouter from 'koa-router'
-import * as session from 'koa-session'
+import _debug from 'debug'
+import Koa from 'koa'
+import bodyParser from 'koa-bodyparser'
+import compose from 'koa-compose'
+import KoaRouter from 'koa-router'
+import session from 'koa-session'
 
 import { serverHost, serverPort } from '../../build/config'
 

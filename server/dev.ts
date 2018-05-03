@@ -1,8 +1,8 @@
-import * as _debug from 'debug'
-import * as _fs from 'fs'
-import * as koaWebpack from 'koa-webpack'
-import * as MFS from 'memory-fs'
-import * as webpack from 'webpack'
+import _debug from 'debug'
+import _fs from 'fs'
+import koaWebpack from 'koa-webpack'
+import MFS from 'memory-fs'
+import webpack from 'webpack'
 
 import { getDllFile, resolve } from '../build/config'
 

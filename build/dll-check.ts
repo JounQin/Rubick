@@ -1,11 +1,11 @@
 import { execSync } from 'child_process'
-import * as fs from 'fs'
+import fs from 'fs'
 
-import * as _debug from 'debug'
+import _debug from 'debug'
 import { isEqual } from 'lodash'
-import * as rimraf from 'rimraf'
+import rimraf from 'rimraf'
 
-import * as pkg from '../package.json'
+import pkg from '../package.json'
 
 import { NODE_ENV, resolve } from './config'
 

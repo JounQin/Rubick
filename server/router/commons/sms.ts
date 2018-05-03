@@ -1,5 +1,5 @@
 import axios from 'axios'
-import * as crypto from 'crypto'
+import crypto from 'crypto'
 import { format } from 'date-fns'
 
 import { CCP_CONFIG } from './config'

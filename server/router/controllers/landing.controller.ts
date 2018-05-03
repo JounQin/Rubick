@@ -1,5 +1,5 @@
-import * as CaptchaPng2 from 'captchapng2'
-import * as crypto from 'crypto'
+import CaptchaPng2 from 'captchapng2'
+import crypto from 'crypto'
 import { Context } from 'koa'
 import { omit } from 'lodash'
 

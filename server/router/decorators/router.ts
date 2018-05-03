@@ -1,5 +1,5 @@
 import { Middleware } from 'koa'
-import * as KoaRouter from 'koa-router'
+import KoaRouter from 'koa-router'
 
 export interface Route {
   handler: Middleware | Middleware[]

@@ -1,7 +1,7 @@
 import axios from 'axios'
-import * as _debug from 'debug'
+import _debug from 'debug'
 import { Context } from 'koa'
-import * as _qs from 'qs'
+import _qs from 'qs'
 
 import { API_PREFIX_REGEXP } from './constants'
 import { ENV, MODE, getEnv } from './env'

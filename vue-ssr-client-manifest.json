@@ -23,8 +23,8 @@
     "13.f3d3cf67e350709931b5.js",
     "manifest.4d835b460c4496e64976.js",
     "vendors.6bd4386ab08380bce1c1.js",
-    "app.5e46a1a8ed78e2827772.css",
-    "app.5e46a1a8ed78e2827772.js",
+    "app.9538cd114938f00ee3e0.css",
+    "app.9538cd114938f00ee3e0.js",
     "favicon.ico",
     "vendors.dll.434ae4a42499f7609f9b.js",
     "__non-ssr-page__.html"
@@ -32,7 +32,7 @@
   "initial": [
     "manifest.4d835b460c4496e64976.js",
     "vendors.6bd4386ab08380bce1c1.js",
-    "app.5e46a1a8ed78e2827772.js"
+    "app.9538cd114938f00ee3e0.js"
   ],
   "async": [
     "7.e0d15bc0cc0eff4bc276.js",
@@ -130,7 +130,7 @@
       22,
       23
     ],
-    "7750ca5d": [
+    "1bcf0e73": [
       22,
       23
     ],
@@ -265,7 +265,7 @@
       22,
       23
     ],
-    "5c226af6": [
+    "9bca7dca": [
       22,
       23
     ],

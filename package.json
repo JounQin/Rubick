@@ -89,6 +89,7 @@
   },
   "devDependencies": {
     "@types/debug": "^0.0.30",
+    "@types/fork-ts-checker-webpack-plugin": "^0.4.0",
     "@types/friendly-errors-webpack-plugin": "^0.1.1",
     "@types/html-webpack-plugin": "^2.30.3",
     "@types/koa": "^2.0.45",

@@ -92,6 +92,13 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
+"@types/fork-ts-checker-webpack-plugin@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@types/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-0.4.0.tgz#e2bf0f9cc75c2b7ce97d171853950f04b311d82d"
+  dependencies:
+    "@types/node" "*"
+    "@types/webpack" "*"
+
 "@types/friendly-errors-webpack-plugin@^0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@types/friendly-errors-webpack-plugin/-/friendly-errors-webpack-plugin-0.1.1.tgz#b56dd545d235823e000c3cba67f4f624f46173d1"

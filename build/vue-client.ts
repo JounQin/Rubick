@@ -69,7 +69,7 @@ if (!__DEV__) {
   clientConfig.plugins.push(
     new SWPrecacheWebpackPlugin({
       cacheId: 'rubick',
-      directoryIndex: false,
+      directoryIndex: null,
       filename: 'service-worker.js',
       minify: true,
       dontCacheBustUrlsMatching: /./,

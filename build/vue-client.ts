@@ -1,6 +1,8 @@
 import AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin'
 import _debug from 'debug'
+import glob from 'glob'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import PurgecssWebpackPlugin from 'purgecss-webpack-plugin'
 import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin'
 import VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import webpack from 'webpack'
@@ -67,6 +69,12 @@ if (!__DEV__) {
   debug(`Enable plugins for ${NODE_ENV} (SWPrecache).`)
 
   clientConfig.plugins.push(
+    new PurgecssWebpackPlugin({
+      paths: glob.sync(resolve('src/**/*'), {
+        nodir: true,
+      }),
+      whitelistPatterns: [/^_/],
+    }),
     new SWPrecacheWebpackPlugin({
       cacheId: 'rubick',
       directoryIndex: null,

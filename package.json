@@ -109,7 +109,7 @@
     "@types/pug": "^2.0.4",
     "@types/qs": "^6.5.1",
     "@types/rimraf": "^2.0.2",
-    "@types/shelljs": "^0.7.9",
+    "@types/shelljs": "^0.8.0",
     "@types/sw-precache-webpack-plugin": "^0.11.0",
     "@types/webpack": "^4.1.6",
     "@types/webpack-dev-middleware": "^2.0.1",

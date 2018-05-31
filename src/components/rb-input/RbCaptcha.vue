@@ -51,4 +51,3 @@ img {
   cursor: pointer;
 }
 </style>
-

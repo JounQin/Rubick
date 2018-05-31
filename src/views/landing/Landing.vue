@@ -43,7 +43,7 @@ $img-height: 72px;
   }
 
   main {
-    >  {
+    > {
       form {
         padding: 16px 32px;
         background-color: $card-bg-color;

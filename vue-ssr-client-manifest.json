@@ -16,23 +16,23 @@
     "6.510a47bab6b184e5dae1.js",
     "912ec66d7572ff821749319396470bde.svg",
     "8.64f15f60f95113dc17c5.js",
-    "9.e2b8777464dc2fb4eb72.js",
+    "9.e1ea7c0d65c31a429ccf.js",
     "10.522fe941ca9d7d70707d.js",
     "11.64856f2bf74f746f3d56.js",
-    "12.55b7ea2df23fc0fa6bb5.js",
+    "12.0c6dba0d9319f53a02e1.js",
     "13.b814928118951dddecad.js",
-    "manifest.8ef8e6547cdf9d0d70aa.js",
+    "manifest.b557d11efdd410081aea.js",
     "vendors.05126c2597edeb301f7b.js",
-    "app.ef66f4ce0e2dc165fe94.css",
-    "app.ef66f4ce0e2dc165fe94.js",
+    "app.a4784ed81a52a8cf9e1c.css",
+    "app.a4784ed81a52a8cf9e1c.js",
     "favicon.ico",
     "vendors.dll.06248c1881d4005b112b.js",
     "__non-ssr-page__.html"
   ],
   "initial": [
-    "manifest.8ef8e6547cdf9d0d70aa.js",
+    "manifest.b557d11efdd410081aea.js",
     "vendors.05126c2597edeb301f7b.js",
-    "app.ef66f4ce0e2dc165fe94.js"
+    "app.a4784ed81a52a8cf9e1c.js"
   ],
   "async": [
     "7.511b8930dc68e2cc2add.js",
@@ -44,10 +44,10 @@
     "5.99b7ed95ffc39d19caf7.js",
     "6.510a47bab6b184e5dae1.js",
     "8.64f15f60f95113dc17c5.js",
-    "9.e2b8777464dc2fb4eb72.js",
+    "9.e1ea7c0d65c31a429ccf.js",
     "10.522fe941ca9d7d70707d.js",
     "11.64856f2bf74f746f3d56.js",
-    "12.55b7ea2df23fc0fa6bb5.js",
+    "12.0c6dba0d9319f53a02e1.js",
     "13.b814928118951dddecad.js",
     "vendors.dll.06248c1881d4005b112b.js"
   ],

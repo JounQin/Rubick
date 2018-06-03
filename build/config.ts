@@ -15,7 +15,7 @@ export const serverPort = +process.env.PORT || 4000
 
 export const publicPath = __DEV__ ? `http://${serverHost}:${serverPort}/` : '/'
 
-export const hashType = __DEV__ ? 'hash' : 'chunkhash'
+export const hashType = __DEV__ ? 'hash' : 'contenthash'
 
 export const innerServer = `http://localhost:${serverPort}/`
 

@@ -4,7 +4,7 @@ import path from 'path'
 
 import acceptLanguage from 'accept-language'
 import _debug from 'debug'
-import Koa from 'koa'
+import Koa, { Middleware } from 'koa'
 import proxy from 'koa-better-http-proxy'
 import compose from 'koa-compose'
 import compress from 'koa-compress'
@@ -86,14 +86,19 @@ const createRenderer = (bundle: object, options: object) =>
   })
 
 if (process.env.NODE_ENV === 'development') {
-  const { readyPromise: ready, webpackMiddleware } = require('./dev').default(
+  const {
+    readyPromise: ready,
+    webpackMiddlewarePromise,
+  } = require('./dev').default(
     ({ bundle, clientManifest, fs: memoryfs }: any) => {
       renderer = createRenderer(bundle, { clientManifest })
       mfs = memoryfs
     },
   )
   readyPromise = ready
-  app.use(webpackMiddleware)
+  webpackMiddlewarePromise.then((webpackMiddleware: Middleware) =>
+    app.use(webpackMiddleware),
+  )
 } else {
   mfs = fs
 
@@ -147,6 +152,7 @@ app.use(async (ctx, next) => {
     ctx.status !== 404 ||
     /(^\/api\/)|(\.[a-z]{2,4}\d?$)/.test(ctx.path)
   ) {
+    await next()
     return
   }
 

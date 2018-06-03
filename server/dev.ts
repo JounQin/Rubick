@@ -34,7 +34,7 @@ export default (cb: any) => {
 
   const clientCompiler = webpack(clientConfig)
 
-  const webpackMiddleware = koaWebpack({
+  const webpackMiddlewarePromise = koaWebpack({
     compiler: clientCompiler,
   })
 
@@ -47,15 +47,18 @@ export default (cb: any) => {
       return
     }
 
-    fs = webpackMiddleware.dev.fileSystem
-    fs.writeFileSync(dllFilePath, dllFileContent, 'utf-8')
-    clientManifest = JSON.parse(
-      fs.readFileSync(resolve('dist/vue-ssr-client-manifest.json')),
-    )
+    ;(webpackMiddlewarePromise as any).then((webpackMiddleware: any) => {
+      fs = webpackMiddleware.devMiddleware.fileSystem
+      fs.writeFileSync(dllFilePath, dllFileContent, 'utf-8')
 
-    if (bundle) {
-      ready({ bundle, clientManifest, fs })
-    }
+      clientManifest = JSON.parse(
+        fs.readFileSync(resolve('dist/vue-ssr-client-manifest.json')),
+      )
+
+      if (bundle) {
+        ready({ bundle, clientManifest, fs })
+      }
+    })
   })
 
   const mfs = new MFS()
@@ -82,5 +85,5 @@ export default (cb: any) => {
     }
   })
 
-  return { readyPromise, webpackMiddleware }
+  return { readyPromise, webpackMiddlewarePromise }
 }

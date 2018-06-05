@@ -21,7 +21,7 @@ const getters: GetterTree<CommonState, RootState> = {
   namespace: ({ user }) => user && user.namespace,
   region: ({ regions, regionId }) =>
     regions && regions.find(({ id }) => id === regionId),
-  regionName(s, g) {
+  regionName(_s, g) {
     return g.region && g.region.name
   },
 }

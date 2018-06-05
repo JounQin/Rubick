@@ -78,7 +78,7 @@ export default class RbInput extends Vue {
   selectOptions: Selection[] = this.selections ? [...this.selections] : []
 
   @Watch('selections')
-  selectionsChange(prev: Selection[], curr: Selection[]) {
+  selectionsChange() {
     this.selectOptions = this.selections ? [...this.selections] : []
     this.selected = []
   }

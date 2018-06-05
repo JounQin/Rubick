@@ -67,7 +67,7 @@ export default class Login extends Vue {
     this.isAccount = !!this.$route.params.type
   }
 
-  beforeRouteUpdate(to: Route, from: Route, next: Next) {
+  beforeRouteUpdate(to: Route, _from: Route, next: Next) {
     this.isAccount = !!to.params.type
     this.$v.$reset()
     next()

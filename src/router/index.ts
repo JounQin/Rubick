@@ -15,7 +15,7 @@ export default () =>
       Landing,
       {
         path: '*',
-        beforeEnter(to, from, next) {
+        beforeEnter(_to, _from, next) {
           next('/')
         },
       },

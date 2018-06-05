@@ -68,8 +68,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 let renderer: BundleRenderer
-let readyPromise: Promise<any>
-let mfs: any
+let readyPromise: Promise<void>
+let mfs: typeof fs
 
 // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
 const createRenderer = (bundle: object, options: object) =>
@@ -152,8 +152,7 @@ app.use(async (ctx, next) => {
     ctx.status !== 404 ||
     /(^\/api\/)|(\.[a-z]{2,4}\d?$)/.test(ctx.path)
   ) {
-    await next()
-    return
+    return next()
   }
 
   await readyPromise

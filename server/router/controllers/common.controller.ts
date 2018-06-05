@@ -1,9 +1,9 @@
 import { Context } from 'koa'
 
-import { Controller, RequestMapping } from '../decorators'
-
 import { jakiro } from 'commons'
 import { Profile, Region, User } from 'types'
+
+import { Controller, RequestMapping } from '../decorators'
 
 @Controller
 export class CommonController {

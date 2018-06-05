@@ -17,11 +17,10 @@ const dllFilePath = resolve('dist/static', dllFile)
 const dllFileContent = _fs.readFileSync(dllFilePath, 'utf-8')
 
 export default (cb: any) => {
-  // tslint:disable-next-line:variable-name
   let _resolve: any
   let clientManifest: any
   let bundle: any
-  let fs: any
+  let fs: MFS
 
   const readyPromise = new Promise(r => {
     _resolve = r
@@ -47,7 +46,7 @@ export default (cb: any) => {
       return
     }
 
-    ;(webpackMiddlewarePromise as any).then((webpackMiddleware: any) => {
+    webpackMiddlewarePromise.then(webpackMiddleware => {
       fs = webpackMiddleware.devMiddleware.fileSystem
       fs.writeFileSync(dllFilePath, dllFileContent, 'utf-8')
 
@@ -70,9 +69,7 @@ export default (cb: any) => {
       throw err
     }
 
-    stats = stats.toJson()
-
-    if ((stats as any).errors.length) {
+    if (stats.hasErrors()) {
       return
     }
 

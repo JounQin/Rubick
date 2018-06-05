@@ -30,7 +30,7 @@ export default class NavRegions extends Vue {
   regionId: string
 
   @Action
-  setRegionId(regionId: string) {}
+  setRegionId() {}
 }
 </script>
 <style lang="scss" module>

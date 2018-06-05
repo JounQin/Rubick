@@ -3,8 +3,6 @@ import crypto from 'crypto'
 import { Context } from 'koa'
 import { omit } from 'lodash'
 
-import { Controller, Method, RequestMapping } from '../decorators'
-
 import {
   CAPTCHA_SESSION,
   HTTP_METHOD,
@@ -14,6 +12,8 @@ import {
   sendSms,
 } from 'commons'
 import { toInt } from 'utils'
+
+import { Controller, Method, RequestMapping } from '../decorators'
 
 const randomCode = () => toInt(Math.random() * 9000 + 1000) + ''
 
@@ -50,7 +50,7 @@ export class LandingController {
       return
     }
 
-    ctx.user = ctx.session.user = user
+    ctx.session.user = user
 
     const { result: profile } = await jakiro({
       ctx,

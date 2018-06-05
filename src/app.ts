@@ -26,7 +26,7 @@ export default (axios: AxiosInstance, ctx?: Context) => {
   )
 
   const ready = () => {
-    router.beforeEach(async (to, from, next) => {
+    router.beforeEach(async (to, _from, next) => {
       if (to.matched.some(route => route.meta.auth)) {
         const { common } = store.state
 

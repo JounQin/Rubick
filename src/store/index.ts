@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Vuex, { ActionContext } from 'vuex'
 
 import { RootState } from 'types'
+
 import modules from './modules'
 
 Vue.use(Vuex)

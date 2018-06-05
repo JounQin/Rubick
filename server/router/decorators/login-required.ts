@@ -28,7 +28,7 @@ export const LoginRequired = (
 
   routes[index].handler = [
     (ctx, next) => {
-      if (!ctx.skipLogin && (!ctx.user || !ctx.user.token)) {
+      if (!ctx.skipLogin && (!ctx.session.user || !ctx.session.user.token)) {
         ctx.throw(401)
       } else {
         next()

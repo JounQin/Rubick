@@ -1,4 +1,3 @@
-/* tslint:disable:no-console no-var-requires */
 import fs from 'fs'
 import path from 'path'
 
@@ -89,6 +88,7 @@ if (process.env.NODE_ENV === 'development') {
   const {
     readyPromise: ready,
     webpackMiddlewarePromise,
+    // tslint:disable-next-line:no-var-requires
   } = require('./dev').default(
     ({ bundle, clientManifest, fs: memoryfs }: any) => {
       renderer = createRenderer(bundle, { clientManifest })
@@ -111,7 +111,7 @@ if (process.env.NODE_ENV === 'development') {
     },
   )
 
-  const files: staticCache.StaticCacheFiles = {}
+  const files: staticCache.Files = {}
 
   app
     .use(
@@ -231,7 +231,7 @@ app.use(async (ctx, next) => {
 
   const stream = renderer
     .renderToStream(context)
-    .on('error', (e: { status: number; url: string; stack: any }) => {
+    .on('error', (e: { status: number; url: string } & Error) => {
       switch ((ctx.status = e.status || 500)) {
         case 302:
           ctx.set({ Location: e.url })
@@ -243,8 +243,8 @@ app.use(async (ctx, next) => {
           return res.end('404 | Page Not Found')
         default:
           res.end('500 | Internal Server Error')
-          console.error(`error during render : ${url}`)
-          console.error(e.stack)
+          debug(`error during render : ${url}`)
+          debug(e.stack)
       }
     })
     .on('end', () => {
@@ -254,7 +254,7 @@ app.use(async (ctx, next) => {
           mfs.writeFileSync(distPath, html)
           debug(`static html file "${distPath}" is generated`)
         } catch (e) {
-          console.error(e)
+          debug(e)
         }
       }
 

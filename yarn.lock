@@ -251,6 +251,12 @@
   dependencies:
     "@types/koa" "*"
 
+"@types/koa-static-cache@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@types/koa-static-cache/-/koa-static-cache-5.1.0.tgz#37c33f877ecd92c13065ed402184632ab18da326"
+  dependencies:
+    "@types/koa" "*"
+
 "@types/koa-static@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/koa-static/-/koa-static-4.0.0.tgz#4cddce6adf45221bacfb2842b3621dc92f4d642c"

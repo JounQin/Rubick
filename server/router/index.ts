@@ -1,5 +1,5 @@
 import _debug from 'debug'
-import Koa from 'koa'
+import Koa, { Context } from 'koa'
 import bodyParser from 'koa-bodyparser'
 import compose from 'koa-compose'
 import KoaRouter from 'koa-router'
@@ -10,10 +10,10 @@ import { serverHost, serverPort } from '../../build/config'
 import {
   API_PREFIX,
   ENV,
-  MODE,
-  SESSION_CONFIG,
   getEnv,
   jakiro,
+  MODE,
+  SESSION_CONFIG,
 } from './commons'
 import { injectAllRoutes } from './decorators'
 
@@ -34,7 +34,7 @@ export default (app?: Koa) => {
     bodyParser(),
     router.routes(),
     router.allowedMethods(),
-    async (ctx, next) => {
+    async (ctx: Context, next) => {
       if (
         !ctx.matched.length &&
         /^\/api/.test(ctx.url) &&

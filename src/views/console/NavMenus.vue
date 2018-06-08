@@ -31,8 +31,11 @@ import { Profile, RootState } from 'types'
 
 @Component
 export default class NavMenus extends Vue {
-  @Getter('username') username: string
-  @Getter('namespace') namespace: string
+  @Getter('username')
+  username: string
+
+  @Getter('namespace')
+  namespace: string
 
   @State((state: RootState) => state.common.profile)
   profile: Profile

@@ -12,7 +12,7 @@ div(v-if="modals.length")
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 
-import { MODAL_BACKDROP, Modal } from 'types'
+import { Modal, MODAL_BACKDROP } from 'types'
 
 const isPromise = (promise: any) =>
   Object.prototype.toString.call(promise) === '[object Promise]' ||
@@ -92,11 +92,10 @@ export default class RbModal extends Vue {
       resolve()
     }
 
-    return new Promise(
-      resolve =>
-        getComputedStyle(modalItem.$el).display === 'none'
-          ? callback(resolve)
-          : modalItem.$once('after-leave', () => callback(resolve)),
+    return new Promise(resolve =>
+      getComputedStyle(modalItem.$el).display === 'none'
+        ? callback(resolve)
+        : modalItem.$once('after-leave', () => callback(resolve)),
     )
   }
 

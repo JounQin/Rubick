@@ -1,7 +1,6 @@
 import { execSync } from 'child_process'
-import fs from 'fs'
-
 import _debug from 'debug'
+import fs from 'fs'
 import { isEqual } from 'lodash'
 import rimraf from 'rimraf'
 

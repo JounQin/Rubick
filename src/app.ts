@@ -3,7 +3,7 @@ import { Context } from 'koa'
 import { Component, Vue } from 'vue-property-decorator'
 
 import 'plugins'
-import { REGION_COOKIE, getCookie } from 'utils'
+import { getCookie, REGION_COOKIE } from 'utils'
 
 import App from './views/App.vue'
 

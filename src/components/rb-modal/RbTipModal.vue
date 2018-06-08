@@ -16,15 +16,32 @@ import RbModalItem from './RbModalItem.vue'
 
 @Component({ components: { RbModalItem } })
 export default class RbTipModal extends Vue {
-  @Prop() tipText: string
-  @Prop() confirm: (text?: string) => any
-  @Prop() close: () => any
-  @Prop() confirmText: string
-  @Prop() cancelText: string
-  @Prop() type: number
-  @Prop() timeout: number
-  @Prop() promptText: string
-  @Prop() placeholder: string
+  @Prop()
+  tipText: string
+
+  @Prop()
+  confirm: (text?: string) => any
+
+  @Prop()
+  close: () => any
+
+  @Prop()
+  confirmText: string
+
+  @Prop()
+  cancelText: string
+
+  @Prop()
+  type: number
+
+  @Prop()
+  timeout: number
+
+  @Prop()
+  promptText: string
+
+  @Prop()
+  placeholder: string
 
   text = this.promptText
 

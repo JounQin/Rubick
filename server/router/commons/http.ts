@@ -4,7 +4,7 @@ import { Context } from 'koa'
 import _qs from 'qs'
 
 import { API_PREFIX_REGEXP } from './constants'
-import { ENV, MODE, getEnv } from './env'
+import { ENV, getEnv, MODE } from './env'
 
 export enum HTTP_METHOD {
   DELETE = 'delete',
@@ -33,7 +33,7 @@ const OUTPUT_JAKIRO_RESPONSE = getEnv(ENV.OUTPUT_JAKIRO_RESPONSE, MODE.BOOLEAN)
 export const jakiro = async <T = any>({
   ctx,
   url = ctx.url,
-  method = ctx.method,
+  method = ctx.method as HTTP_METHOD,
   data = ctx.request.body,
   headers,
   params = ctx.query,

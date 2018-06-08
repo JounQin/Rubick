@@ -21,7 +21,7 @@ export const breadCrumbs = (route: Route, $t: Translator = Vue.translator) => {
       const nav = 'nav_' + crumb
       const tNav = $t(nav, null, true)
       crumbs.push({
-        link: (routePath = routePath + '/' + p),
+        link: routePath = routePath + '/' + p,
         text: nav === tNav ? $t(crumb) : tNav,
       })
     }

@@ -8,7 +8,7 @@ import VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
 
-import { NODE_ENV, __DEV__, getDllFile, resolve } from './config'
+import { __DEV__, getDllFile, NODE_ENV, resolve } from './config'
 
 import baseConfig from './base'
 
@@ -30,12 +30,11 @@ const clientConfig = merge.smart(baseConfig, {
       name: 'manifest',
     },
     splitChunks: {
-      name: 'vendors',
-      chunks: 'initial',
       cacheGroups: {
         vendors: {
-          test: ({ context, request }: { context: string; request: string }) =>
-            /node_modules/.test(context) && !/\.css$/.test(request),
+          chunks: 'initial',
+          name: 'vendors',
+          test: /node_modules/,
         },
       },
     },
@@ -57,7 +56,7 @@ const clientConfig = merge.smart(baseConfig, {
     }),
     new AddAssetHtmlPlugin({
       filepath: resolve('dist/static/vendors.dll.*.js'),
-      includeSourcemap: false,
+      includeRelatedFiles: false,
     }),
     new VueSSRClientPlugin({
       filename: '../vue-ssr-client-manifest.json',
@@ -89,7 +88,7 @@ if (!__DEV__) {
           handler: 'cacheFirst',
         },
         {
-          urlPattern: /\//,
+          urlPattern: /^https?\:\/\//,
           handler: 'networkFirst',
         },
       ],

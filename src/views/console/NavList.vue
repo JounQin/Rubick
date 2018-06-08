@@ -18,7 +18,8 @@ import NavItem from './NavItem.vue'
   },
 })
 export default class NavList extends Vue {
-  @Prop() navConfig: NavCategory[]
+  @Prop()
+  navConfig: NavCategory[]
 
   activeItem: string = null
   activeSubItem: string = null

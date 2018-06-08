@@ -21,7 +21,7 @@
     "11.c59f8005ee9473978916.js",
     "12.d818720fc36eb5c9b0ac.js",
     "13.5a2ba7a87c455336bae2.js",
-    "manifest.e269004670bff53b4015.js",
+    "manifest.f6be8c0357475980a4e9.js",
     "vendors.eb694ee9c233ebfca714.js",
     "app.72317e02c82fcacdeb1e.css",
     "app.b1b5b65a9bbfe076d7b4.js",
@@ -30,7 +30,7 @@
     "__non-ssr-page__.html"
   ],
   "initial": [
-    "manifest.e269004670bff53b4015.js",
+    "manifest.f6be8c0357475980a4e9.js",
     "vendors.eb694ee9c233ebfca714.js",
     "app.b1b5b65a9bbfe076d7b4.js"
   ],

@@ -105,7 +105,7 @@
     "@types/friendly-errors-webpack-plugin": "^0.1.1",
     "@types/html-webpack-plugin": "^2.30.3",
     "@types/koa": "^2.0.46",
-    "@types/koa-bodyparser": "^4.2.0",
+    "@types/koa-bodyparser": "^5.0.0",
     "@types/koa-compose": "^3.2.2",
     "@types/koa-compress": "^2.0.8",
     "@types/koa-logger": "^3.1.0",

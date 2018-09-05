@@ -29,7 +29,8 @@ import { NavItem as NavItemType } from 'types'
 
 @Component
 export default class NavItem extends Vue {
-  @Prop() item: NavItemType
+  @Prop()
+  item: NavItemType
 
   expanded: boolean = null
   snakeCase = snakeCase

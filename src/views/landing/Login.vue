@@ -61,7 +61,8 @@ export default class Login extends Vue {
   isAccount = false
   submitting = false
 
-  @Action setUser: (user: User) => void
+  @Action
+  setUser: (user: User) => void
 
   created() {
     this.isAccount = !!this.$route.params.type

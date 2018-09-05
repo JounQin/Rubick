@@ -11,10 +11,18 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class RbBtn extends Vue {
   @Prop({ default: 'primary' })
   btnStyle: string
-  @Prop() size: string
-  @Prop() type: string
-  @Prop() disabled: boolean
-  @Prop() loading: boolean
+
+  @Prop()
+  size: string
+
+  @Prop()
+  type: string
+
+  @Prop()
+  disabled: boolean
+
+  @Prop()
+  loading: boolean
 }
 </script>
 <style lang="scss" module>

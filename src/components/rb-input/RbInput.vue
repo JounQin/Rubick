@@ -50,18 +50,33 @@ const INPUT = 'input'
   },
 })
 export default class RbInput extends Vue {
-  @Prop() label: string
-  @Prop() type: string
+  @Prop()
+  label: string
+
+  @Prop()
+  type: string
 
   @Prop({ type: [String, Boolean] })
   captcha: string | boolean
-  @Prop() captchaDisabled: boolean
-  @Prop() captchaData: any
 
-  @Prop() selections: Selection[]
-  @Prop() displayField: string
-  @Prop() valueField: string
-  @Prop() emptyText: string
+  @Prop()
+  captchaDisabled: boolean
+
+  @Prop()
+  captchaData: any
+
+  @Prop()
+  selections: Selection[]
+
+  @Prop()
+  displayField: string
+
+  @Prop()
+  valueField: string
+
+  @Prop()
+  emptyText: string
+
   @Prop({ default: 1 })
   maxNum: number
 

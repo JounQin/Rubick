@@ -1,5 +1,5 @@
 dist
 node_modules
 .cache
-.env.local
+.dev.env
 *.log

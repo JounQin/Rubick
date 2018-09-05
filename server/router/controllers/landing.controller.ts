@@ -1,8 +1,4 @@
 import CaptchaPng2 from 'captchapng2'
-import crypto from 'crypto'
-import { Context } from 'koa'
-import { omit } from 'lodash'
-
 import {
   CAPTCHA_SESSION,
   HTTP_METHOD,
@@ -11,6 +7,11 @@ import {
   jakiro,
   sendSms,
 } from 'commons'
+import crypto from 'crypto'
+import { Context } from 'koa'
+import { omit } from 'lodash'
+
+import { Dictionary } from 'types'
 import { toInt } from 'utils'
 
 import { Controller, Method, RequestMapping } from '../decorators'
@@ -30,7 +31,7 @@ export class LandingController {
   async login(ctx: Context) {
     const { request } = ctx
 
-    const data = request.body
+    const data: Dictionary = request.body
 
     let user
 
@@ -84,21 +85,17 @@ export class LandingController {
   async sendSms(ctx: Context) {
     const captcha = ctx.session[CAPTCHA_SESSION]
 
-    if (captcha !== ctx.request.body.captcha) {
-      ctx.body = {
-        errors: [
-          {
-            code: 'invalid_captcha',
-          },
-        ],
-      }
+    const data: Dictionary = ctx.request.body
+
+    if (captcha !== data.captcha) {
+      ctx.body = { errors: [{ code: 'invalid_captcha' }] }
       ctx.status = 401
       return
     }
 
     const code = randomCode()
 
-    const { mobile } = ctx.request.body
+    const { mobile } = data
 
     await sendSms(mobile, code)
 

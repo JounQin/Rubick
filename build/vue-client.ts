@@ -30,12 +30,11 @@ const clientConfig = merge.smart(baseConfig, {
       name: 'manifest',
     },
     splitChunks: {
-      name: 'vendors',
-      chunks: 'initial',
       cacheGroups: {
         vendors: {
-          test: ({ context, request }: { context: string; request: string }) =>
-            /node_modules/.test(context) && !/\.css$/.test(request),
+          chunks: 'initial',
+          name: 'vendors',
+          test: /node_modules/,
         },
       },
     },
@@ -89,7 +88,7 @@ if (!__DEV__) {
           handler: 'cacheFirst',
         },
         {
-          urlPattern: /\//,
+          urlPattern: /^https?\:\/\//,
           handler: 'networkFirst',
         },
       ],

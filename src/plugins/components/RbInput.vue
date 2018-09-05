@@ -8,7 +8,8 @@ const INPUT = 'input'
 
 @Component
 export default class RbInput extends Vue {
-  @Model(INPUT) input: string
+  @Model(INPUT)
+  input: string
 
   get model() {
     return this.input

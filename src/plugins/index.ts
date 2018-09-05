@@ -5,6 +5,5 @@ import './mixins'
 import './tip'
 import './tooltip'
 import './translate'
-import './util'
 
 export * from './title'

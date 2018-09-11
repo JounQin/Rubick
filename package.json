@@ -60,7 +60,7 @@
     "axios": "^0.18.0",
     "captchapng2": "^1.0.3",
     "date-fns": "^1.29.0",
-    "debug": "^3.1.0",
+    "debug": "^4.0.0",
     "env-cmd": "^8.0.2",
     "koa": "^2.5.2",
     "koa-better-http-proxy": "^0.2.4",

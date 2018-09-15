@@ -638,9 +638,9 @@ acorn@^5.0.0, acorn@^5.6.2:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.2.tgz#91fa871883485d06708800318404e72bfb26dcc5"
 
-add-asset-html-webpack-plugin@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/add-asset-html-webpack-plugin/-/add-asset-html-webpack-plugin-2.1.3.tgz#1bb8cd9cf9bd612833a502397bb75da66b77ba32"
+add-asset-html-webpack-plugin@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/add-asset-html-webpack-plugin/-/add-asset-html-webpack-plugin-3.0.0.tgz#5ff1e145a69f47a550d014ac6e60765fe771d657"
   dependencies:
     globby "^8.0.0"
     micromatch "^3.1.3"

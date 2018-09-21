@@ -387,7 +387,7 @@
   dependencies:
     source-map "^0.6.1"
 
-"@types/webpack-dev-middleware@*", "@types/webpack-dev-middleware@^2.0.2":
+"@types/webpack-dev-middleware@*":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@types/webpack-dev-middleware/-/webpack-dev-middleware-2.0.2.tgz#33934f15de582f1a6c21ea21c42f69282e328c76"
   dependencies:
@@ -405,13 +405,6 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-hot-client/-/webpack-hot-client-4.0.0.tgz#8dc631153a0ae68de202f2e0e4b5b58527e41467"
   dependencies:
     "@types/node" "*"
-    "@types/webpack" "*"
-
-"@types/webpack-hot-middleware@^2.16.4":
-  version "2.16.4"
-  resolved "https://registry.yarnpkg.com/@types/webpack-hot-middleware/-/webpack-hot-middleware-2.16.4.tgz#258ecf2ae0ee80a988cc65547b24608fe10be440"
-  dependencies:
-    "@types/connect" "*"
     "@types/webpack" "*"
 
 "@types/webpack-merge@^4.1.3":

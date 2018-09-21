@@ -56,7 +56,7 @@ const clientConfig = merge.smart(baseConfig, {
     }),
     new AddAssetHtmlPlugin({
       filepath: resolve('dist/static/vendors.dll.*.js'),
-      includeSourcemap: false,
+      includeRelatedFiles: false,
     }),
     new VueSSRClientPlugin({
       filename: '../vue-ssr-client-manifest.json',

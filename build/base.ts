@@ -17,11 +17,6 @@ const scssLoaders = ({
   {
     loader: 'css-loader',
     options: {
-      minimize: minimize && {
-        discardComments: {
-          removeAll: true,
-        },
-      },
       modules,
       camelCase: true,
       localIdentName: __DEV__

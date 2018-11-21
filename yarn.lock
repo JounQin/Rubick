@@ -2601,7 +2601,7 @@ forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
 
-fork-ts-checker-webpack-plugin@*, fork-ts-checker-webpack-plugin@^0.4.9:
+fork-ts-checker-webpack-plugin@*:
   version "0.4.9"
   resolved "https://registry.yarnpkg.com/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-0.4.9.tgz#78607899d4411fdc6faeca5b4db7654c9d8d28a2"
   dependencies:
@@ -2614,6 +2614,17 @@ fork-ts-checker-webpack-plugin@*, fork-ts-checker-webpack-plugin@^0.4.9:
     lodash.startswith "^4.2.1"
     minimatch "^3.0.4"
     resolve "^1.5.0"
+    tapable "^1.0.0"
+
+fork-ts-checker-webpack-plugin@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-0.5.0.tgz#39de03c2579368806478024cbce6ac7f5346d590"
+  dependencies:
+    babel-code-frame "^6.22.0"
+    chalk "^2.4.1"
+    chokidar "^2.0.4"
+    micromatch "^3.1.10"
+    minimatch "^3.0.4"
     tapable "^1.0.0"
 
 form-data@~2.3.1, form-data@~2.3.2:

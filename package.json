@@ -124,7 +124,7 @@
     "file-loader": "^2.0.0",
     "font-awesome": "^4.7.0",
     "fonts.css": "^2.0.0",
-    "fork-ts-checker-webpack-plugin": "^0.4.9",
+    "fork-ts-checker-webpack-plugin": "^0.5.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-loader": "^0.5.5",
     "html-minifier": "^3.5.20",

@@ -119,7 +119,7 @@
     "@types/webpack-node-externals": "^1.6.3",
     "add-asset-html-webpack-plugin": "^3.0.1",
     "autoprefixer": "^9.1.5",
-    "css-loader": "^1.0.0",
+    "css-loader": "^2.0.0",
     "cssnano": "^4.1.0",
     "file-loader": "^2.0.0",
     "font-awesome": "^4.7.0",

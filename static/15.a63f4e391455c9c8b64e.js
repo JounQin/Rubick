@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[15],{284:function(n,e,t){"use strict";t.r(e);var i=t(4),s=Object(i.a)({},function(){var n=this.$createElement;return(this._self._c||n)("div")},[],!1,null,null,null);s.options.__file="SyncHistory.vue";e.default=s.exports}}]);

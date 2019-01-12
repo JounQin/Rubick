@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{284:function(e,t,i){"use strict";i.r(t);var n=i(4),o=Object(n.a)({},function(){var e=this.$createElement;return(this._self._c||e)("router-link",{attrs:{to:"/image/image-repository/detail/123"}},[this._v("detail")])},[],!1,null,null,null);o.options.__file="ImageRepository.vue";t.default=o.exports}}]);

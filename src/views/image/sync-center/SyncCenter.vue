@@ -27,7 +27,7 @@ main
           span(v-else) -
         td
           a {{ config.space_name }}
-        td {{ config.created_at | formateDate }}
+        td {{ config.created_at | formatDate }}
         td
           rb-btn(size='xs')
             i.fa.fa-refresh

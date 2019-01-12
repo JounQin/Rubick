@@ -1,1 +1,1 @@
-export { formateDate } from 'utils'
+export { formatDate } from 'utils'

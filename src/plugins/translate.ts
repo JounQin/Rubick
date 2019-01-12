@@ -3,7 +3,7 @@ import Vue from 'vue'
 import VueTranslator from 'vue-translator'
 
 import { Locale } from 'types'
-import { LOCALE_COOKIE, getCookie } from 'utils'
+import { getCookie, LOCALE_COOKIE } from 'utils'
 
 const context = require.context('../views', true, I18N_REGEX)
 

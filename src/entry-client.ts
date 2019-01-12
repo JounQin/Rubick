@@ -3,10 +3,10 @@ import axios from 'axios'
 import { routeTitle } from 'plugins'
 import { Locale } from 'types'
 import {
+  getCookie,
   INCORRECT_AUTHENTICATION_CREDENTIALS,
   LANG,
   LOCALE_COOKIE,
-  getCookie,
   setCookie,
 } from 'utils'
 

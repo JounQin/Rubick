@@ -8,7 +8,7 @@ import VueSSRClientPlugin from 'vue-server-renderer/client-plugin'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
 
-import { NODE_ENV, __DEV__, getDllFile, resolve } from './config'
+import { __DEV__, getDllFile, NODE_ENV, resolve } from './config'
 
 import baseConfig from './base'
 

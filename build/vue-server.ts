@@ -4,7 +4,7 @@ import webpack from 'webpack'
 import merge from 'webpack-merge'
 import nodeExternals from 'webpack-node-externals'
 
-import { NODE_ENV, innerServer, resolve } from './config'
+import { innerServer, NODE_ENV, resolve } from './config'
 
 import baseConfig from './base'
 

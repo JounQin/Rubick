@@ -4,7 +4,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { VueLoaderPlugin } from 'vue-loader'
 import webpack from 'webpack'
 
-import { NODE_ENV, __DEV__, hashType, publicPath, resolve } from './config'
+import { __DEV__, hashType, NODE_ENV, publicPath, resolve } from './config'
 
 const minimize = !__DEV__
 const sourceMap = __DEV__

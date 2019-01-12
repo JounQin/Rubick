@@ -11,7 +11,7 @@ import logger from 'koa-logger'
 import session from 'koa-session'
 import serve from 'koa-static'
 import staticCache from 'koa-static-cache'
-import lruCache from 'lru-cache'
+import LruCache from 'lru-cache'
 import mkdirp from 'mkdirp'
 import re from 'path-to-regexp'
 import { BundleRenderer, createBundleRenderer } from 'vue-server-renderer'
@@ -19,7 +19,7 @@ import { BundleRenderer, createBundleRenderer } from 'vue-server-renderer'
 import koaPkg from 'koa/package.json'
 import vuePkg from 'vue/package.json'
 
-import { ACCEPT_LANGUAGE, ENV, MODE, SESSION_CONFIG, getEnv } from 'commons'
+import { ACCEPT_LANGUAGE, ENV, getEnv, MODE, SESSION_CONFIG } from 'commons'
 import { Locale } from 'types'
 import { INFINITY_DATE, LOCALE_COOKIE } from 'utils'
 
@@ -76,7 +76,7 @@ const createRenderer = (bundle: object, options: object) =>
     ...options,
     template,
     inject: false,
-    cache: lruCache({
+    cache: new LruCache({
       max: 1000,
       maxAge: 1000 * 60 * 15,
     }),

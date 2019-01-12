@@ -96,11 +96,11 @@ export default class Console extends Vue {
   }
 
   mounted() {
-    this.$root.$el.style.height = '100%'
+    ;(this.$root.$el as HTMLElement).style.height = '100%'
   }
 
   destoryed() {
-    this.$root.$el.style.height = null
+    ;(this.$root.$el as HTMLElement).style.height = null
   }
 }
 </script>

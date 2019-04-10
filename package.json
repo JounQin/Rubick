@@ -138,7 +138,7 @@
     "lint-staged": "^8.1.0",
     "lodash-es": "^4.17.11",
     "memory-fs": "^0.4.1",
-    "mini-css-extract-plugin": "^0.5.0",
+    "mini-css-extract-plugin": "^0.6.0",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
     "normalize.css": "^8.0.1",
